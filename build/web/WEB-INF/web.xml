@@ -10,24 +10,8 @@
         </session-timeout>
     </session-config>
     
-    <!-- Declaração dos Filtros -->
-    <filter>
-        <filter-name>AcessoAdministrativo</filter-name>
-        <filter-class>AutorizacaoDeAcesso.AcessoAdministrativo</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>AcessoAdministrativo</filter-name>
-        <url-pattern>/admin/*</url-pattern>
-    </filter-mapping>
-    
-    <filter>
-        <filter-name>AcessoLogado</filter-name>
-        <filter-class>AutorizacaoDeAcesso.AcessoLogado</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>AcessoLogado</filter-name>
-        <url-pattern>/principal.jsp</url-pattern>
-    </filter-mapping>
+
+ 
 </web-app>
 
 

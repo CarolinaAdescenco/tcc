@@ -23,6 +23,6 @@
         <% } %>
         
         <a href="admin/cadastro_usuario.jsp">Área restrita</a> <br>
-        <a href="ControleAcesso?acao=Sair">Área restrita</a> <br>
+        <a href="ControleAcesso?acao=Sair">Logout</a> <br>
     </body>
 </html>
