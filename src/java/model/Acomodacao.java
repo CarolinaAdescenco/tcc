@@ -10,9 +10,26 @@ package model;
  * @author alunocmc
  */
 public class Acomodacao {
+    private int id;
     private String tipo;
     private String descricao;
     private Double valorPadrao;
+
+    public Acomodacao(String tipo, String descricao, Double valorPadrao) {
+        this.tipo = tipo;
+        this.descricao = descricao;
+        this.valorPadrao = valorPadrao;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    
 
     public String getTipo() {
         return tipo;

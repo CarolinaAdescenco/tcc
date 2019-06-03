@@ -25,6 +25,6 @@
         <a href="admin/cadastro_usuario.jsp">Área restrita</a> <br>
         <a href="ControleAcesso?acao=Sair">Logout</a> <br>
         
-        <a href="ControleAcomodacoes?acao=Listar">Acomodações</a> <br>
+        <a href="ControleAcomodacao?acao=Listar">Acomodações</a> <br>
     </body>
 </html>

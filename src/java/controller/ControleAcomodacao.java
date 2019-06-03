@@ -7,12 +7,15 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Acomodacao;
+import model.AcomodacaoDAO;
 
 /**
  *
@@ -34,21 +37,31 @@ public class ControleAcomodacao extends HttpServlet {
             throws ServletException, IOException {
         try {
             String acao = request.getParameter("acao");
+
             if (acao.equals("Listar")) {
-                Acomodacao aco = new Acomodacao();
+                
+                AcomodacaoDAO aco = new AcomodacaoDAO();
+                request.setAttribute("acomodacoes", aco.listar());
+                request.getRequestDispatcher("/admin/cadastro_acomodacao.jsp").forward(request, response);
+                
+            } else if (acao.equals("Cadastrar")) {
+                
+                AcomodacaoDAO dao = new AcomodacaoDAO();
+                dao.salvar(new Acomodacao(
+                    request.getParameter("tipo"),
+                    request.getParameter("descricao"),
+                    Double.parseDouble(request.getParameter("valor_padrao"))
+                ));
 
-                if (perfil.equalsIgnoreCase("administrador")) {
-                    usuario.setPerfil(PerfilDeAcesso.ADMINISTRADOR);
-                } else {
-                    usuario.setPerfil(PerfilDeAcesso.COMUM);
-                }
-
-                UsuarioDAO usuarioDAO = new UsuarioDAO();
-                usuarioDAO.cadastraNovoUsuario(usuario);
-                request.setAttribute("msg", "Cadastrado com sucesso!");
-                RequestDispatcher rd = request.getRequestDispatcher("/admin/cadastro_usuario.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/admin/cadastro_acomodacao.jsp");
                 rd.forward(request, response);
+
+            } else if (acao.equals("Excluir")) {
+                Double acoID = Double.parseDouble(request.getParameter("id"));
+                AcomodacaoDAO dao = new AcomodacaoDAO();
+                dao.excluir(acoID);
             }
+
         } catch (Exception erro) {
             RequestDispatcher rd = request.getRequestDispatcher("/erro.jsp");
             request.setAttribute("erro", erro);
