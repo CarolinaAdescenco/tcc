@@ -9,17 +9,22 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import util.ConectaBanco;
 
 /**
  *
  * @author alunocmc
  */
-public class UsuarioDAO {
+public class AcomodacaoDAO {
     
-    private static final String CADASTRA_NOVO_USUARIO = "INSERT INTO usuarios (login, senha, perfil) values (?,?,?)";
-    private static final String AUTENTICA_USUARIO = "SELECT * FROM usuarios WHERE login=? AND senha=?";
+    private static final String LISTAR_ACOMODACOES = "SELECT * FROM acomodacoes";
     
+    public ArrayList<Acomodacao> listar() {
+        ArrayList<Acomodacao> acomodacoes = new ArrayList<Acomodacao>();
+        
+        
+    }
     
     public void cadastraNovoUsuario(Usuario usuario){
         Connection conexao = null;

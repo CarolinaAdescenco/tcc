@@ -20,7 +20,7 @@ public class ConectaBanco {
         
         try{
             Class.forName("org.postgresql.Driver");            
-            conexao = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/usuario","postgres", "postgres");
+            conexao = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/sistema_hotel","postgres", "postgres");
         } catch(ClassNotFoundException erro1){
          throw new RuntimeException(erro1);
         } catch (SQLException erro2) {
