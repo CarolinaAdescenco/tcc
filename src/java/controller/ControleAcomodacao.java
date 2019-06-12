@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import java.io.IOException;
@@ -17,10 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.Acomodacao;
 import model.AcomodacaoDAO;
 
-/**
- *
- * @author alunocmc
- */
+
 @WebServlet(name = "ControleAcomodacao", urlPatterns = {"/ControleAcomodacao"})
 public class ControleAcomodacao extends HttpServlet {
 
@@ -60,6 +52,29 @@ public class ControleAcomodacao extends HttpServlet {
                 Double acoID = Double.parseDouble(request.getParameter("id"));
                 AcomodacaoDAO dao = new AcomodacaoDAO();
                 dao.excluir(acoID);
+
+                request.setAttribute("acomodacao", dao.buscar(acoID));
+                request.getRequestDispatcher("/admin/cadastro_acomodacao.jsp").forward(request, response);
+
+            } else if (acao.Equals("Ver")) {
+                Double acoID = Double.parseDouble(request.getParameter("id"));
+                AcomodacaoDAO dao = new AcomodacaoDAO();
+
+                request.setAttribute("acomodacao", dao.buscar(acoID));
+                request.getRequestDispatcher("/admin/editar_acomodacao.jsp").forward(request, response);
+
+            } else if (acao.Equals("Editar")) {
+                AcomodacaoDAO dao = new AcomodacaoDAO();
+                Acomodacao aco = new Acomodacao(
+                    request.getParameter("tipo"),
+                    request.getParameter("descricao"),
+                    Double.parseDouble(request.getParameter("valor_padrao"))
+                );
+                aco.setId(Double.parseDouble(request.getParameter("id")));
+
+                dao.atualizar(aco);
+
+                request.getRequestDispatcher("/admin/cadastro_acomodacao.jsp");forward(request, response);
             }
 
         } catch (Exception erro) {

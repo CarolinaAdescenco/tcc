@@ -21,6 +21,8 @@ public class AcomodacaoDAO {
     private static final String LISTAR_ACOMODACOES = "SELECT * FROM acomodacoes";
     private static final String INSERIR_ACOMODACAO = "INSERT INTO acomodacoes VALUES(?, ?, ?)";
     private static final String DELETAR_ACOMODACAO = "DELETE FROM acomodacoes WHERE id = ?";
+    private static final String BUSCAR_ACOMODACAO = "SELECT * FROM acomodacoes WHERE id = ?";
+    private static final String ATUALIZAR_ACOMODACAO = "UPDATE acomodacoes SET descricao = ?, valor_padrao = ?, tipo = ? WHERE id = ?";
     
     public ArrayList<Acomodacao> listar() {
         ArrayList<Acomodacao> acomodacoes = new ArrayList<Acomodacao>();
@@ -102,60 +104,58 @@ public class AcomodacaoDAO {
             }
         }
     }
-//    public void cadastraNovoUsuario(Usuario usuario){
-//        Connection conexao = null;
-//        PreparedStatement pstmt = null;
-//        
-//        try{
-//            conexao = ConectaBanco.getConnection();
-//            pstmt = conexao.prepareStatement(CADASTRA_NOVO_USUARIO);
-//            pstmt.setString(1, usuario.getLogin());
-//            pstmt.setString(2, usuario.getSenha());
-//            pstmt.setString(3, usuario.getPerfil().toString());
-//            pstmt.execute();
-//        } catch(SQLException sqlErro){
-//            throw new RuntimeException(sqlErro);
-//        }finally{
-//            if(conexao != null){
-//                try{
-//                    conexao.close();
-//                } catch(SQLException ex){
-//                    throw new RuntimeException(ex);
-//                }
-//            }
-//        }
-//    }
-//    
-//    public Usuario autenticaUsuario(Usuario usuario){
-//        Usuario usuarioAutenticado = null;
-//        
-//        Connection conexao = null;
-//        PreparedStatement pstmt = null;
-//        ResultSet rsUsuario = null;
-//        try {
-//            conexao = ConectaBanco.getConnection();
-//            pstmt = conexao.prepareStatement(AUTENTICA_USUARIO);
-//            pstmt.setString(1, usuario.getLogin());
-//            pstmt.setString(2, usuario.getSenha());
-//            rsUsuario = pstmt.executeQuery();
-//            if (rsUsuario.next()) {
-//                usuarioAutenticado = new Usuario();
-//                usuarioAutenticado.setLogin(rsUsuario.getString("login"));
-//                usuarioAutenticado.setSenha(rsUsuario.getString("senha"));
-//                usuarioAutenticado.setPerfil(PerfilDeAcesso.valueOf(rsUsuario.getString("perfil")));
-//            }
-//        } catch (SQLException sqlErro) {
-//            throw new RuntimeException(sqlErro);
-//        } finally {
-//            if (conexao != null) {
-//                try {
-//                    conexao.close();
-//                } catch (SQLException ex) {
-//                    throw new RuntimeException(ex);
-//                }
-//            }
-//        }
-//        
-//        return usuarioAutenticado;
-//    }    
+
+    public Acomodacao buscar(Double id) {
+        Connection conexao = null;
+        PreparedStatement pstmt = null;
+        Acomodacao aco = new Acomodacao();
+        
+        try{
+            conexao = ConectaBanco.getConnection();
+            pstmt = conexao.prepareStatement(BUSCAR_ACOMODACAO);
+            pstmt.setString(1, id.toString());
+            rsAcomo = pstmt.executeQuery();
+
+            while (rsAcomo.next()) {
+                aco.setId(rsAcomo.getInt("id"));
+                aco.setTipo(rsAcomo.getString("tipo"));
+                aco.setDescricao(rsAcomo.getString("descricao"));
+                aco.setValorPadrao(rsAcomo.getDouble("valor_padrao"));
+            }
+        } catch(SQLException sqlErro){
+            throw new RuntimeException(sqlErro);
+        } finally {
+            if(conexao != null){
+                try{
+                    conexao.close();
+                } catch(SQLException ex){
+                    throw new RuntimeException(ex);
+                }
+            }
+        }
+
+        return aco;
+    }
+
+    public void atualizar(Acomodacao acomodacao) {
+        try{
+            conexao = ConectaBanco.getConnection();
+            pstmt = conexao.prepareStatement(ATUALIZAR_ACOMODACAO);
+            pstmt.setString(1, acomodacao.getDescricao());
+            pstmt.setDouble(2, acomodacao.getValorPadrao());
+            pstmt.setString(3, acomodacao.getTipo());
+            pstmt.setDouble(4, acomodacao.getId());
+            rsAcomo = pstmt.executeQuery();
+        } catch(SQLException sqlErro){
+            throw new RuntimeException(sqlErro);
+        } finally {
+            if(conexao != null){
+                try{
+                    conexao.close();
+                } catch(SQLException ex){
+                    throw new RuntimeException(ex);
+                }
+            }
+        }
+    }
 }
