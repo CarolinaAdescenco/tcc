@@ -32,8 +32,8 @@ public class ControleAcomodacao extends HttpServlet {
 
             if (acao.equals("Listar")) {
                 
-                AcomodacaoDAO aco = new AcomodacaoDAO();
-                request.setAttribute("acomodacoes", aco.listar());
+                AcomodacaoDAO acomodacao = new AcomodacaoDAO();
+                request.setAttribute("acomodacoes", acomodacao.listar());
                 request.getRequestDispatcher("/admin/cadastro_acomodacao.jsp").forward(request, response);
                 
             } else if (acao.equals("Cadastrar")) {
@@ -56,7 +56,7 @@ public class ControleAcomodacao extends HttpServlet {
                 request.setAttribute("acomodacao", dao.buscar(acoID));
                 request.getRequestDispatcher("/admin/cadastro_acomodacao.jsp").forward(request, response);
 
-            } else if (acao.Equals("Ver")) {
+            } else if (acao.Equals("Consultar")) {
                 Double acoID = Double.parseDouble(request.getParameter("id"));
                 AcomodacaoDAO dao = new AcomodacaoDAO();
 
@@ -65,14 +65,14 @@ public class ControleAcomodacao extends HttpServlet {
 
             } else if (acao.Equals("Editar")) {
                 AcomodacaoDAO dao = new AcomodacaoDAO();
-                Acomodacao aco = new Acomodacao(
+                Acomodacao acomodacao = new Acomodacao(
                     request.getParameter("tipo"),
                     request.getParameter("descricao"),
                     Double.parseDouble(request.getParameter("valor_padrao"))
                 );
                 aco.setId(Double.parseDouble(request.getParameter("id")));
 
-                dao.atualizar(aco);
+                dao.atualizar(acomodacao);
 
                 request.getRequestDispatcher("/admin/cadastro_acomodacao.jsp");forward(request, response);
             }

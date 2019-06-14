@@ -108,7 +108,7 @@ public class AcomodacaoDAO {
     public Acomodacao buscar(Double id) {
         Connection conexao = null;
         PreparedStatement pstmt = null;
-        Acomodacao aco = new Acomodacao();
+        Acomodacao acomodacao = new Acomodacao();
         
         try{
             conexao = ConectaBanco.getConnection();
@@ -117,10 +117,10 @@ public class AcomodacaoDAO {
             rsAcomo = pstmt.executeQuery();
 
             while (rsAcomo.next()) {
-                aco.setId(rsAcomo.getInt("id"));
-                aco.setTipo(rsAcomo.getString("tipo"));
-                aco.setDescricao(rsAcomo.getString("descricao"));
-                aco.setValorPadrao(rsAcomo.getDouble("valor_padrao"));
+                acomodacao.setId(rsAcomo.getInt("id"));
+                acomodacao.setTipo(rsAcomo.getString("tipo"));
+                acomodacao.setDescricao(rsAcomo.getString("descricao"));
+                acomodacao.setValorPadrao(rsAcomo.getDouble("valor_padrao"));
             }
         } catch(SQLException sqlErro){
             throw new RuntimeException(sqlErro);
@@ -145,7 +145,7 @@ public class AcomodacaoDAO {
             pstmt.setDouble(2, acomodacao.getValorPadrao());
             pstmt.setString(3, acomodacao.getTipo());
             pstmt.setDouble(4, acomodacao.getId());
-            rsAcomo = pstmt.executeQuery();
+            pstmt.execute();
         } catch(SQLException sqlErro){
             throw new RuntimeException(sqlErro);
         } finally {
