@@ -96,7 +96,7 @@ public class UsuarioDAO {
 
                 EnderecoDAO endeDAO = new EnderecoDAO();
                 Endereco endereco = endeDAO.buscar(rsUsuario.getInt("id"));
-                usuario.setEndereco(endereco);
+                usuario.setLogradouro(endereco);
             }
         } catch (SQLException sqlErro) {
             throw new RuntimeException(sqlErro);
@@ -131,7 +131,7 @@ public class UsuarioDAO {
 
                 EnderecoDAO endeDAO = new EnderecoDAO();
                 Endereco endereco = endeDAO.buscar(rsUsuario.getInt("id"));
-                usuario.setEndereco(endereco);
+                usuario.setLogradouro(endereco);
 
                 usuarios.add(usuario);
             }

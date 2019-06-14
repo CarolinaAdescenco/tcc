@@ -1,7 +1,7 @@
 package model;
 
 public class Endereco {
-    private String endereco;
+    private String logradouro;
     private int numero;
     private String bairro;
     private String complemento;
@@ -9,8 +9,8 @@ public class Endereco {
     private String municipio;
     private String cpf;
 
-    public Endereco(String endereco, int numero, String bairro, String complemento, String estado, String municipio, String cpf) {
-        this.endereco = endereco;
+    public Endereco(String logradouro, int numero, String bairro, String complemento, String estado, String municipio, String cpf) {
+        this.logradouro = logradouro;
         this.numero = numero;
         this.bairro = bairro;
         this.complemento = complemento;
@@ -19,12 +19,12 @@ public class Endereco {
         this.cpf = cpf;
     }
 
-    public String getEndereco() {
-        return this.endereco;
+    public String getLogradouro() {
+        return this.logradouro;
     }
 
-    public void setEndereco(String ende) {
-        this.endereco = ende;
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
     }
 
     public String getNumero() {

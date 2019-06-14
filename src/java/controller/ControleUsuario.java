@@ -25,7 +25,7 @@ public class ControleUsuario extends HttpServlet {
                 Usuario usuario = new Usuario();
                 usuario.setLogin(request.getParameter("txtLogin"));
                 usuario.setSenha(request.getParameter("txtSenha"));
-                usuario.getEndereco().setEndereco(request.getParameter("endereco"));
+                usuario.getEndereco().setLogradouro(request.getParameter("endereco"));
                 usuario.getEndereco().setNumero(request.getParameter("numero"));
                 usuario.getEndereco().setBairro(request.getParameter("bairro"));
                 usuario.getEndereco().setComplemento(request.getParameter("complemento"));
@@ -63,7 +63,7 @@ public class ControleUsuario extends HttpServlet {
                 Usuario usuario = new Usuario();
                 usuario.setLogin(request.getParameter("txtLogin"));
                 usuario.setSenha(request.getParameter("txtSenha"));
-                usuario.getEndereco().setEndereco(request.getParameter("endereco"));
+                usuario.getEndereco().setLogradouro(request.getParameter("endereco"));
                 usuario.getEndereco().setNumero(request.getParameter("numero"));
                 usuario.getEndereco().setBairro(request.getParameter("bairro"));
                 usuario.getEndereco().setComplemento(request.getParameter("complemento"));

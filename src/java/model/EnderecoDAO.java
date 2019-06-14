@@ -55,7 +55,7 @@ public class EnderecoDAO {
             rsEndereco = pstmt.executeQuery();
 
             while (rsEndereco.next()) {
-                endereco.setEndereco(rsEndereco.getString("endereco"));
+                endereco.setLogradouro(rsEndereco.getString("endereco"));
                 endereco.setNumero(rsEndereco.getInt("numero"));
                 endereco.setBairro(rsEndereco.getString("bairro"));
                 endereco.setComplemento(rsEndereco.getString("complemento"));
