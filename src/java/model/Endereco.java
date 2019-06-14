@@ -9,6 +9,15 @@ public class Endereco {
     private String municipio;
     private String cpf;
 
+    public Endereco(String endereco, int numero, String bairro, String complemento, String estado, String municipio, String cpf) {
+        this.endereco = endereco;
+        this.numero = numero;
+        this.bairro = bairro;
+        this.complemento = complemento;
+        this.estado = estado;
+        this.municipio = municipio;
+        this.cpf = cpf;
+    }
 
     public String getEndereco() {
         return this.endereco;

@@ -29,13 +29,13 @@ public class ControleUsuario extends HttpServlet {
                 Usuario usuario = new Usuario();
                 usuario.setLogin(request.getParameter("txtLogin"));
                 usuario.setSenha(request.getParameter("txtSenha"));
-                usuario.endereco.setEndereco(request.getParameter("endereco"));
-                usuario.endereco.setNumero(request.getParameter("numero"));
-                usuario.endereco.setBairro(request.getParameter("bairro"));
-                usuario.endereco.setComplemento(request.getParameter("complemento"));
-                usuario.endereco.setEstado(request.getParameter("estado"));
-                usuario.endereco.setMunicipio(request.getParameter("municipio"));
-                usuario.endereco.setCpf(request.getParameter("cpf"));
+                usuario.getEndereco().setEndereco(request.getParameter("endereco"));
+                usuario.getEndereco().setNumero(request.getParameter("numero"));
+                usuario.getEndereco().setBairro(request.getParameter("bairro"));
+                usuario.getEndereco().setComplemento(request.getParameter("complemento"));
+                usuario.getEndereco().setEstado(request.getParameter("estado"));
+                usuario.getEndereco().setMunicipio(request.getParameter("municipio"));
+                usuario.getEndereco().setCpf(request.getParameter("cpf"));
 
                 if (perfil.equalsIgnoreCase("administrador")) {
                     usuario.setPerfil(PerfilDeAcesso.ADMINISTRADOR);

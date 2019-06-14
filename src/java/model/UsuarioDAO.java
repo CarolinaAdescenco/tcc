@@ -23,6 +23,11 @@ public class UsuarioDAO {
             pstmt.setString(2, usuario.getSenha());
             pstmt.setString(3, usuario.getPerfil().toString());
             pstmt.execute();
+
+            EnderecoDAO enderecodao = new EnderecoDAO();
+            // TODO: buscar o ID do usuario que acabou de ser inserido
+            // no banco de dados
+            EnderecoDAO.cadastraNovoEndereco(1, usuario.getEndereco());
         } catch(SQLException sqlErro){
             throw new RuntimeException(sqlErro);
         }finally{

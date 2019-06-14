@@ -30,7 +30,7 @@ public class Usuario {
         this.perfil = perfil;
     }
 
-    public Endereco endereco() {
+    public Endereco getEndereco() {
         return this.endereco;
     }
 }
