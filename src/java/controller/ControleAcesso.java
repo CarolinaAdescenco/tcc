@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import java.io.IOException;
@@ -17,10 +12,6 @@ import javax.servlet.http.HttpSession;
 import model.Usuario;
 import model.UsuarioDAO;
 
-/**
- *
- * @author alunocmc
- */
 @WebServlet(name = "ControleAcesso", urlPatterns = {"/ControleAcesso"})
 public class ControleAcesso extends HttpServlet {
 
@@ -32,7 +23,7 @@ public class ControleAcesso extends HttpServlet {
             String acao = request.getParameter("acao");
             if (acao.equals("Entrar")) {
                 Usuario usuario = new Usuario();
-                usuario.setLogin(request.getParameter("txtLogin"));
+                usuario.setEmail(request.getParameter("txtLogin"));
                 usuario.setSenha(request.getParameter("txtSenha"));
                 UsuarioDAO usuarioDAO = new UsuarioDAO();
                 Usuario usuarioAutenticado = usuarioDAO.autenticaUsuario(usuario);

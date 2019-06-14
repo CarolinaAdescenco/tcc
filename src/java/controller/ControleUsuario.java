@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import java.io.IOException;
@@ -29,15 +24,25 @@ public class ControleUsuario extends HttpServlet {
         try {
             String acao = request.getParameter("acao");
             if (acao.equals("Cadastrar")) {
+                String perfil = request.getParameter("optPerfil");
+
                 Usuario usuario = new Usuario();
                 usuario.setLogin(request.getParameter("txtLogin"));
                 usuario.setSenha(request.getParameter("txtSenha"));
-                String perfil = request.getParameter("optPerfil");
+                usuario.endereco.setEndereco(request.getParameter("endereco"));
+                usuario.endereco.setNumero(request.getParameter("numero"));
+                usuario.endereco.setBairro(request.getParameter("bairro"));
+                usuario.endereco.setComplemento(request.getParameter("complemento"));
+                usuario.endereco.setEstado(request.getParameter("estado"));
+                usuario.endereco.setMunicipio(request.getParameter("municipio"));
+                usuario.endereco.setCpf(request.getParameter("cpf"));
 
                 if (perfil.equalsIgnoreCase("administrador")) {
                     usuario.setPerfil(PerfilDeAcesso.ADMINISTRADOR);
-                } else {
+                } else if(perfil.equalsIgnoreCase("funcionario")) {
                     usuario.setPerfil(PerfilDeAcesso.COMUM);
+                } else {
+                    usuario.setPerfil(PerfilDeAcesso.HOSPEDE)
                 }
 
                 UsuarioDAO usuarioDAO = new UsuarioDAO();

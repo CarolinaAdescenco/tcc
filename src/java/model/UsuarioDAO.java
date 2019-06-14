@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import java.sql.Connection;
@@ -11,14 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import util.ConectaBanco;
 
-/**
- *
- * @author alunocmc
- */
 public class UsuarioDAO {
     
-    private static final String CADASTRA_NOVO_USUARIO = "INSERT INTO usuarios (login, senha, perfil) values (?,?,?)";
-    private static final String AUTENTICA_USUARIO = "SELECT * FROM usuarios WHERE login=? AND senha=?";
+    private static final String CADASTRA_NOVO_USUARIO = "INSERT INTO usuarios (email, senha, perfil) values (?,?,?)";
+    private static final String AUTENTICA_USUARIO = "SELECT * FROM usuarios WHERE email=? AND senha=?";
     
     
     public void cadastraNovoUsuario(Usuario usuario){
@@ -28,7 +19,7 @@ public class UsuarioDAO {
         try{
             conexao = ConectaBanco.getConnection();
             pstmt = conexao.prepareStatement(CADASTRA_NOVO_USUARIO);
-            pstmt.setString(1, usuario.getLogin());
+            pstmt.setString(1, usuario.getEmail());
             pstmt.setString(2, usuario.getSenha());
             pstmt.setString(3, usuario.getPerfil().toString());
             pstmt.execute();
@@ -54,12 +45,12 @@ public class UsuarioDAO {
         try {
             conexao = ConectaBanco.getConnection();
             pstmt = conexao.prepareStatement(AUTENTICA_USUARIO);
-            pstmt.setString(1, usuario.getLogin());
+            pstmt.setString(1, usuario.getEmail());
             pstmt.setString(2, usuario.getSenha());
             rsUsuario = pstmt.executeQuery();
             if (rsUsuario.next()) {
                 usuarioAutenticado = new Usuario();
-                usuarioAutenticado.setLogin(rsUsuario.getString("login"));
+                usuarioAutenticado.setEmail(rsUsuario.getString("login"));
                 usuarioAutenticado.setSenha(rsUsuario.getString("senha"));
                 usuarioAutenticado.setPerfil(PerfilDeAcesso.valueOf(rsUsuario.getString("perfil")));
             }

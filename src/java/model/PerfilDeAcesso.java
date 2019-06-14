@@ -11,5 +11,6 @@ package model;
  */
 public enum PerfilDeAcesso {
     COMUM, 
-    ADMINISTRADOR
+    ADMINISTRADOR,
+    HOSPEDE
 }

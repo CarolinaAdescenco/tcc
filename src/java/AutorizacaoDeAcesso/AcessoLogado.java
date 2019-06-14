@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package AutorizacaoDeAcesso;
 
 import java.io.IOException;
@@ -18,10 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Usuario;
 
-/**
- *
- * @author alunocmc
- */
 @WebFilter(urlPatterns = {"/principal.jsp"})
 public class AcessoLogado implements Filter{
     
@@ -46,7 +37,8 @@ public class AcessoLogado implements Filter{
 
     @Override
     public void destroy() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
+        //To change body of generated methods, choose Tools | Templates.
     }
     
 }
