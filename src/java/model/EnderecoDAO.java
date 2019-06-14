@@ -11,9 +11,10 @@ public class EnderecoDAO {
     private static final String CADASTRAR_NOVO_ENDERECO = "INSERT INTO enderecos (usuario_id, endereco, numero, bairro, complemento, estado, municipio, cpf) values (?, ?, ?, ?, ?, ?, ?)";
     private static final String BUSCAR_ENDERECO = "SELECT * FROM enderecos WHERE usuario_id=?";
     private static final String ATUALIZAR_ENDERECO = "UPDATE enderecos SET endereco = ?, numero = ?, bairro = ?, complemento = ?, estado = ?, municipio = ?, cpf = ? WHERE usuarioID = ?";
+    private static final String EXCLUIR_ENDERECO = "DELETE FROM enderecos WHERE usuario_id=?";
     
     
-    public void cadastraNovoEndereco(int usuarioID, Endereco endereco){
+    public void cadastrar(int usuarioID, Endereco endereco){
         Connection conexao = null;
         PreparedStatement pstmt = null;
         
@@ -42,7 +43,7 @@ public class EnderecoDAO {
         }
     }
     
-    public Endereco buscarEndereco(int usuarioID) {
+    public Endereco buscar(int usuarioID) {
         Connection conexao = null;
         PreparedStatement pstmt = null;
         Endereco endereco = null;
@@ -79,7 +80,7 @@ public class EnderecoDAO {
         return endereco;
     }
 
-    public void atualizarEndereco(int usuarioID, Endereco endereco) {
+    public void atualizar(int usuarioID, Endereco endereco) {
         try{
             conexao = ConectaBanco.getConnection();
             pstmt = conexao.prepareStatement(ATUALIZAR_ENDERECO);
@@ -93,6 +94,29 @@ public class EnderecoDAO {
             pstmt.setInt(8, usuarioID);
 
             pstmt.execute();
+        } catch(SQLException sqlErro){
+            throw new RuntimeException(sqlErro);
+        } finally {
+            if(conexao != null){
+                try{
+                    conexao.close();
+                } catch(SQLException ex){
+                    throw new RuntimeException(ex);
+                }
+            }
+        }
+    }
+
+    public void excluir(int usuarioID) {
+        Connection conexao = null;
+        PreparedStatement pstmt = null;
+        
+        try {
+            conexao = ConectaBanco.getConnection();
+            pstmt = conexao.prepareStatement(EXCLUIR_ENDERECO);
+            pstmt.setInt(1, usuarioID)
+            pstmt.execute();
+        }
         } catch(SQLException sqlErro){
             throw new RuntimeException(sqlErro);
         } finally {

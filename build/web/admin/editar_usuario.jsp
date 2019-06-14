@@ -18,7 +18,7 @@
 
     <h3>Editar usuario: <%= usuario.getId() %></h3>
     <form action="ControleAcomodacao" method="POST">
-        <input type="hidden" name="id" value="<%= usuario.getId() %>">
+        <input type="hidden" name="usuarioID" value="<%= usuario.getId() %>">
         Email: <input type="text" required name="txtLogin" value="<%= usuario.getEmail() %>"> <br>
         Senha: <input type="password" required name="txtSenha" value="<%= usuario.getSenha() %>"> <br>
         Perfil:

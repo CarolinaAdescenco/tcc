@@ -12,7 +12,7 @@ public class UsuarioDAO {
     private static final String AUTENTICA_USUARIO = "SELECT * FROM usuarios WHERE email=? AND senha=?";
     private static final String BUSCAR_USUARIO = "SELECT * FROM usuarios WHERE id=?";
     private static final String LISTAR_USUARIO = "SELECT * FROM usuarios";
-    private static final String ATUALIZAR_USUARIO = "UPDATE usuarios SET email = ?, senha = ?, perfil = ? WHERE id = ?";
+    private static final String DELETAR_USUARIO = "DELETE from usuarios WHERE id = ?";
     
     
     public void cadastraNovoUsuario(Usuario usuario){
@@ -30,7 +30,7 @@ public class UsuarioDAO {
             EnderecoDAO enderecodao = new EnderecoDAO();
             // TODO: buscar o ID do usuario que acabou de ser inserido
             // no banco de dados
-            EnderecoDAO.cadastraNovoEndereco(1, usuario.getEndereco());
+            EnderecoDAO.cadastrar(1, usuario.getEndereco());
         } catch(SQLException sqlErro){
             throw new RuntimeException(sqlErro);
         }finally{
@@ -77,7 +77,7 @@ public class UsuarioDAO {
         return usuarioAutenticado;
     }
     
-    public Usuario buscarUsuario(int usuarioID) {
+    public Usuario consultar(int usuarioID) {
         Usuario usuario = null;
         
         Connection conexao = null;
@@ -95,7 +95,7 @@ public class UsuarioDAO {
                 usuario.setPerfil(PerfilDeAcesso.valueOf(rsUsuario.getString("perfil")));
 
                 EnderecoDAO endeDAO = new EnderecoDAO();
-                Endereco endereco = endeDAO.buscarEndereco(rsUsuario.getInt("id"));
+                Endereco endereco = endeDAO.buscar(rsUsuario.getInt("id"));
                 usuario.setEndereco(endereco);
             }
         } catch (SQLException sqlErro) {
@@ -113,7 +113,7 @@ public class UsuarioDAO {
         return usuario;
     }
 
-    public ArrayList<Usuario> listarUsuarios() {
+    public ArrayList<Usuario> listar() {
         ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
         
         Connection conexao = null;
@@ -130,7 +130,7 @@ public class UsuarioDAO {
                 usuario.setPerfil(PerfilDeAcesso.valueOf(rsUsuario.getString("perfil")));
 
                 EnderecoDAO endeDAO = new EnderecoDAO();
-                Endereco endereco = endeDAO.buscarEndereco(rsUsuario.getInt("id"));
+                Endereco endereco = endeDAO.buscar(rsUsuario.getInt("id"));
                 usuario.setEndereco(endereco);
 
                 usuarios.add(usuario);
@@ -150,8 +150,8 @@ public class UsuarioDAO {
         return usuarios;
     }
 
-    public void atualizarUsuario(Usuario usuario, int usuarioID) {
-        try{
+    public void atualizar(Usuario usuario, int usuarioID) {
+        try {
             conexao = ConectaBanco.getConnection();
             pstmt = conexao.prepareStatement(ATUALIZAR_USUARIO);
             pstmt.setString(1, usuario.getEmail());
@@ -161,7 +161,29 @@ public class UsuarioDAO {
             rsAcomo = pstmt.executeQuery();
 
             EnderecoDAO dao = new EnderecoDAO();
-            dao.atualizarEndereco(usuario.getEndereco());
+            dao.atualizar(usuario.getEndereco());
+        } catch(SQLException sqlErro){
+            throw new RuntimeException(sqlErro);
+        } finally {
+            if(conexao != null){
+                try{
+                    conexao.close();
+                } catch(SQLException ex){
+                    throw new RuntimeException(ex);
+                }
+            }
+        }
+    }
+    
+    public void excluir(int usuarioID) {
+        try {
+            conexao = ConectaBanco.getConnection();
+            pstmt = conexao.prepareStatement(ATUALIZAR_USUARIO);
+            pstmt.setInt(1, usuarioID);
+            pstmt.execute();
+
+            EnderecoDAO dao = new EnderecoDAO();
+            dao.excluir(usuarioID);
         } catch(SQLException sqlErro){
             throw new RuntimeException(sqlErro);
         } finally {

@@ -50,12 +50,12 @@ public class ControleUsuario extends HttpServlet {
                 int usuarioID = Integer.parseInt(request.getParameter("usuarioID"));
                 UsuarioDAO usuarioDAO = new UsuarioDAO();
 
-                request.setAttribute("usuario", usuarioDAO.buscarUsuario(usuarioID));
+                request.setAttribute("usuario", usuarioDAO.buscar(usuarioID));
                 request.getRequestDispatcher("/admin/editar_usuario.jsp").forward(request, response);
             } else if(acao.equals("Listar")) {
                 ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
                 UsuarioDAO dao = new UsuarioDAO();
-                request.setAttribute("usuarios", dao.listarUsuarios());
+                request.setAttribute("usuarios", dao.listar());
                 request.getRequestDispatcher("/admin/listar_usuario.jsp").forward(request, response);
             } else if(acao.equals("Atualizar")) {
                 String perfil = request.getParameter("optPerfil");
@@ -80,10 +80,12 @@ public class ControleUsuario extends HttpServlet {
                 }
 
                 UsuarioDAO usuarioDAO = new UsuarioDAO();
-                usuarioDAO.atualizarUsuario(usuario);
+                usuarioDAO.atualizar(usuario, Integer.parseInt(request.getParameter("usuarioID")));
                 request.setAttribute("msg", "Atualizado com sucesso!");
                 RequestDispatcher rd = request.getRequestDispatcher("/admin/cadastro_usuario.jsp");
                 rd.forward(request, response);
+            } else if(acao.equals("Excluir")) {
+                UsuarioDAO dao = new UsuarioDAO();
             }
         } catch (Exception erro) {
             RequestDispatcher rd = request.getRequestDispatcher("/erro.jsp");
