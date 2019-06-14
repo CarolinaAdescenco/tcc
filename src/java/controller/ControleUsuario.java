@@ -11,10 +11,6 @@ import model.PerfilDeAcesso;
 import model.Usuario;
 import model.UsuarioDAO;
 
-/**
- *
- * @author alunocmc
- */
 @WebServlet(name = "ControleUsuario", urlPatterns = {"/ControleUsuario"})
 public class ControleUsuario extends HttpServlet {
 
@@ -48,6 +44,44 @@ public class ControleUsuario extends HttpServlet {
                 UsuarioDAO usuarioDAO = new UsuarioDAO();
                 usuarioDAO.cadastraNovoUsuario(usuario);
                 request.setAttribute("msg", "Cadastrado com sucesso!");
+                RequestDispatcher rd = request.getRequestDispatcher("/admin/cadastro_usuario.jsp");
+                rd.forward(request, response);
+            } else if(acao.equals("Editar")) {
+                int usuarioID = Integer.parseInt(request.getParameter("usuarioID"));
+                UsuarioDAO usuarioDAO = new UsuarioDAO();
+
+                request.setAttribute("usuario", usuarioDAO.buscarUsuario(usuarioID));
+                request.getRequestDispatcher("/admin/editar_usuario.jsp").forward(request, response);
+            } else if(acao.equals("Listar")) {
+                ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+                UsuarioDAO dao = new UsuarioDAO();
+                request.setAttribute("usuarios", dao.listarUsuarios());
+                request.getRequestDispatcher("/admin/listar_usuario.jsp").forward(request, response);
+            } else if(acao.equals("Atualizar")) {
+                String perfil = request.getParameter("optPerfil");
+
+                Usuario usuario = new Usuario();
+                usuario.setLogin(request.getParameter("txtLogin"));
+                usuario.setSenha(request.getParameter("txtSenha"));
+                usuario.getEndereco().setEndereco(request.getParameter("endereco"));
+                usuario.getEndereco().setNumero(request.getParameter("numero"));
+                usuario.getEndereco().setBairro(request.getParameter("bairro"));
+                usuario.getEndereco().setComplemento(request.getParameter("complemento"));
+                usuario.getEndereco().setEstado(request.getParameter("estado"));
+                usuario.getEndereco().setMunicipio(request.getParameter("municipio"));
+                usuario.getEndereco().setCpf(request.getParameter("cpf"));
+
+                if (perfil.equalsIgnoreCase("administrador")) {
+                    usuario.setPerfil(PerfilDeAcesso.ADMINISTRADOR);
+                } else if(perfil.equalsIgnoreCase("funcionario")) {
+                    usuario.setPerfil(PerfilDeAcesso.COMUM);
+                } else {
+                    usuario.setPerfil(PerfilDeAcesso.HOSPEDE)
+                }
+
+                UsuarioDAO usuarioDAO = new UsuarioDAO();
+                usuarioDAO.atualizarUsuario(usuario);
+                request.setAttribute("msg", "Atualizado com sucesso!");
                 RequestDispatcher rd = request.getRequestDispatcher("/admin/cadastro_usuario.jsp");
                 rd.forward(request, response);
             }

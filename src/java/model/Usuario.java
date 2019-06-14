@@ -33,4 +33,8 @@ public class Usuario {
     public Endereco getEndereco() {
         return this.endereco;
     }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
 }
