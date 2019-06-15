@@ -1,9 +1,3 @@
-<%-- 
-    Document   : index
-    Created on : 09/05/2019, 19:32:17
-    Author     : alunocmc
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

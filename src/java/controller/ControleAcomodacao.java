@@ -16,15 +16,6 @@ import model.AcomodacaoDAO;
 @WebServlet(name = "ControleAcomodacao", urlPatterns = {"/ControleAcomodacao"})
 public class ControleAcomodacao extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
@@ -56,25 +47,25 @@ public class ControleAcomodacao extends HttpServlet {
                 request.setAttribute("acomodacao", dao.buscar(acoID));
                 request.getRequestDispatcher("/admin/cadastro_acomodacao.jsp").forward(request, response);
 
-            } else if (acao.Equals("Consultar")) {
+            } else if (acao.equals("Consultar")) {
                 Double acoID = Double.parseDouble(request.getParameter("id"));
                 AcomodacaoDAO dao = new AcomodacaoDAO();
 
                 request.setAttribute("acomodacao", dao.buscar(acoID));
                 request.getRequestDispatcher("/admin/editar_acomodacao.jsp").forward(request, response);
 
-            } else if (acao.Equals("Editar")) {
+            } else if (acao.equals("Editar")) {
                 AcomodacaoDAO dao = new AcomodacaoDAO();
                 Acomodacao acomodacao = new Acomodacao(
                     request.getParameter("tipo"),
                     request.getParameter("descricao"),
                     Double.parseDouble(request.getParameter("valor_padrao"))
                 );
-                aco.setId(Double.parseDouble(request.getParameter("id")));
+                acomodacao.setId(Integer.parseInt(request.getParameter("id")));
 
                 dao.atualizar(acomodacao);
 
-                request.getRequestDispatcher("/admin/cadastro_acomodacao.jsp");forward(request, response);
+                request.getRequestDispatcher("/admin/cadastro_acomodacao.jsp").forward(request, response);
             }
 
         } catch (Exception erro) {

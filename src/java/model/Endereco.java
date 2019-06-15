@@ -7,16 +7,16 @@ public class Endereco {
     private String complemento;
     private String estado;
     private String municipio;
-    private String cpf;
+    private String cep;
 
-    public Endereco(String logradouro, int numero, String bairro, String complemento, String estado, String municipio, String cpf) {
+    public Endereco(String logradouro, int numero, String bairro, String complemento, String estado, String municipio, String cep) {
         this.logradouro = logradouro;
         this.numero = numero;
         this.bairro = bairro;
         this.complemento = complemento;
         this.estado = estado;
         this.municipio = municipio;
-        this.cpf = cpf;
+        this.cep = cep;
     }
 
     public String getLogradouro() {
@@ -27,11 +27,11 @@ public class Endereco {
         this.logradouro = logradouro;
     }
 
-    public String getNumero() {
+    public int getNumero() {
         return this.numero;
     }
 
-    public void setNumero(String numero) {
+    public void setNumero(int numero) {
         this.numero = numero;
     }
 
@@ -67,11 +67,11 @@ public class Endereco {
         this.municipio = municipio;
     }
 
-    public String getCpf() {
-        return this.cpf;
+    public String getCep() {
+        return cep;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setCep(String cep) {
+        this.cep = cep;
     }
 }

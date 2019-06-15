@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,22 +24,22 @@ public class ControleUsuario extends HttpServlet {
                 String perfil = request.getParameter("optPerfil");
 
                 Usuario usuario = new Usuario();
-                usuario.setLogin(request.getParameter("txtLogin"));
+                usuario.setEmail(request.getParameter("txtLogin"));
                 usuario.setSenha(request.getParameter("txtSenha"));
                 usuario.getEndereco().setLogradouro(request.getParameter("endereco"));
-                usuario.getEndereco().setNumero(request.getParameter("numero"));
+                usuario.getEndereco().setNumero(Integer.parseInt(request.getParameter("numero")));
                 usuario.getEndereco().setBairro(request.getParameter("bairro"));
                 usuario.getEndereco().setComplemento(request.getParameter("complemento"));
                 usuario.getEndereco().setEstado(request.getParameter("estado"));
                 usuario.getEndereco().setMunicipio(request.getParameter("municipio"));
-                usuario.getEndereco().setCpf(request.getParameter("cpf"));
+                usuario.getEndereco().setCep(request.getParameter("cep"));
 
                 if (perfil.equalsIgnoreCase("administrador")) {
                     usuario.setPerfil(PerfilDeAcesso.ADMINISTRADOR);
                 } else if(perfil.equalsIgnoreCase("funcionario")) {
                     usuario.setPerfil(PerfilDeAcesso.COMUM);
                 } else {
-                    usuario.setPerfil(PerfilDeAcesso.HOSPEDE)
+                    usuario.setPerfil(PerfilDeAcesso.HOSPEDE);
                 }
 
                 UsuarioDAO usuarioDAO = new UsuarioDAO();
@@ -50,7 +51,7 @@ public class ControleUsuario extends HttpServlet {
                 int usuarioID = Integer.parseInt(request.getParameter("usuarioID"));
                 UsuarioDAO usuarioDAO = new UsuarioDAO();
 
-                request.setAttribute("usuario", usuarioDAO.buscar(usuarioID));
+                request.setAttribute("usuario", usuarioDAO.consultar(usuarioID));
                 request.getRequestDispatcher("/admin/editar_usuario.jsp").forward(request, response);
             } else if(acao.equals("Listar")) {
                 ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
@@ -61,22 +62,22 @@ public class ControleUsuario extends HttpServlet {
                 String perfil = request.getParameter("optPerfil");
 
                 Usuario usuario = new Usuario();
-                usuario.setLogin(request.getParameter("txtLogin"));
+                usuario.setEmail(request.getParameter("txtLogin"));
                 usuario.setSenha(request.getParameter("txtSenha"));
                 usuario.getEndereco().setLogradouro(request.getParameter("endereco"));
-                usuario.getEndereco().setNumero(request.getParameter("numero"));
+                usuario.getEndereco().setNumero(Integer.parseInt(request.getParameter("numero")));
                 usuario.getEndereco().setBairro(request.getParameter("bairro"));
                 usuario.getEndereco().setComplemento(request.getParameter("complemento"));
                 usuario.getEndereco().setEstado(request.getParameter("estado"));
                 usuario.getEndereco().setMunicipio(request.getParameter("municipio"));
-                usuario.getEndereco().setCpf(request.getParameter("cpf"));
+                usuario.getEndereco().setCep(request.getParameter("cep"));
 
                 if (perfil.equalsIgnoreCase("administrador")) {
                     usuario.setPerfil(PerfilDeAcesso.ADMINISTRADOR);
                 } else if(perfil.equalsIgnoreCase("funcionario")) {
                     usuario.setPerfil(PerfilDeAcesso.COMUM);
                 } else {
-                    usuario.setPerfil(PerfilDeAcesso.HOSPEDE)
+                    usuario.setPerfil(PerfilDeAcesso.HOSPEDE);
                 }
 
                 UsuarioDAO usuarioDAO = new UsuarioDAO();

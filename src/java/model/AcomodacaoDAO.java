@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import java.sql.Connection;
@@ -12,10 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import util.ConectaBanco;
 
-/**
- *
- * @author alunocmc
- */
 public class AcomodacaoDAO {
     
     private static final String LISTAR_ACOMODACOES = "SELECT * FROM acomodacoes";
@@ -109,7 +100,7 @@ public class AcomodacaoDAO {
         Connection conexao = null;
         PreparedStatement pstmt = null;
         Acomodacao acomodacao = new Acomodacao();
-        
+        ResultSet rsAcomo = null;
         try{
             conexao = ConectaBanco.getConnection();
             pstmt = conexao.prepareStatement(BUSCAR_ACOMODACAO);
@@ -134,10 +125,13 @@ public class AcomodacaoDAO {
             }
         }
 
-        return aco;
+        return acomodacao;
     }
 
     public void atualizar(Acomodacao acomodacao) {
+        Connection conexao = null;
+        PreparedStatement pstmt = null;
+        ResultSet rsAcomo = null;
         try{
             conexao = ConectaBanco.getConnection();
             pstmt = conexao.prepareStatement(ATUALIZAR_ACOMODACAO);
