@@ -4,12 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import util.ConectaBanco;
 
 public class UsuarioDAO {
     
-    private static final String CADASTRA_NOVO_USUARIO = "INSERT INTO usuarios (email, senha, perfil) values (?,?,?)";
+    private static final String CADASTRA_NOVO_USUARIO = "INSERT INTO usuarios (email, senha, perfil) VALUES(?,?,?)";
     private static final String AUTENTICA_USUARIO = "SELECT * FROM usuarios WHERE email=? AND senha=?";
     private static final String BUSCAR_USUARIO = "SELECT * FROM usuarios WHERE id=?";
     private static final String LISTAR_USUARIO = "SELECT * FROM usuarios";
@@ -17,22 +18,25 @@ public class UsuarioDAO {
     private static final String ATUALIZAR_USUARIO = "UPDATE usuarios SET email = ?, senha = ?, perfil = ?";
     
     
-    public void cadastraNovoUsuario(Usuario usuario){
+    public Usuario cadastraNovoUsuario(Usuario usuario){
         Connection conexao = null;
         PreparedStatement pstmt = null;
+        ResultSet resUser;
         
         try{
             conexao = ConectaBanco.getConnection();
-            pstmt = conexao.prepareStatement(CADASTRA_NOVO_USUARIO);
+            pstmt = conexao.prepareStatement(CADASTRA_NOVO_USUARIO, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, usuario.getEmail());
             pstmt.setString(2, usuario.getSenha());
             pstmt.setString(3, usuario.getPerfil().toString());
-            pstmt.execute();
+            pstmt.executeUpdate();
+            resUser = pstmt.getGeneratedKeys();
 
-//            EnderecoDAO enderecodao = new EnderecoDAO();
-//            // TODO: buscar o ID do usuario que acabou de ser inserido
-//            // no banco de dados
-//            EnderecoDAO.cadastrar(1, usuario.getEndereco());
+            if (resUser.next()) {
+                usuario.setId(resUser.getInt("id"));
+            }
+            
+            return usuario;
         } catch(SQLException sqlErro){
             throw new RuntimeException(sqlErro);
         }finally{

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Endereco;
+import model.EnderecoDAO;
 import model.PerfilDeAcesso;
 import model.Usuario;
 import model.UsuarioDAO;
@@ -49,6 +50,10 @@ public class ControleUsuario extends HttpServlet {
 
                 UsuarioDAO usuarioDAO = new UsuarioDAO();
                 usuarioDAO.cadastraNovoUsuario(usuario);
+                
+                EnderecoDAO enderecoDAO = new EnderecoDAO();
+                enderecoDAO.cadastrar(usuario.getId(), usuario.getEndereco());
+
                 request.setAttribute("msg", "Cadastrado com sucesso!");
                 RequestDispatcher rd = request.getRequestDispatcher("/admin/cadastro_usuario.jsp");
                 rd.forward(request, response);

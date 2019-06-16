@@ -1,10 +1,19 @@
 package model;
 
 public class Usuario {
+    private int id;
     private String email;
     private String senha;
     private PerfilDeAcesso perfil;
     private Endereco endereco;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getEmail() {
         return email;
