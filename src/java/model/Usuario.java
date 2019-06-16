@@ -5,7 +5,8 @@ public class Usuario {
     private String email;
     private String senha;
     private PerfilDeAcesso perfil;
-    private Endereco endereco;
+    private String cpf;
+    private Endereco endereco = new Endereco();
 
     public int getId() {
         return id;
@@ -25,6 +26,14 @@ public class Usuario {
 
     public String getSenha() {
         return senha;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public void setSenha(String senha) {

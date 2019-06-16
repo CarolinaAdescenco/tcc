@@ -10,7 +10,7 @@ public class EnderecoDAO {
     
     private static final String CADASTRAR_NOVO_ENDERECO = "INSERT INTO enderecos (usuario_id, logradouro, numero, bairro, complemento, estado, cep, municipio) values (?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String BUSCAR_ENDERECO = "SELECT * FROM enderecos WHERE usuario_id=?";
-    private static final String ATUALIZAR_ENDERECO = "UPDATE enderecos SET endereco = ?, numero = ?, bairro = ?, complemento = ?, estado = ?, municipio = ?, cpf = ? WHERE usuarioID = ?";
+    private static final String ATUALIZAR_ENDERECO = "UPDATE enderecos SET logradouro = ?, numero = ?, bairro = ?, complemento = ?, estado = ?, municipio = ?, cep = ? WHERE usuario_id = ?";
     private static final String EXCLUIR_ENDERECO = "DELETE FROM enderecos WHERE usuario_id=?";
     
     
@@ -46,8 +46,8 @@ public class EnderecoDAO {
     public Endereco buscar(int usuarioID) {
         Connection conexao = null;
         PreparedStatement pstmt = null;
-        Endereco endereco = null;
         ResultSet rsEndereco = null;
+        Endereco endereco = new Endereco();
         
         try{
             conexao = ConectaBanco.getConnection();
@@ -56,13 +56,13 @@ public class EnderecoDAO {
             rsEndereco = pstmt.executeQuery();
 
             while (rsEndereco.next()) {
-                endereco.setLogradouro(rsEndereco.getString("endereco"));
+                endereco.setLogradouro(rsEndereco.getString("logradouro"));
                 endereco.setNumero(rsEndereco.getInt("numero"));
                 endereco.setBairro(rsEndereco.getString("bairro"));
                 endereco.setComplemento(rsEndereco.getString("complemento"));
                 endereco.setEstado(rsEndereco.getString("estado"));
                 endereco.setMunicipio( rsEndereco.getString("municipio"));
-                endereco.setCep(rsEndereco.getString("cpf"));
+                endereco.setCep(rsEndereco.getString("cep"));
 
                 return endereco;
             }

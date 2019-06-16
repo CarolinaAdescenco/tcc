@@ -11,7 +11,6 @@
 
 <body>
     <h1>Área de acesso restrito aos administradores</h1>
-    <h2>Cadastro de nova acomodação</h2>
 
     <%
         String msg = (String) request.getAttribute("msg");
@@ -21,6 +20,9 @@
     <% } %>
 
     <a href="../principal.jsp">Página Principal</a>
+    <h1>Usuarios</h1>
+    
+    <% ArrayList<Usuario> usuarios = (ArrayList<Usuario>)request.getAttribute("usuarios"); %>
 
     <table>
         <thead>
@@ -32,18 +34,42 @@
             </tr>
         </thead>
         <tbody>
-            <c:forEach items="${usuarios}" var="usuario">
-                <tr>
-                    <td>${usuario.getId()}</td>
-                    <td>${usuario.getEmail()}</td>
-                    <td>${usuario.getPerfil()}</td>
-                    <td>
-                        <a href="ControleUsuario?acao=Listar&usuarioID=${usuario.getId()}">Editar</a>
-                    </td>
-                </tr>
-            </c:forEach>
+            <% for(Usuario usuario: usuarios) { %>
+            <tr>
+                <td><%= usuario.getId() %></td>
+                <td><%= usuario.getEmail() %></td>
+                <td><%= usuario.getPerfil() %></td>
+                <td>
+                    <a href="ControleUsuario?acao=Editar&usuarioID=<%= usuario.getId() %>">Editar</a>
+                </td>
+            </tr>
+            <% } %>
         </tbody>
     </table>
+               
+    <hr />
+    <h1>Cadastrar novo usuario</h1>
+    <form action="/tcc/ControleUsuario" method="POST">
+        Email: <input type="text" required name="txtLogin"> <br>
+        Senha: <input type="password" required name="txtSenha"> <br>
+        CPF: <input type="text" required name="cpf"> <br>
+        Perfil:
+        <select required name="optPerfil">
+            <option value="funcionario">Funcionario</option>
+            <option value="administrador">Administrador</option>
+            <option value="hospede">Hospede</option>
+        </select>
+        <br>
+
+        Endereço: <input type="text" required name="logradouro"> <br />
+        Numero: <input type="text" required name="numero"> <br />
+        Bairro: <input type="text" required name="bairro"> <br />
+        Complemento: <input type="text" required name="complemento"> <br />
+        Municipio: <input type="text" required name="municipio"> <br />
+        Cep: <input type="text" required name="cep"> <br />
+
+        <input type="submit" value="Cadastrar" required name="acao">
+    </form>
 </body>
 
 </html>

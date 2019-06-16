@@ -10,12 +10,12 @@ import util.ConectaBanco;
 
 public class UsuarioDAO {
     
-    private static final String CADASTRA_NOVO_USUARIO = "INSERT INTO usuarios (email, senha, perfil) VALUES(?,?,?)";
+    private static final String CADASTRA_NOVO_USUARIO = "INSERT INTO usuarios (email, senha, perfil, cpf) VALUES(?,?,?,?)";
     private static final String AUTENTICA_USUARIO = "SELECT * FROM usuarios WHERE email=? AND senha=?";
     private static final String BUSCAR_USUARIO = "SELECT * FROM usuarios WHERE id=?";
     private static final String LISTAR_USUARIO = "SELECT * FROM usuarios";
     private static final String DELETAR_USUARIO = "DELETE from usuarios WHERE id = ?";
-    private static final String ATUALIZAR_USUARIO = "UPDATE usuarios SET email = ?, senha = ?, perfil = ?";
+    private static final String ATUALIZAR_USUARIO = "UPDATE usuarios SET email = ?, senha = ?, perfil = ?, cpf = ?  WHERE id = ?";
     
     
     public Usuario cadastraNovoUsuario(Usuario usuario){
@@ -29,6 +29,7 @@ public class UsuarioDAO {
             pstmt.setString(1, usuario.getEmail());
             pstmt.setString(2, usuario.getSenha());
             pstmt.setString(3, usuario.getPerfil().toString());
+            pstmt.setString(4, usuario.getCpf());
             pstmt.executeUpdate();
             resUser = pstmt.getGeneratedKeys();
 
@@ -91,17 +92,19 @@ public class UsuarioDAO {
         ResultSet rsUsuario = null;
         try {
             conexao = ConectaBanco.getConnection();
-            pstmt = conexao.prepareStatement(AUTENTICA_USUARIO);
+            pstmt = conexao.prepareStatement(BUSCAR_USUARIO);
             pstmt.setInt(1, usuarioID);
             rsUsuario = pstmt.executeQuery();
             if (rsUsuario.next()) {
                 usuario = new Usuario();
-                usuario.setEmail(rsUsuario.getString("login"));
+                usuario.setId(rsUsuario.getInt("id"));
+                usuario.setEmail(rsUsuario.getString("email"));
                 usuario.setSenha(rsUsuario.getString("senha"));
                 usuario.setPerfil(PerfilDeAcesso.valueOf(rsUsuario.getString("perfil")));
+                usuario.setCpf(rsUsuario.getString("cpf"));
 
                 EnderecoDAO endeDAO = new EnderecoDAO();
-                Endereco endereco = endeDAO.buscar(rsUsuario.getInt("id"));
+                Endereco endereco = endeDAO.buscar(usuarioID);
                 usuario.setEndereco(endereco);
             }
         } catch (SQLException sqlErro) {
@@ -129,16 +132,13 @@ public class UsuarioDAO {
             conexao = ConectaBanco.getConnection();
             pstmt = conexao.prepareStatement(LISTAR_USUARIO);
             rsUsuario = pstmt.executeQuery();
-            if (rsUsuario.next()) {
+            while (rsUsuario.next()) {
                 Usuario usuario = new Usuario();
-                usuario.setEmail(rsUsuario.getString("login"));
+                usuario.setId(rsUsuario.getInt("id"));
+                usuario.setEmail(rsUsuario.getString("email"));
                 usuario.setSenha(rsUsuario.getString("senha"));
                 usuario.setPerfil(PerfilDeAcesso.valueOf(rsUsuario.getString("perfil")));
-
-                EnderecoDAO endeDAO = new EnderecoDAO();
-                Endereco endereco = endeDAO.buscar(rsUsuario.getInt("id"));
-                usuario.setEndereco(endereco);
-
+//
                 usuarios.add(usuario);
             }
         } catch (SQLException sqlErro) {
@@ -166,11 +166,9 @@ public class UsuarioDAO {
             pstmt.setString(1, usuario.getEmail());
             pstmt.setString(2, usuario.getSenha());
             pstmt.setString(3, usuario.getPerfil().toString());
-            pstmt.setInt(4, usuarioID);
-            rsUsuario = pstmt.executeQuery();
-
-//            EnderecoDAO dao = new EnderecoDAO();
-//            dao.atualizar(usuario.getEndereco());
+            pstmt.setString(4, usuario.getCpf());
+            pstmt.setInt(5, usuarioID);
+            pstmt.execute();
         } catch(SQLException sqlErro){
             throw new RuntimeException(sqlErro);
         } finally {

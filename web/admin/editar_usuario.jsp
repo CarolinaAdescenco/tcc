@@ -10,17 +10,18 @@
 
 <body>
     <h1>Área de acesso restrito aos administradores</h1>
-    <h2>Cadastro de nova acomodação</h2>
+    <h2>Editar usuario</h2>
 
-    <a href="/tcc/principal.jsp">Página Principal</a>
+    <a href="/tcc//admin/principal.jsp">Página Principal</a>
 
-    <% Usuario usuario = (Usuario)session.getAttribute("usuario"); %>
+    <% Usuario usuario = (Usuario)request.getAttribute("usuario"); %>
 
     <h3>Editar usuario: <%= usuario.getId() %></h3>
-    <form action="ControleAcomodacao" method="POST">
+    <form action="ControleUsuario" method="POST">
         <input type="hidden" name="usuarioID" value="<%= usuario.getId() %>">
         Email: <input type="text" required name="txtLogin" value="<%= usuario.getEmail() %>"> <br>
         Senha: <input type="password" required name="txtSenha" value="<%= usuario.getSenha() %>"> <br>
+        CPF: <input type="text" required name="cpf" value="<%= usuario.getCpf() %>"> <br>
         Perfil:
         <select required name="optPerfil">
             <option value="<%= usuario.getPerfil() %>" selected disabled><%= usuario.getPerfil() %></option>
@@ -30,14 +31,15 @@
         </select>
         <br>
 
-        Endereço: <input type="text" required name="endereco" value="<%= usuario.getEndereco().getEndereco() %>"> <br />
+        Endereço: <input type="text" required name="logradouro" value="<%= usuario.getEndereco().getLogradouro() %>"> <br />
         Numero: <input type="text" required name="numero" value="<%= usuario.getEndereco().getNumero() %>"> <br />
         Bairro: <input type="text" required name="bairro" value="<%= usuario.getEndereco().getBairro() %>"> <br />
         Complemento: <input type="text" required name="complemento"
             value="<%= usuario.getEndereco().getComplemento() %>"> <br />
-        Municipio: <input type="text" required name="municipio" value="<%= usuario.getEndereco().getMunicipio() %>">
+        Municipio: <input type="text" required name="municipio" value="<%= usuario.getEndereco().getMunicipio() %>">  <br />
+        Estado: <input type="text" required name="estado" value="<%= usuario.getEndereco().getEstado() %>">
         <br />
-        CPF: <input type="text" required name="cpf" value="<%= usuario.getEndereco().getCpf() %>"> <br />
+        CEP: <input type="text" required name="cep" value="<%= usuario.getEndereco().getCep() %>"> <br />
 
         <input type="submit" value="Atualizar" name="acao">
     </form>

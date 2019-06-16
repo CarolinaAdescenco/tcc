@@ -29,6 +29,7 @@ public class ControleUsuario extends HttpServlet {
                 Endereco endereco = new Endereco();
                 usuario.setEmail(request.getParameter("txtLogin"));
                 usuario.setSenha(request.getParameter("txtSenha"));
+                usuario.setCpf(request.getParameter("cpf"));
                 
                 endereco.setLogradouro(request.getParameter("logradouro"));
                 endereco.setNumero(Integer.parseInt(request.getParameter("numero")));
@@ -55,18 +56,27 @@ public class ControleUsuario extends HttpServlet {
                 enderecoDAO.cadastrar(usuario.getId(), usuario.getEndereco());
 
                 request.setAttribute("msg", "Cadastrado com sucesso!");
-                RequestDispatcher rd = request.getRequestDispatcher("/admin/cadastro_usuario.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/admin/principal.jsp");
                 rd.forward(request, response);
             } else if(acao.equals("Editar")) {
                 int usuarioID = Integer.parseInt(request.getParameter("usuarioID"));
                 UsuarioDAO usuarioDAO = new UsuarioDAO();
+                Usuario usuario;
+                usuario = usuarioDAO.consultar(usuarioID);
+                
+                EnderecoDAO enderecoDAO = new EnderecoDAO();
+                usuario.setEndereco(enderecoDAO.buscar(usuarioID));
 
-                request.setAttribute("usuario", usuarioDAO.consultar(usuarioID));
+                request.setAttribute("usuario", usuario);
                 request.getRequestDispatcher("/admin/editar_usuario.jsp").forward(request, response);
+
             } else if(acao.equals("Listar")) {
+                
                 ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
                 UsuarioDAO dao = new UsuarioDAO();
-                request.setAttribute("usuarios", dao.listar());
+                usuarios = dao.listar();
+                request.setAttribute("usuarios", usuarios);
+                
                 request.getRequestDispatcher("/admin/listar_usuario.jsp").forward(request, response);
             } else if(acao.equals("Atualizar")) {
                 String perfil = request.getParameter("optPerfil");
@@ -74,6 +84,9 @@ public class ControleUsuario extends HttpServlet {
                 Usuario usuario = new Usuario();
                 usuario.setEmail(request.getParameter("txtLogin"));
                 usuario.setSenha(request.getParameter("txtSenha"));
+                usuario.setCpf(request.getParameter("cpf"));
+                
+                
                 usuario.getEndereco().setLogradouro(request.getParameter("logradouro"));
                 usuario.getEndereco().setNumero(Integer.parseInt(request.getParameter("numero")));
                 usuario.getEndereco().setBairro(request.getParameter("bairro"));
@@ -89,11 +102,17 @@ public class ControleUsuario extends HttpServlet {
                 } else {
                     usuario.setPerfil(PerfilDeAcesso.HOSPEDE);
                 }
+                
+                int usuarioID = Integer.parseInt(request.getParameter("usuarioID"));
 
                 UsuarioDAO usuarioDAO = new UsuarioDAO();
-                usuarioDAO.atualizar(usuario, Integer.parseInt(request.getParameter("usuarioID")));
+                usuarioDAO.atualizar(usuario, usuarioID);
+                
+                EnderecoDAO enderecoDAO = new EnderecoDAO();
+                enderecoDAO.atualizar(usuarioID, usuario.getEndereco());
+                
                 request.setAttribute("msg", "Atualizado com sucesso!");
-                RequestDispatcher rd = request.getRequestDispatcher("/admin/cadastro_usuario.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/admin/principal.jsp");
                 rd.forward(request, response);
             } else if(acao.equals("Excluir")) {
                 UsuarioDAO dao = new UsuarioDAO();

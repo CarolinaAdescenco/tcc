@@ -15,9 +15,7 @@
             <h1>Bem vindo, <%= usuario.getEmail()%></h1>
         <% } %>
         
-        <a href="admin/cadastro_usuario.jsp">Área restrita</a> <br>
+        <a href="admin/principal.jsp">Área restrita</a> <br>
         <a href="ControleAcesso?acao=Sair">Logout</a> <br>
-        
-        <a href="ControleAcomodacao?acao=Listar">Acomodações</a> <br>
     </body>
 </html>
