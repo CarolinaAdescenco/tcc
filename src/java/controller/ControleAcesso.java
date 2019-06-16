@@ -27,12 +27,9 @@ public class ControleAcesso extends HttpServlet {
                 usuario.setSenha(request.getParameter("txtSenha"));
                 UsuarioDAO usuarioDAO = new UsuarioDAO();
                 Usuario usuarioAutenticado = usuarioDAO.autenticaUsuario(usuario);
-                //se o usuario existe no banco de dados
                 if (usuarioAutenticado != null) {
-                    //cria uma sessao para o usuario
                     HttpSession sessaoUsuario = request.getSession();
                     sessaoUsuario.setAttribute("usuarioAutenticado", usuarioAutenticado);
-                    //redireciona para a pagina princiapal
                     response.sendRedirect("principal.jsp");
                 } else {
                     RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");

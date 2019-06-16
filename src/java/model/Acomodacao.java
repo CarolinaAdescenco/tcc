@@ -32,8 +32,6 @@ public class Acomodacao {
     public void setId(int id) {
         this.id = id;
     }
-    
-    
 
     public String getTipo() {
         return tipo;
@@ -58,6 +56,4 @@ public class Acomodacao {
     public void setValorPadrao(Double valorPadrao) {
         this.valorPadrao = valorPadrao;
     }
-    
-    
 }

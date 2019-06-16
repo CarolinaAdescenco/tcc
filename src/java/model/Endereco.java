@@ -18,6 +18,10 @@ public class Endereco {
         this.municipio = municipio;
         this.cep = cep;
     }
+    
+    public Endereco() {
+        
+    }
 
     public String getLogradouro() {
         return this.logradouro;

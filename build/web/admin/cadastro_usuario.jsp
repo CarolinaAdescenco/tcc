@@ -18,7 +18,7 @@
     <font color="blue"><%= msg %></font>
     <% } %>
 
-    <form action="ControleUsuario" method="POST">
+    <form action="/tcc/ControleUsuario" method="POST">
         Email: <input type="text" required name="txtLogin"> <br>
         Senha: <input type="password" required name="txtSenha"> <br>
         Perfil:
@@ -29,7 +29,7 @@
         </select>
         <br>
 
-        Endereço: <input type="text" required name="endereco"> <br />
+        Endereço: <input type="text" required name="logradouro"> <br />
         Numero: <input type="text" required name="numero"> <br />
         Bairro: <input type="text" required name="bairro"> <br />
         Complemento: <input type="text" required name="complemento"> <br />
@@ -38,7 +38,7 @@
 
         <input type="submit" value="Cadastrar" required name="acao">
     </form>
-    <a href="../principal.jsp">Página Principal</a>
+    <a href="/tcc/principal.jsp">Página Principal</a>
 </body>
 
 </html>

@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Endereco;
 import model.PerfilDeAcesso;
 import model.Usuario;
 import model.UsuarioDAO;
@@ -24,15 +25,19 @@ public class ControleUsuario extends HttpServlet {
                 String perfil = request.getParameter("optPerfil");
 
                 Usuario usuario = new Usuario();
+                Endereco endereco = new Endereco();
                 usuario.setEmail(request.getParameter("txtLogin"));
                 usuario.setSenha(request.getParameter("txtSenha"));
-                usuario.getEndereco().setLogradouro(request.getParameter("endereco"));
-                usuario.getEndereco().setNumero(Integer.parseInt(request.getParameter("numero")));
-                usuario.getEndereco().setBairro(request.getParameter("bairro"));
-                usuario.getEndereco().setComplemento(request.getParameter("complemento"));
-                usuario.getEndereco().setEstado(request.getParameter("estado"));
-                usuario.getEndereco().setMunicipio(request.getParameter("municipio"));
-                usuario.getEndereco().setCep(request.getParameter("cep"));
+                
+                endereco.setLogradouro(request.getParameter("logradouro"));
+                endereco.setNumero(Integer.parseInt(request.getParameter("numero")));
+                endereco.setBairro(request.getParameter("bairro"));
+                endereco.setComplemento(request.getParameter("complemento"));
+                endereco.setEstado(request.getParameter("estado"));
+                endereco.setMunicipio(request.getParameter("municipio"));
+                endereco.setCep(request.getParameter("cep"));
+                
+                usuario.setEndereco(endereco);
 
                 if (perfil.equalsIgnoreCase("administrador")) {
                     usuario.setPerfil(PerfilDeAcesso.ADMINISTRADOR);
@@ -64,7 +69,7 @@ public class ControleUsuario extends HttpServlet {
                 Usuario usuario = new Usuario();
                 usuario.setEmail(request.getParameter("txtLogin"));
                 usuario.setSenha(request.getParameter("txtSenha"));
-                usuario.getEndereco().setLogradouro(request.getParameter("endereco"));
+                usuario.getEndereco().setLogradouro(request.getParameter("logradouro"));
                 usuario.getEndereco().setNumero(Integer.parseInt(request.getParameter("numero")));
                 usuario.getEndereco().setBairro(request.getParameter("bairro"));
                 usuario.getEndereco().setComplemento(request.getParameter("complemento"));

@@ -1,9 +1,3 @@
-<%-- 
-    Document   : principal
-    Created on : 09/05/2019, 19:32:51
-    Author     : alunocmc
---%>
-
 <%@page import="model.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -15,11 +9,10 @@
     <body>
         
         <%
-            //recupera usuario da sessão
             Usuario usuario = (Usuario)session.getAttribute("usuarioAutenticado");
             if(usuario != null){
         %>
-            <h1>Bem vindo, <%= usuario.getLogin()%></h1>
+            <h1>Bem vindo, <%= usuario.getEmail()%></h1>
         <% } %>
         
         <a href="admin/cadastro_usuario.jsp">Área restrita</a> <br>
