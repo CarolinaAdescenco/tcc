@@ -152,7 +152,7 @@ public class UsuarioDAO {
         return usuarios;
     }
 
-    public void atualizar(Usuario usuario, int usuarioID) {
+    public void editar(Usuario usuario, int usuarioID) {
         Connection conexao = null;
         PreparedStatement pstmt = null;
         ResultSet rsUsuario = null;

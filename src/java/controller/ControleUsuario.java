@@ -106,7 +106,7 @@ public class ControleUsuario extends HttpServlet {
                 int usuarioID = Integer.parseInt(request.getParameter("usuarioID"));
 
                 UsuarioDAO usuarioDAO = new UsuarioDAO();
-                usuarioDAO.atualizar(usuario, usuarioID);
+                usuarioDAO.editar(usuario, usuarioID);
                 
                 EnderecoDAO enderecoDAO = new EnderecoDAO();
                 enderecoDAO.atualizar(usuarioID, usuario.getEndereco());
