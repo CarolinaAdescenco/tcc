@@ -81,7 +81,7 @@ public class EnderecoDAO {
         return endereco;
     }
 
-    public void atualizar(int usuarioID, Endereco endereco) {
+    public void editar(int usuarioID, Endereco endereco) {
         Connection conexao = null;
         PreparedStatement pstmt = null;
         ResultSet rsEndereco = null;

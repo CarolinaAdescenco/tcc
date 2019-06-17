@@ -109,7 +109,7 @@ public class ControleUsuario extends HttpServlet {
                 usuarioDAO.editar(usuario, usuarioID);
                 
                 EnderecoDAO enderecoDAO = new EnderecoDAO();
-                enderecoDAO.atualizar(usuarioID, usuario.getEndereco());
+                enderecoDAO.editar(usuarioID, usuario.getEndereco());
                 
                 request.setAttribute("msg", "Atualizado com sucesso!");
                 RequestDispatcher rd = request.getRequestDispatcher("/admin/principal.jsp");
