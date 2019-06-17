@@ -25,7 +25,7 @@
         Perfil:
         <select required name="optPerfil">
             <option value="<%= usuario.getPerfil() %>" selected disabled><%= usuario.getPerfil() %></option>
-            <option value="funcionario">Funcionario</option>
+            <option value="comum">Comum</option>
             <option value="administrador">Administrador</option>
             <option value="hospede">Hospede</option>
         </select>
@@ -41,7 +41,7 @@
         <br />
         CEP: <input type="text" required name="cep" value="<%= usuario.getEndereco().getCep() %>"> <br />
 
-        <input type="submit" value="Atualizar" name="acao">
+        <input type="submit" value="Editar" name="acao">
     </form>
 </body>
 

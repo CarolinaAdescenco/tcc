@@ -18,7 +18,7 @@ public class UsuarioDAO {
     private static final String ATUALIZAR_USUARIO = "UPDATE usuarios SET email = ?, senha = ?, perfil = ?, cpf = ?  WHERE id = ?";
     
     
-    public Usuario cadastraNovoUsuario(Usuario usuario){
+    public Usuario cadastrar(Usuario usuario){
         Connection conexao = null;
         PreparedStatement pstmt = null;
         ResultSet resUser;
@@ -102,10 +102,6 @@ public class UsuarioDAO {
                 usuario.setSenha(rsUsuario.getString("senha"));
                 usuario.setPerfil(PerfilDeAcesso.valueOf(rsUsuario.getString("perfil")));
                 usuario.setCpf(rsUsuario.getString("cpf"));
-
-                EnderecoDAO endeDAO = new EnderecoDAO();
-                Endereco endereco = endeDAO.buscar(usuarioID);
-                usuario.setEndereco(endereco);
             }
         } catch (SQLException sqlErro) {
             throw new RuntimeException(sqlErro);
@@ -190,9 +186,6 @@ public class UsuarioDAO {
             pstmt = conexao.prepareStatement(DELETAR_USUARIO);
             pstmt.setInt(1, usuarioID);
             pstmt.execute();
-
-            EnderecoDAO dao = new EnderecoDAO();
-            dao.excluir(usuarioID);
         } catch(SQLException sqlErro){
             throw new RuntimeException(sqlErro);
         } finally {

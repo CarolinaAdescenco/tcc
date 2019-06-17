@@ -43,7 +43,7 @@ public class EnderecoDAO {
         }
     }
     
-    public Endereco buscar(int usuarioID) {
+    public Endereco consultar(int usuarioID) {
         Connection conexao = null;
         PreparedStatement pstmt = null;
         ResultSet rsEndereco = null;
