@@ -12,12 +12,12 @@
     <h1>Área de acesso restrito aos administradores</h1>
     <h2>Editar usuario</h2>
 
-    <a href="/tcc//admin/principal.jsp">Página Principal</a>
+    <a href="/tcc/admin/principal.jsp">Página Principal</a>
 
     <% Usuario usuario = (Usuario)request.getAttribute("usuario"); %>
 
     <h3>Editar usuario: <%= usuario.getId() %></h3>
-    <form action="ControleUsuario" method="POST">
+    <form action="ControleUsuario?acao=Editar" method="POST">
         <input type="hidden" name="usuarioID" value="<%= usuario.getId() %>">
         Email: <input type="text" required name="txtLogin" value="<%= usuario.getEmail() %>"> <br>
         Senha: <input type="password" required name="txtSenha" value="<%= usuario.getSenha() %>"> <br>

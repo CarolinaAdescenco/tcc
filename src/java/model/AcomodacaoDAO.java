@@ -10,7 +10,7 @@ import util.ConectaBanco;
 public class AcomodacaoDAO {
     
     private static final String LISTAR_ACOMODACOES = "SELECT * FROM acomodacoes";
-    private static final String INSERIR_ACOMODACAO = "INSERT INTO acomodacoes VALUES(?, ?, ?)";
+    private static final String INSERIR_ACOMODACAO = "INSERT INTO acomodacoes(tipo, descricao, valor_padrao) VALUES(?, ?, ?)";
     private static final String DELETAR_ACOMODACAO = "DELETE FROM acomodacoes WHERE id = ?";
     private static final String BUSCAR_ACOMODACAO = "SELECT * FROM acomodacoes WHERE id = ?";
     private static final String ATUALIZAR_ACOMODACAO = "UPDATE acomodacoes SET descricao = ?, valor_padrao = ?, tipo = ? WHERE id = ?";
@@ -29,6 +29,7 @@ public class AcomodacaoDAO {
             while (rsAcomo.next()) {
                 acomodacoes.add(
                         new Acomodacao(
+                            rsAcomo.getInt("id"),
                             rsAcomo.getString("tipo"),
                             rsAcomo.getString("descricao"),
                             rsAcomo.getDouble("valor_padrao")
@@ -50,7 +51,7 @@ public class AcomodacaoDAO {
         return acomodacoes;
     }
     
-    public void salvar(Acomodacao acomodacao) {
+    public void cadastrar(Acomodacao acomodacao) {
         Connection conexao = null;
         PreparedStatement pstmt = null;
         
@@ -58,8 +59,8 @@ public class AcomodacaoDAO {
             conexao = ConectaBanco.getConnection();
             pstmt = conexao.prepareStatement(INSERIR_ACOMODACAO);
             pstmt.setString(1, acomodacao.getDescricao());
-            pstmt.setString(2, acomodacao.getTipo());
-            pstmt.setString(3, acomodacao.getValorPadrao().toString());
+            pstmt.setString(2, TipoAcomodacao.valueOf(acomodacao.getTipo()).toString());
+            pstmt.setDouble(3, acomodacao.getValorPadrao());
             pstmt.execute();
         } catch(SQLException sqlErro){
             throw new RuntimeException(sqlErro);
@@ -74,14 +75,14 @@ public class AcomodacaoDAO {
         }
     }
     
-    public void excluir(Double id) {
+    public void excluir(int id) {
         Connection conexao = null;
         PreparedStatement pstmt = null;
         
         try{
             conexao = ConectaBanco.getConnection();
             pstmt = conexao.prepareStatement(DELETAR_ACOMODACAO);
-            pstmt.setString(1, id.toString());
+            pstmt.setInt(1, id);
             pstmt.execute();
         } catch(SQLException sqlErro){
             throw new RuntimeException(sqlErro);
@@ -96,7 +97,7 @@ public class AcomodacaoDAO {
         }
     }
 
-    public Acomodacao buscar(Double id) {
+    public Acomodacao consultar(int id) {
         Connection conexao = null;
         PreparedStatement pstmt = null;
         Acomodacao acomodacao = new Acomodacao();
@@ -104,7 +105,7 @@ public class AcomodacaoDAO {
         try{
             conexao = ConectaBanco.getConnection();
             pstmt = conexao.prepareStatement(BUSCAR_ACOMODACAO);
-            pstmt.setString(1, id.toString());
+            pstmt.setInt(1, id);
             rsAcomo = pstmt.executeQuery();
 
             while (rsAcomo.next()) {
@@ -128,7 +129,7 @@ public class AcomodacaoDAO {
         return acomodacao;
     }
 
-    public void atualizar(Acomodacao acomodacao) {
+    public void editar(Acomodacao acomodacao) {
         Connection conexao = null;
         PreparedStatement pstmt = null;
         ResultSet rsAcomo = null;

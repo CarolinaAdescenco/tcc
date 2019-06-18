@@ -15,15 +15,20 @@ public class Acomodacao {
     private String descricao;
     private Double valorPadrao;
 
+    public Acomodacao(int id, String tipo, String descricao, Double valorPadrao) {
+        this.id = id;
+        this.tipo = tipo;
+        this.descricao = descricao;
+        this.valorPadrao = valorPadrao;
+    }
+    
     public Acomodacao(String tipo, String descricao, Double valorPadrao) {
         this.tipo = tipo;
         this.descricao = descricao;
         this.valorPadrao = valorPadrao;
     }
-
-    Acomodacao() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
+    public Acomodacao() {}
 
     public int getId() {
         return id;

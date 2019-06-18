@@ -17,7 +17,7 @@
     %>
     <font color="blue"><%= msg %></font>
     <% } %>
-    
+    <br/>
     <a href="/tcc/ControleAcomodacao?acao=Listar">Acomodações</a> <br>
     <a href="/tcc/ControleUsuario?acao=Listar">Usuarios</a> <br>
 

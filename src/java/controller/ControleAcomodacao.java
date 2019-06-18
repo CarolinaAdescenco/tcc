@@ -24,48 +24,56 @@ public class ControleAcomodacao extends HttpServlet {
             if (acao.equals("Listar")) {
                 
                 AcomodacaoDAO acomodacao = new AcomodacaoDAO();
-                request.setAttribute("acomodacoes", acomodacao.listar());
-                request.getRequestDispatcher("/admin/cadastro_acomodacao.jsp").forward(request, response);
+                ArrayList<Acomodacao> acomodacoes = new ArrayList<Acomodacao>();
+                
+                acomodacoes = acomodacao.listar();
+                request.setAttribute("acomodacoes", acomodacoes);
+
+                request.getRequestDispatcher("/admin/listar_acomodacoes.jsp").forward(request, response);
                 
             } else if (acao.equals("Cadastrar")) {
                 
-                AcomodacaoDAO dao = new AcomodacaoDAO();
-                dao.salvar(new Acomodacao(
-                    request.getParameter("tipo"),
-                    request.getParameter("descricao"),
-                    Double.parseDouble(request.getParameter("valor_padrao"))
-                ));
-
-                RequestDispatcher rd = request.getRequestDispatcher("/admin/cadastro_acomodacao.jsp");
-                rd.forward(request, response);
-
-            } else if (acao.equals("Excluir")) {
-                Double acoID = Double.parseDouble(request.getParameter("id"));
-                AcomodacaoDAO dao = new AcomodacaoDAO();
-                dao.excluir(acoID);
-
-                request.setAttribute("acomodacao", dao.buscar(acoID));
-                request.getRequestDispatcher("/admin/cadastro_acomodacao.jsp").forward(request, response);
-
-            } else if (acao.equals("Consultar")) {
-                Double acoID = Double.parseDouble(request.getParameter("id"));
-                AcomodacaoDAO dao = new AcomodacaoDAO();
-
-                request.setAttribute("acomodacao", dao.buscar(acoID));
-                request.getRequestDispatcher("/admin/editar_acomodacao.jsp").forward(request, response);
-
-            } else if (acao.equals("Editar")) {
                 AcomodacaoDAO dao = new AcomodacaoDAO();
                 Acomodacao acomodacao = new Acomodacao(
                     request.getParameter("tipo"),
                     request.getParameter("descricao"),
                     Double.parseDouble(request.getParameter("valor_padrao"))
                 );
-                acomodacao.setId(Integer.parseInt(request.getParameter("id")));
+                dao.cadastrar(acomodacao);
 
-                dao.atualizar(acomodacao);
+                request.setAttribute("msg", "Acomodação criada com sucesso!");
+                RequestDispatcher rd = request.getRequestDispatcher("/admin/principal.jsp");
+                rd.forward(request, response);
 
-                request.getRequestDispatcher("/admin/cadastro_acomodacao.jsp").forward(request, response);
+            } else if (acao.equals("Excluir")) {
+                int acoID = Integer.parseInt(request.getParameter("acomodacaoID"));
+                AcomodacaoDAO dao = new AcomodacaoDAO();
+                dao.excluir(acoID);
+
+                request.setAttribute("msg", "Acomodação excluida com sucesso!");
+                request.getRequestDispatcher("/admin/principal.jsp").forward(request, response);
+
+            } else if (acao.equals("Consultar")) {
+                int acoID = Integer.parseInt(request.getParameter("acomodacaoID"));
+                AcomodacaoDAO dao = new AcomodacaoDAO();
+                Acomodacao acomodacao = dao.consultar(acoID);
+
+                request.setAttribute("acomodacao", acomodacao);
+                request.getRequestDispatcher("/admin/editar_acomodacao.jsp").forward(request, response);
+
+            } else if (acao.equals("Editar")) {
+                AcomodacaoDAO dao = new AcomodacaoDAO();
+                Acomodacao acomodacao = new Acomodacao(
+                    Integer.parseInt(request.getParameter("acomodacaoID")),
+                    request.getParameter("tipo"),
+                    request.getParameter("descricao"),
+                    Double.parseDouble(request.getParameter("valor_padrao"))
+                );
+
+                dao.editar(acomodacao);
+                request.setAttribute("msg", "Acomodacao atualizada com sucesso!");
+                request.getRequestDispatcher("/admin/principal.jsp").forward(request, response);
+
             }
 
         } catch (Exception erro) {

@@ -10,15 +10,14 @@
 
 <body>
     <h1>Área de acesso restrito aos administradores</h1>
-    <h2>Cadastro de nova acomodação</h2>
 
-    <a href="../principal.jsp">Página Principal</a>
+    <a href="/tcc/admin/principal.jsp">Página Principal</a>
 
-    <% Acomodacao aco = (Acomodacao)session.getAttribute("acomodacao"); %>
+    <% Acomodacao aco = (Acomodacao)request.getAttribute("acomodacao"); %>
 
     <h3>Editar acomodação: <%= aco.getId() %></h3>
     <form action="ControleAcomodacao" method="POST">
-        <input type="hidden" name="id" value="<% aco.getId() %>">
+        <input type="hidden" name="acomodacaoID" value="<%= aco.getId() %>">
         Tipo:
         <select name="tipo">
             <option value="<%= aco.getTipo() %>" selected disabled><%= aco.getTipo() %></option>
@@ -28,7 +27,7 @@
         <br>
         Descrição <input type="text" name="descricao" value="<%= aco.getDescricao() %>"> <br>
         Valor Padrão: <input type="text" name="valor_padrao" value="<%= aco.getValorPadrao() %>"> <br>
-        <input type="submit" value="Atualizar" name="acao">
+        <input type="submit" value="Editar" name="acao">
     </form>
 </body>
 

@@ -19,7 +19,7 @@
     <font color="blue"><%=msg%></font>
     <% } %>
 
-    <a href="../principal.jsp">Página Principal</a>
+    <a href="/tcc/admin/principal.jsp">Página Principal</a>
     <h1>Usuarios</h1>
     
     <% ArrayList<Usuario> usuarios = (ArrayList<Usuario>)request.getAttribute("usuarios"); %>
