@@ -1,24 +1,61 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Autenticação</title>
-    </head>
-    <body>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css"
+        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <!-- CSS Files -->
+    <link href="assets/css/style.min.css?v=2.0.5" rel="stylesheet" />
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link href="assets/css/demo.css" rel="stylesheet" />
+    <link href="assets/css/custom.css" rel="stylesheet" />
+    <title>Autenticação</title>
+</head>
+
+<body>
+
+    <section class="container page-login">
+
+
         <h1>Autenticação de usuário</h1>
-        
+
         <%
             String msg = (String) request.getAttribute("msg");
             if(msg != null){
         %>
             <font color="red"><%=msg%></font>
-        <% } %>
-        
-        <form action="ControleAcesso" method="POST">
-            Login: <input type="text" name="txtLogin"> <br>
-            Senha: <input type="password" name="txtSenha"> <br>           
-            <input type="submit" value="Entrar" name="acao">
-        </form>
-    </body>
+        <% } %> 
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-5 ">
+                <form action="ControleAcesso" method="POST">
+                    <div class="form-group">
+                        <label for="login">Login</label>
+                        <input type="text" name="txtLogin" class="form-control" id="login">
+                    </div>
+                    <div class="form-group">
+                        <label for="senha">Senha</label>
+                        <input type="password" name="txtSenha" class="form-control" id="senha">
+                    </div>
+                    <input class="btn btn-primary" type="submit" value="Entrar" name="acao">
+                </form>
+            </div>
+        </div>
+
+    </section>
+
+    <!--   Core JS Files   -->
+    <script src="./assets/js/core/jquery.min.js" type="text/javascript"></script>
+    <script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
+    <script src="./assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+    <script src="./assets/js/plugins/moment.min.js"></script>
+    <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
+    <script src="./assets/js/style-main.min.js" type="text/javascript"></script>
+</body>
+
 </html>

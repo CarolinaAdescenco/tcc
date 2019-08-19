@@ -1,0 +1,40 @@
+body {
+  background-color: white; }
+
+section {
+  margin: 3rem 1rem; }
+  section h1 {
+    text-align: center;
+    font-weight: 400;
+    font-size: 2.5rem;
+    width: 100%; }
+  section h2 {
+    margin-bottom: 3rem;
+    width: 100%; }
+
+form .btn {
+  width: 100%; }
+
+.page-login {
+  padding: 2rem 1rem; }
+  .page-login h1 {
+    margin: 2rem auto; }
+  .page-login form {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2); }
+    .page-login form .btn {
+      width: 100%; }
+
+table td .material-icons {
+  font-size: 18px; }
+table td i {
+  background-color: #9c27b0;
+  color: white;
+  border-radius: 1.5rem;
+  padding: 8px; }
+table th {
+  text-align: center; }
+
+/*# sourceMappingURL=custom.css.map */
