@@ -77,27 +77,27 @@
                 </div>
 
                 <div class="form-group col-12 col-md-4">
-                    <label class="ml-3" for="logradouro">Logradouro</label>
-                    <input class="form-control" type="text" required name="logradouro" id="logradouro"
-                        value="<%= usuario.getEndereco().getLogradouro() %>">
-                </div>
-
-                <div class="form-group col-12 col-md-4">
                     <label class="ml-3" for="numero">Número</label>
                     <input class="form-control" type="text" required name="numero" id="numero"
                         value="<%= usuario.getEndereco().getNumero() %>">
                 </div>
+                
+                 <div class="form-group col-12 col-md-4">
+                    <label class="ml-3" for="complemento">Complemento</label>
+                    <input class="form-control" type="text" required name="complemento" id="complemento"
+                        value="<%= usuario.getEndereco().getComplemento() %>">
+                </div>
+                
+                <div class="form-group col-12 col-md-6">
+                    <label class="ml-3" for="logradouro">Logradouro</label>
+                    <input class="form-control" type="text" required name="logradouro" id="logradouro"
+                        value="<%= usuario.getEndereco().getLogradouro() %>">
+                </div>                
 
                 <div class="form-group col-12 col-md-6">
                     <label class="ml-3" for="bairro">Bairro</label>
                     <input class="form-control" type="text" required name="bairro" id="bairro"
                         value="<%= usuario.getEndereco().getBairro() %>">
-                </div>
-
-                <div class="form-group col-12 col-md-6">
-                    <label class="ml-3" for="complemento">Complemento</label>
-                    <input class="form-control" type="text" required name="complemento" id="complemento"
-                        value="<%= usuario.getEndereco().getComplemento() %>">
                 </div>
 
                 <div class="form-group col-12 col-md-6">

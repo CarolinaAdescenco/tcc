@@ -65,25 +65,25 @@
                     <label class="ml-3" for="cep">CEP</label>
                     <input class="form-control" type="text" required name="cep" id="cep">
                 </div>
-
-                <div class="form-group col-12 col-md-4">
-                    <label class="ml-3" for="logradouro">Logradouro</label>
-                    <input class="form-control" type="text" required name="logradouro" id="logradouro">
-                </div>
-
+                
                 <div class="form-group col-12 col-md-4">
                     <label class="ml-3" for="numero">Número</label>
                     <input class="form-control" type="text" required name="numero" id="numero">
                 </div>
+                
+                <div class="form-group col-12 col-md-4">
+                    <label class="ml-3" for="complemento">Complemento</label>
+                    <input class="form-control" type="text" required name="complemento" id="complemento">
+                </div>
+
+                <div class="form-group col-12 col-md-6">
+                    <label class="ml-3" for="logradouro">Logradouro</label>
+                    <input class="form-control" type="text" required name="logradouro" id="logradouro">
+                </div>                
 
                 <div class="form-group col-12 col-md-6">
                     <label class="ml-3" for="bairro">Bairro</label>
                     <input class="form-control" type="text" required name="bairro" id="bairro">
-                </div>
-
-                <div class="form-group col-12 col-md-6">
-                    <label class="ml-3" for="complemento">Complemento</label>
-                    <input class="form-control" type="text" required name="complemento" id="complemento">
                 </div>
 
                 <div class="form-group col-12 col-md-6">
@@ -153,6 +153,8 @@
     <script src="/tcc/assets/js/plugins/moment.min.js"></script>
     <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
     <script src="/tcc/assets/js/style-main.min.js" type="text/javascript"></script>
+    <!--Consulta de CEP-->
+    <script src="/tcc/assets/js/consultaCep.js" type="text/javascript"></script>
 </body>
 
 </html>
