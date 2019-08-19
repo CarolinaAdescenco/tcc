@@ -28,6 +28,8 @@
     <section class="container">
         <h1>Erro!</h1>
         <%= ((Exception)request.getAttribute("erro")).getMessage() %>
+        
+        <!-- <% ((Exception)request.getAttribute("erro")).printStackTrace(response.getWriter()); %> -->
     </section>
 
     <!--   Core JS Files   -->

@@ -17,23 +17,23 @@
     <title>Autenticação</title>
 </head>
 
-<body>
+<body class="background-home">
 
     <section class="container page-login">
 
 
-        <h1>Autenticação de usuário</h1>
-
-        <%
-            String msg = (String) request.getAttribute("msg");
-            if(msg != null){
-        %>
-            <font color="red"><%=msg%></font>
-        <% } %> 
+        
 
         <div class="row justify-content-center">
-            <div class="col-12 col-md-5 ">
+            <div class="col-12 col-md-5 ">               
                 <form action="ControleAcesso" method="POST">
+                    <h3 class="text-center">Bem vindo!</h3>
+                    <%
+                        String msg = (String) request.getAttribute("msg");
+                        if(msg != null){
+                    %>
+                        <font color="red"><%=msg%></font>
+                    <% } %>
                     <div class="form-group">
                         <label for="login">Login</label>
                         <input type="text" name="txtLogin" class="form-control" id="login">
