@@ -32,19 +32,19 @@
             <i class="material-icons">layers</i> Página Principal </a>
 
         <h1>Cadastrar novo produto</h1>
-        <form action="/tcc/ControleProduto" method="POST">
+        <form action="ControleProduto" method="POST">
             <div class="row justify-content-center">
                 <div class="form-group col-12 col-md-4">
                     <label class="ml-3" for="descricao">Descrição</label>
-                    <input class="form-control" type="text" required name="txtDescricao" id="descricao">
+                    <input class="form-control" type="text" required name="descricao" id="descricao">
                 </div>
                 <div class="form-group col-12 col-md-4">
                     <label class="ml-3" for="valor_unitario">Valor Unitário</label>
-                    <input class="form-control" type="text" required name="txtValorUnitario" id="valor_unitario">
+                    <input class="form-control" type="text" required name="valor_unitario" id="valor_unitario">
                 </div>
                 <div class="form-group col-12 col-md-4">
                     <label class="ml-3" for="quantidade">Quantidade em Estoque</label>
-                    <input class="form-control" type="text" required name="txtQuantidadeEstoque" id="quantidade">
+                    <input class="form-control" type="text" required name="quantidade_estoque" id="quantidade">
                 </div>             
              
                 <div class="form-group col-12 col-md-4">

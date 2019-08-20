@@ -117,7 +117,7 @@ public class ProdutoDAO {
         return produtos;
     }
     
-    public void editar(int produtoID, Produto produto) {
+    public void editar(Produto produto) {
         Connection conexao = null;
         PreparedStatement pstmt = null;
         ResultSet rsProduto = null;
@@ -127,7 +127,7 @@ public class ProdutoDAO {
             pstmt.setString(1, produto.getDescricao());
             pstmt.setDouble(2, produto.getValor_unitario());
             pstmt.setInt(3, produto.getQuantidade_estoque());
-            pstmt.setInt(4, produtoID);
+            pstmt.setInt(4, produto.getId());
 
             pstmt.execute();
         } catch(SQLException sqlErro){
