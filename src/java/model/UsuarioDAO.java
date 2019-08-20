@@ -134,7 +134,7 @@ public class UsuarioDAO {
                 usuario.setEmail(rsUsuario.getString("email"));
                 usuario.setSenha(rsUsuario.getString("senha"));
                 usuario.setPerfil(PerfilDeAcesso.valueOf(rsUsuario.getString("perfil")));
-//
+                usuario.setCpf(rsUsuario.getString("cpf"));
                 usuarios.add(usuario);
             }
         } catch (SQLException sqlErro) {
