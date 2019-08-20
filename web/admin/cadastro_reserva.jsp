@@ -36,11 +36,11 @@
 
         <h2>Cadastro de nova reservas</h2>
        
-        <form action="ControleAcomodacao" method="POST">
+        <form action="ControleReserva" method="POST">
             <div class="row justify-content-center">
                 <div class="form-group col-12 col-md-4">
                     <label for="tipoAcomodacao">Tipo de acomodação</label>
-                    <select name="tipo" class="form-control selectpicker" data-style="btn btn-link" id="acomodacao">
+                    <select name="acomodacaoID" class="form-control selectpicker" data-style="btn btn-link" id="acomodacaoID">
                         <% ArrayList<Acomodacao> acomodacoes = (ArrayList<Acomodacao>)request.getAttribute("acomodacoes"); %>
                         <% for(Acomodacao acomodacao: acomodacoes) { %>
                             <option value="<%= acomodacao.getId() %>">
@@ -49,17 +49,33 @@
                         <% } %>
                     </select>
                 </div>
-                    
                 <div class="form-group col-12 col-md-4">
                     <label for="tipoAcomodacao">Usuário</label>
-                    <select name="tipo" class="form-control selectpicker" data-style="btn btn-link" id="acomodacao">
+                    <select name="usuarioID" class="form-control selectpicker" data-style="btn btn-link" id="usuarioID">
                         <% ArrayList<Usuario> usuarios = (ArrayList<Usuario>)request.getAttribute("usuarios"); %>
                         <% for(Usuario usuario: usuarios) { %>
                             <option value="<%= usuario.getId() %>">
-                                <%= usuario.getEmail() %> - R$ <%= usuario.getCpf() %>
+                                <%= usuario.getEmail() %> - <%= usuario.getCpf() %>
                             </option>
                         <% } %>
                     </select>
+                </div>
+                <div class="form-group col-12 col-md-4">
+                    <label for="criancas">Crianças</label>
+                    <input type="number" name="criancas" id="criancas" min="0"/>
+                    <br />
+                    <label for="adultos">Adultos</label>
+                    <input type="number" name="adultos" id="adultos" min="0"/>
+                </div>
+                    <div class="form-group col-12 col-md-4">
+                    <label for="checkin">Crianças</label>
+                    <input type="date" name="checkin" class="datepicker" id="checkin"/>
+                    <br />
+                    <label for="checkout">Adultos</label>
+                    <input type="date" name="checkout" id="checkout"/>
+                </div>
+                <div class="form-group col-12 col-md-4">
+                    <input class="btn btn-primary" type="submit" value="Cadastrar" name="acao">
                 </div>
             </div>
         </form>
@@ -73,6 +89,11 @@
     <script src="/tcc/assets/js/plugins/moment.min.js"></script>
     <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
     <script src="/tcc/assets/js/style-main.min.js" type="text/javascript"></script>
+    <script>
+        $(document).ready(function(){
+            $('.datepicker').datepicker(); //TODO: Incluir o componente de datepicker
+        });
+  </script>
 </body>
 
 </html>
