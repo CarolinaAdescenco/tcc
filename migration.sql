@@ -17,23 +17,21 @@ CREATE TABLE acomodacoes (
 
 CREATE TABLE enderecos (
   id SERIAL NOT NULL,
-  logradouro VARCHAR NOT NULL,
-  numero INTEGER NOT NULL,
-  bairro VARCHAR NOT NULL,
-  complemento VARCHAR NOT NULL,
-  estado VARCHAR NOT NULL,
-  municipio VARCHAR NOT NULL,
-  cep VARCHAR NOT NULL,
-  usuario_id INTEGER NOT NULL,
-  PRIMARY KEY(id),
-  FOREIGN KEY (usuarios_id) REFERENCES usuarios(id)
+  endereco VARCHAR NULL,
+  numero INTEGER NULL,
+  bairro VARCHAR NULL,
+  complemento VARCHAR NULL,
+  estado VARCHAR NULL,
+  municipio VARCHAR NULL,
+  cpf VARCHAR NULL,
+  PRIMARY KEY(id)
 );
 
-CREATE TABLE produtos(
-    id SERIAL NOT NULL,
-    descricao VARCHAR NOT NULL,
-    valor_unitario DECIMAL NOT NULL,
-    quantidade_estoque INTEGER NOT NULL
+CREATE TABLE produtos (
+  id SERIAL NOT NULL,
+  descricao VARCHAR NULL,
+  preco DECIMAL NULL,
+  PRIMARY KEY(id)
 );
 
 CREATE TABLE produtos_reservas (
@@ -72,6 +70,13 @@ CREATE TABLE tipo_acomodacao (
   PRIMARY KEY(id)
 );
 
-
+CREATE TABLE usuarios (
+  id SERIAL NOT NULL,
+  enderecos_id INTEGER NOT NULL,
+  email VARCHAR NULL,
+  senha VARCHAR NULL,
+  tipo_usuario INTEGER NULL,
+  PRIMARY KEY(id)
+);
 
 
