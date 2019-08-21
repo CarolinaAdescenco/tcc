@@ -62,6 +62,7 @@ public class ProdutoDAO {
             rsProduto = pstmt.executeQuery();
 
             while (rsProduto.next()) {
+                produto.setId(rsProduto.getInt("id"));
                 produto.setDescricao(rsProduto.getString("descricao"));
                 produto.setValor_unitario(rsProduto.getDouble("valor_unitario"));
                 produto.setQuantidade_estoque(rsProduto.getInt("quantidade_estoque"));
