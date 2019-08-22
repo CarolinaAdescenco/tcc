@@ -27,7 +27,7 @@
             </button>
         </div>
 
-        <a class="btn btn-primary btn-round my-3" href="../principal.jsp">
+        <a class="btn btn-primary btn-round my-3" href="/tcc/principal.jsp">
             <i class="material-icons">layers</i> Página Principal </a>
 
         <h2>Editar usuário</h2>
