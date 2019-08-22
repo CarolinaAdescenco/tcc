@@ -30,13 +30,15 @@ form .btn {
       .background-home .page-login form .btn {
         width: 100%; }
 
-table td .material-icons {
-  font-size: 18px; }
-table td i {
-  background-color: #9c27b0;
-  color: white;
-  border-radius: 1.5rem;
-  padding: 8px; }
+table td {
+  padding: 5px; }
+  table td .material-icons {
+    font-size: 18px; }
+  table td i {
+    background-color: #9c27b0;
+    color: white;
+    border-radius: 1.5rem;
+    padding: 8px; }
 table th {
   text-align: center; }
 

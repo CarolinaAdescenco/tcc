@@ -78,26 +78,26 @@
 
                 <div class="form-group col-12 col-md-6">
                     <label class="ml-3" for="logradouro">Logradouro</label>
-                    <input class="form-control" type="text" required name="logradouro" id="logradouro">
+                    <input class="form-control" type="text" required name="logradouro" id="logradouro" readonly>
                 </div>                
 
                 <div class="form-group col-12 col-md-6">
                     <label class="ml-3" for="bairro">Bairro</label>
-                    <input class="form-control" type="text" required name="bairro" id="bairro">
+                    <input class="form-control" type="text" required name="bairro" id="bairro" readonly>
                 </div>
 
                 <div class="form-group col-12 col-md-6">
                     <label class="ml-3" for="municipio">Município</label>
-                    <input class="form-control" type="text" required name="municipio" id="municipio">
+                    <input class="form-control" type="text" required name="municipio" id="municipio" readonly>
                 </div>
 
                 <div class="form-group col-12 col-md-6">
                     <label class="ml-3" for="estado">Estado</label>
-                    <input class="form-control" type="text" required name="estado" id="estado">
+                    <input class="form-control" type="text" required name="estado" id="estado" readonly>
                 </div>
 
                 <div class="form-group col-12 col-md-4">
-                    <input class="btn btn-primary" type="submit" value="Cadastrar" required name="acao">
+                    <input class="btn btn-primary" type="submit" value="Cadastrar" required name="acao" readonly>
                 </div>
         </form>
 

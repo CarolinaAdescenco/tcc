@@ -8,7 +8,7 @@ import util.ConectaBanco;
 
 public class EnderecoDAO {
     
-    private static final String CADASTRAR_NOVO_ENDERECO = "INSERT INTO enderecos (usuario_id, logradouro, numero, bairro, complemento, estado, cep, municipio) values (?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String CADASTRAR_NOVO_ENDERECO = "INSERT INTO enderecos (usuario_id, logradouro, numero, bairro, complemento, estado, municipio, cep) values (?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String BUSCAR_ENDERECO = "SELECT * FROM enderecos WHERE usuario_id=?";
     private static final String ATUALIZAR_ENDERECO = "UPDATE enderecos SET logradouro = ?, numero = ?, bairro = ?, complemento = ?, estado = ?, municipio = ?, cep = ? WHERE usuario_id = ?";
     private static final String EXCLUIR_ENDERECO = "DELETE FROM enderecos WHERE usuario_id=?";
