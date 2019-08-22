@@ -1,80 +1,77 @@
+CREATE TABLE usuarios (
+  id SERIAL NOT NULL,
+  email VARCHAR NOT NULL,
+  senha VARCHAR NOT NULL,
+  perfil VARCHAR NOT NULL,
+  cpf VARCHAR NOT NULL
+  PRIMARY KEY(id)
+);
+
 CREATE TABLE acomodacoes (
-  id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  tipo_acomodacao_id INTEGER UNSIGNED NOT NULL,
+  id SERIAL NOT NULL,
+  tipo_acomodacao_id INTEGER NOT NULL,
   descricao TEXT NULL,
   valor_padrao DECIMAL NULL,
-  PRIMARY KEY(id),
-  INDEX acomodacoes_FKIndex1(tipo_acomodacao_id)
+  PRIMARY KEY(id)
 );
 
 CREATE TABLE enderecos (
-  id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  endereco VARCHAR NULL,
-  numero INTEGER UNSIGNED NULL,
-  bairro VARCHAR NULL,
-  complemento VARCHAR NULL,
-  estado VARCHAR NULL,
-  municipio VARCHAR NULL,
-  cpf VARCHAR NULL,
-  PRIMARY KEY(id)
+  id SERIAL NOT NULL,
+  logradouro VARCHAR NOT NULL,
+  numero INTEGER NOT NULL,
+  bairro VARCHAR NOT NULL,
+  complemento VARCHAR NOT NULL,
+  estado VARCHAR NOT NULL,
+  municipio VARCHAR NOT NULL,
+  cep VARCHAR NOT NULL,
+  usuario_id INTEGER NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY (usuarios_id) REFERENCES usuarios(id)
 );
 
-CREATE TABLE produtos (
-  id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  descricao VARCHAR NULL,
-  preco DECIMAL NULL,
-  PRIMARY KEY(id)
+CREATE TABLE produtos(
+    id SERIAL NOT NULL,
+    descricao VARCHAR NOT NULL,
+    valor_unitario DECIMAL NOT NULL,
+    quantidade_estoque INTEGER NOT NULL
 );
 
 CREATE TABLE produtos_reservas (
-  id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  produtos_id INTEGER UNSIGNED NOT NULL,
-  reservas_id INTEGER UNSIGNED NOT NULL,
-  quantidade INTEGER UNSIGNED NULL,
+  id SERIAL NOT NULL,
+  produtos_id INTEGER NOT NULL,
+  reservas_id INTEGER NOT NULL,
+  quantidade INTEGER NULL,
   sub_total DECIMAL NULL,
-  PRIMARY KEY(id),
-  INDEX produtos_reservas_FKIndex1(reservas_id),
-  INDEX produtos_reservas_FKIndex2(produtos_id)
+  PRIMARY KEY(id)
 );
 
 CREATE TABLE reservas (
-  id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  acomodacoes_id INTEGER UNSIGNED NOT NULL,
-  usuarios_id INTEGER UNSIGNED NOT NULL,
+  id SERIAL NOT NULL,
+  acomodacoes_id INTEGER NOT NULL,
+  usuarios_id INTEGER NOT NULL,
   data_checkin DATETIME NULL,
   data_checkout DATETIME NULL,
-  adultos INTEGER UNSIGNED NULL,
-  criancas INTEGER UNSIGNED NULL,
+  adultos INTEGER NULL,
+  criancas INTEGER NULL,
   sub_total DECIMAL NULL,
-  PRIMARY KEY(id),
-  INDEX reservas_FKIndex2(usuarios_id),
-  INDEX reservas_FKIndex3(acomodacoes_id)
+  PRIMARY KEY(id)
 );
 
 CREATE TABLE tarifas (
-  id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  tipo_acomodacao_id INTEGER UNSIGNED NOT NULL,
+  id SERIAL NOT NULL,
+  tipo_acomodacao_id INTEGER NOT NULL,
   valor DECIMAL NULL,
   data_inicio DATETIME NULL,
   data_fim DATETIME NULL,
-  PRIMARY KEY(id),
-  INDEX tarifas_FKIndex2(tipo_acomodacao_id)
+  PRIMARY KEY(id)
 );
 
 CREATE TABLE tipo_acomodacao (
-  id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  id SERIAL NOT NULL,
   tipo VARCHAR NULL,
   PRIMARY KEY(id)
 );
 
-CREATE TABLE usuarios (
-  id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  enderecos_id INTEGER UNSIGNED NOT NULL,
-  email VARCHAR NULL,
-  senha VARCHAR NULL,
-  tipo_usuario INTEGER UNSIGNED NULL,
-  PRIMARY KEY(id),
-  INDEX usuarios_FKIndex2(enderecos_id)
-);
+
 
 
