@@ -46,10 +46,14 @@ public class ControleReserva extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        
+        int acomodacaoID = Integer.parseInt(request.getParameter("acomodacaoID"));
+        Date checkin = Date.valueOf(request.getParameter("checkin"));
+        
         Reserva reserva = new Reserva(
-            Integer.parseInt(request.getParameter("acomodacaoID")),
+            acomodacaoID,
             Integer.parseInt(request.getParameter("usuarioID")),
-            Date.valueOf(request.getParameter("checkin")),
+            checkin,
             Date.valueOf(request.getParameter("checkout")),
             Integer.parseInt(request.getParameter("adultos")),
             Integer.parseInt(request.getParameter("criancas"))
@@ -57,9 +61,15 @@ public class ControleReserva extends HttpServlet {
         reserva.calcularSubTotal(9.90);
         
         ReservaDAO dao = new ReservaDAO();
-        dao.cadastrar(reserva);
-        
-        request.setAttribute("msg", "Reserva criada com sucesso!");
+        if (dao.estaDisponivel(acomodacaoID, checkin)) {
+            dao.cadastrar(reserva);
+            request.setAttribute("msg", "Reserva criada com sucesso!");
+            RequestDispatcher rd = request.getRequestDispatcher("/admin/principal.jsp");
+            rd.forward(request, response);
+            return;
+        }
+
+        request.setAttribute("msg", "Acomodação não esta disponivel para locação!");
         RequestDispatcher rd = request.getRequestDispatcher("/admin/principal.jsp");
         rd.forward(request, response);
     }
