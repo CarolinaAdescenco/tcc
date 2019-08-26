@@ -20,8 +20,8 @@
 
         
 
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-5 ">               
+        <div class="row">
+            <div class="col s10 m6 offset-m3">               
                 <form action="ControleAcesso" method="POST">
                     <h3 class="text-center">Bem vindo!</h3>
                     <%

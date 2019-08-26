@@ -26,6 +26,21 @@ form{
     }
 }
 
+.btn{
+    background-color: $cor-primaria;
+    display: flex;
+    justify-content: space-around;
+    margin: 0 10px; 
+    
+    &:hover{
+        background-color: darken($cor-primaria, 10);
+    }
+}
+
+.nav-wrapper{
+    background-color: $cor-primaria;
+}
+
 .background-home{
     background-image: url('../images/background-city.jpg');
     background-size: cover;
@@ -48,7 +63,17 @@ form{
     }
 }
 
+.container{
+    margin: 2rem auto;
+}
 
+.row{  
+    @for $i from 1 through 12{
+        .col.s#{$i}, .col.m#{$i}{
+            margin-left: 0;
+        }
+    } 
+}  
 
 table{
     td{
@@ -64,8 +89,31 @@ table{
             padding: 8px;
         }
     }
+}
 
-    th{        
-        text-align: center;
+ul{
+    &.tabs{
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.tabs{
+    .tab{
+        a{
+            color: $cor-primaria;
+            
+            &:hover{
+                color: $cor-primaria;
+            }
+            
+            &.active{
+                color: $cor-primaria;
+            }
+        }
+    }
+    
+    .indicator{
+        background-color: $cor-primaria;
     }
 }

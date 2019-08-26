@@ -30,16 +30,18 @@
         </header>
 
         <section class="container page-acomodacao">
-            <div class="row justify-content-end">
-                <button class="btn btn-primary btn-fab  btn-round" data-toggle="tooltip" data-placement="top"
+            <div class="row">
+                <button class="btn col s2 m2" data-toggle="tooltip" data-placement="top"
                         title="Área restrita">
                     <i class="material-icons">widgets</i>
                 </button>
+                
+                 <a class="btn col s3 m3" href="/tcc/principal.jsp">
+                <i class="material-icons">layers</i> Página Principal </a>
             </div>
 
 
-            <a class="btn btn-primary btn-round my-3" href="/tcc/principal.jsp">
-                <i class="material-icons">layers</i> Página Principal </a>
+           
 
             <%
                 String msg = (String) request.getAttribute("msg");
@@ -57,7 +59,7 @@
                 </div>
 
                 <div id="cadastrar" class="col s12">
-                    <h1>Cadastrar nova acomodação</h1>
+                    <h2>Cadastrar nova acomodação</h2>
                     <form action="ControleAcomodacao" method="POST">
                         <div class="row justify-content-center">
                             <div class="form-group col s12 m4">
@@ -96,6 +98,8 @@
                                 <th>Tipo</th>
                                 <th>Descrição</th>
                                 <th>Valor padrão</th>
+                                <th>Editar</th>
+                                <th>Excluir</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -106,8 +110,10 @@
                                 <td><%= acomodacao.getDescricao()%></td>
                                 <td><%= acomodacao.getValorPadrao()%></td>
                                 <td>
-                                    <a href="ControleAcomodacao?acao=Consultar&acomodacaoID=<%= acomodacao.getId()%>">Editar</a>
-                                    <a href="ControleAcomodacao?acao=Excluir&acomodacaoID=<%= acomodacao.getId()%>">Excluir</a>
+                                    <a href="ControleAcomodacao?acao=Consultar&acomodacaoID=<%= acomodacao.getId()%>"><i class="material-icons">edit</i></a>
+                                </td>
+                                <td>
+                                    <a href="ControleAcomodacao?acao=Excluir&acomodacaoID=<%= acomodacao.getId()%>"><i class="material-icons">delete</i></a>
                                 </td>
                             </tr>
                             <% }%>

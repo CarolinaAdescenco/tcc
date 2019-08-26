@@ -15,6 +15,17 @@ section {
 form .btn {
   width: 100%; }
 
+.btn {
+  background-color: #9c27b0;
+  display: flex;
+  justify-content: space-around;
+  margin: 0 10px; }
+  .btn:hover {
+    background-color: #771e86; }
+
+.nav-wrapper {
+  background-color: #9c27b0; }
+
 .background-home {
   background-image: url("../images/background-city.jpg");
   background-size: cover;
@@ -30,6 +41,34 @@ form .btn {
       .background-home .page-login form .btn {
         width: 100%; }
 
+.container {
+  margin: 2rem auto; }
+
+.row .col.s1, .row .col.m1 {
+  margin-left: 0; }
+.row .col.s2, .row .col.m2 {
+  margin-left: 0; }
+.row .col.s3, .row .col.m3 {
+  margin-left: 0; }
+.row .col.s4, .row .col.m4 {
+  margin-left: 0; }
+.row .col.s5, .row .col.m5 {
+  margin-left: 0; }
+.row .col.s6, .row .col.m6 {
+  margin-left: 0; }
+.row .col.s7, .row .col.m7 {
+  margin-left: 0; }
+.row .col.s8, .row .col.m8 {
+  margin-left: 0; }
+.row .col.s9, .row .col.m9 {
+  margin-left: 0; }
+.row .col.s10, .row .col.m10 {
+  margin-left: 0; }
+.row .col.s11, .row .col.m11 {
+  margin-left: 0; }
+.row .col.s12, .row .col.m12 {
+  margin-left: 0; }
+
 table td {
   padding: 5px; }
   table td .material-icons {
@@ -39,7 +78,18 @@ table td {
     color: white;
     border-radius: 1.5rem;
     padding: 8px; }
-table th {
-  text-align: center; }
+
+ul.tabs {
+  display: flex;
+  justify-content: center; }
+
+.tabs .tab a {
+  color: #9c27b0; }
+  .tabs .tab a:hover {
+    color: #9c27b0; }
+  .tabs .tab a.active {
+    color: #9c27b0; }
+.tabs .indicator {
+  background-color: #9c27b0; }
 
 /*# sourceMappingURL=custom.css.map */

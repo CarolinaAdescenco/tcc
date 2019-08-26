@@ -30,16 +30,15 @@
         </header>
 
         <section class="container page-acomodacao">
-            <div class="row justify-content-end">
-                <button class="btn btn-primary btn-fab  btn-round" data-toggle="tooltip" data-placement="top"
+            <div class="row">
+                <button class="btn col s2 m2" data-toggle="tooltip" data-placement="top"
                         title="Área restrita">
                     <i class="material-icons">widgets</i>
                 </button>
-            </div>
-
-
-            <a class="btn btn-primary btn-round my-3" href="/tcc/principal.jsp">
+                
+                 <a class="btn col s3 m3" href="/tcc/principal.jsp">
                 <i class="material-icons">layers</i> Página Principal </a>
+            </div>
 
             <%
                 String msg = (String) request.getAttribute("msg");
@@ -58,7 +57,7 @@
 
                 <div id="cadastrar" class="col s12">
 
-                    <h1>Cadastrar novo usuario</h1>
+                    <h2>Cadastrar novo usuario</h2>
                     <form action="/tcc/ControleUsuario" method="POST">
                         <div class="row justify-content-center">
                             <div class="form-group col s12 m6">
@@ -156,8 +155,7 @@
                                             class="material-icons">edit</i> </a>
                                 </td>
                                 <td>
-                                    <a href="ControleUsuario?acao=Excluir&usuarioID=<%= usuario.getId()%>"> <i
-                                            class="material-icons">delete</i> </a>
+                                    <a href="ControleUsuario?acao=Excluir&usuarioID=<%= usuario.getId()%>"> <i class="material-icons">delete</i> </a>
 
                                 </td>
                             </tr>
