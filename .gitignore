@@ -33,6 +33,7 @@ hs_err_pid*
 target/
 
 ### NetBeans ###
+nbproject/*
 **/nbproject/private/
 **/nbproject/Makefile-*.mk
 **/nbproject/Package-*.bash
