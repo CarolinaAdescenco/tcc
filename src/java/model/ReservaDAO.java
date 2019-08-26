@@ -11,7 +11,7 @@ import util.ConectaBanco;
 public class ReservaDAO {
     
     private static final String CADASTRAR_NOVA_RESERVA = "INSERT INTO reservas(acomodacoes_id, usuarios_id, data_checkin, data_checkout, adultos, criancas, sub_total) VALUES(?, ?, ? , ?, ?, ?, ?)";
-    private static final String CONSULTAR_DISPONIBILIDADE = "SELECT COUNT(*) FROM reservas WHERE acomodacoes_id = ? AND data_checkin >= ? AND data_checkout <= ?";
+    private static final String CONSULTAR_DISPONIBILIDADE = "SELECT COUNT(*) FROM reservas WHERE acomodacoes_id = ? AND ? BETWEEN data_checkin AND data_checkout";
     
     public void cadastrar(Reserva reserva) {
         Connection conexao = null;
@@ -52,7 +52,6 @@ public class ReservaDAO {
             pstmt = conexao.prepareStatement(CONSULTAR_DISPONIBILIDADE);
             pstmt.setInt(1, acomodacaoID);
             pstmt.setDate(2, data);
-            pstmt.setDate(3, data);
             rsReserva = pstmt.executeQuery();
             rsReserva.next();
             int achou = rsReserva.getInt(1);
