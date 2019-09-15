@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Produto;
 import model.ProdutoDAO;
+import model.Reserva;
+import model.ReservaDAO;
 
 
 @WebServlet(name = "ControleProduto", urlPatterns = {"/ControleProduto"})
@@ -28,6 +30,12 @@ public class ControleProduto extends HttpServlet {
                 
                 produtos = produto.listar();
                 request.setAttribute("produtos", produtos);
+                
+                ReservaDAO reservaDAO = new ReservaDAO();
+                ArrayList<Reserva> reservas = new ArrayList<Reserva>();
+                
+                reservas = reservaDAO.listarOcupacoes();
+                request.setAttribute("reservas", reservas);
 
                 request.getRequestDispatcher("/admin/listar_produto.jsp").forward(request, response);
                 

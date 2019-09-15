@@ -47,6 +47,8 @@
                     class="material-icons">local_hotel</i> Acomodações</a>
             <a class="btn btn-primary btn-round mx-2" href="/tcc/ControleReserva"> <i class="material-icons">vpn_key</i>
                 Reservas</a>
+            <a class="btn btn-primary btn-round mx-2" href="/tcc/ControleProduto?acao=Listar"> <i class="material-icons">vpn_key</i>
+                Produtos</a>
         </div>
 
         <!--   Core JS Files   -->

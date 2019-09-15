@@ -2,11 +2,20 @@ package model;
 
 public class Usuario {
     private int id;
+    private String nome;
     private String email;
     private String senha;
     private PerfilDeAcesso perfil;
     private String cpf;
     private Endereco endereco = new Endereco();
+    
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    
+    public String getNome() {
+        return this.nome;
+    }
 
     public int getId() {
         return id;

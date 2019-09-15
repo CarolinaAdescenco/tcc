@@ -3,6 +3,9 @@ package model;
 import java.sql.Date;
 
 public class Reserva {
+
+    public Usuario usuario = new Usuario();
+    private int id;
     private int acomodacaoID;
     private int usuarioID;
     private Date dataCheckin;
@@ -18,6 +21,16 @@ public class Reserva {
         this.dataCheckout = dataCheckout;
         this.adultos = adultos;
         this.criancas = criancas;
+    }
+
+    Reserva() {}
+    
+    public void setId(int ID) {
+        this.id = ID;
+    }
+    
+    public int getId() {
+        return this.id;
     }
 
     public int getAcomodacaoID() {
