@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Acomodacao;
 import model.AcomodacaoDAO;
+import model.Produto;
+import model.ProdutoDAO;
 import model.Reserva;
 import model.ReservaDAO;
 import model.Usuario;
@@ -45,6 +47,12 @@ public class ControleReserva extends HttpServlet {
                 UsuarioDAO dao = new UsuarioDAO();
                 usuarios = dao.listar();
                 request.setAttribute("usuarios", usuarios);
+                // -- FIM
+                
+                // -- Dados para preencher os campos de lançamento de produto
+                ProdutoDAO produto = new ProdutoDAO();
+                ArrayList<Produto> produtos = produto.listar();
+                request.setAttribute("produtos", produtos);
                 // -- FIM
 
                 // -- Dados das reservas ocupadas

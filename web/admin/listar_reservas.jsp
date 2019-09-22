@@ -1,3 +1,4 @@
+<%@page import="model.Produto"%>
 <%@page import="model.Acomodacao"%>
 <%@page import="model.Reserva"%>
 <%@page import="java.util.ArrayList"%>
@@ -85,10 +86,47 @@
                                 <td><%= reserva.getDataCheckout()%></td>
                                 <td>
                                     <button class="btn">Finalizar estadia</button>
-                                    <button class="btn btn-primary">Lançar produto</button>
+                                    <a class="waves-effect waves-light btn modal-trigger" href="#modal<%= reserva.getId()%>">Lançar produto</a>
                                 </td>
                             </tr>
-                            <% }%>
+                            <!-- Modal Structure -->
+                        <div id="modal<%= reserva.getId()%>" class="modal">
+                            <div class="modal-content">
+                                <h4>Lançar produto para: <%= reserva.getUsuario().getNome()%></h4>
+                                <form action="ControleProduto?acao=LancarProduto" method="POST">
+                                    <div class="row justify-content-center">
+                                        
+                                        <!-- ID do hospede -->
+                                        <input name="reservaID" type="hidden" value="<%= reserva.getId() %>" />
+                                        <!-- Fim -->
+                                        
+                                        <div class="form-group col s12 m4">
+                                            <label class="ml-3" for="descricao">Produto</label>
+                                            <% ArrayList<Produto> produtos = (ArrayList<Produto>) request.getAttribute("produtos"); %>
+                                            <select name="produtoID">
+                                                <option selected disabled>Selecione...</option>
+                                                <% for (Produto produto : produtos) {%>
+                                                <option value="<%= produto.getId()%>"><%= produto.getDescricao()%> - (R$ <%= produto.getValor_unitario()%>)</option>
+                                                <% } %>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col s12 m4">
+                                            <label class="ml-3" for="quantidade">Quantidade</label>
+                                            <input class="form-control" type="number" min="1" required name="quantidade" id="quantidade">
+                                        </div>
+                                        <div class="form-group col s12 m4">
+                                            <label class="ml-3" for="observacao">Observacao</label>
+                                            <input class="form-control" type="text" required name="observacao" id="observacao">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#!" class="modal-close waves-effect waves-green btn-flat" >Cancelar</a>
+                                <input class="btn btn-primary" type="submit" value="Cadastrar" required name="acao">
+                            </div>
+                        </div>
+                        <% }%>
                         </tbody>
                     </table>
                 </div>
@@ -147,6 +185,11 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
         <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
         <script src="/tcc/assets/js/main.js" type="text/javascript"></script>
+        <script>
+            $(document).ready(function () {
+                $('.modal').modal();
+            });
+        </script>
     </body>
 
 </html>
