@@ -14,7 +14,7 @@ public class ReservaDAO {
     private static final String CADASTRAR_NOVA_RESERVA = "INSERT INTO reservas(acomodacoes_id, usuarios_id, data_checkin, data_checkout, adultos, criancas, sub_total) VALUES(?, ?, ? , ?, ?, ?, ?)";
     private static final String CONSULTAR_DISPONIBILIDADE = "SELECT COUNT(*) FROM reservas WHERE acomodacoes_id = ? AND ? BETWEEN data_checkin AND data_checkout";
     private static final String LISTAR_RESERVAS = "SELECT usuario.id as usuario_id, usuario.email as usuario_email, reserva.id as reserva_id FROM usuarios as usuario, reservas as reserva WHERE reserva.usuarios_id = usuario.id";
-    private static final String LISTAR_OCUPACOES = "SELECT usuario.nome as usuario_nome, usuario.id as usuario_id, reserva.id as reserva_id, usuario.cpf as usuario_cpf FROM usuarios as usuario, reservas as reserva WHERE reserva.usuarios_id = usuario.id AND reserva.data_checkin <= NOW() AND reserva.data_checkout > NOW()";
+    private static final String LISTAR_OCUPACOES = "SELECT usuario.nome as usuario_nome, usuario.id as usuario_id, reserva.id as reserva_id, usuario.cpf as usuario_cpf, reserva.data_checkin as reserva_checkin, reserva.data_checkout as reserva_checkout FROM usuarios as usuario, reservas as reserva WHERE reserva.usuarios_id = usuario.id AND reserva.data_checkin <= NOW() AND reserva.data_checkout > NOW()";
 
     private static final String ADICIONAR_ITEM_PEDIDO = "INSERT INTO produtos_reservas(produtos_id, reservas_id, quantidade, sub_total, observacao) VALUES(?, ?, ?, ?, ?)";
     
@@ -87,12 +87,18 @@ public class ReservaDAO {
             pstmt = conexao.prepareStatement(LISTAR_OCUPACOES);
             rsReserva = pstmt.executeQuery();
             while (rsReserva.next()) {
-                Reserva reserva = new Reserva();
-                reserva.usuario.setNome(rsReserva.getString("usuario_nome"));
-                reserva.usuario.setId(rsReserva.getInt("usuario_id"));
-                reserva.usuario.setCpf(rsReserva.getString("usuario_cpf"));
-                reserva.setId(rsReserva.getInt("reserva_id"));
+                Usuario usuario = new Usuario();
+                usuario.setNome(rsReserva.getString("usuario_nome"));
+                usuario.setId(rsReserva.getInt("usuario_id"));
+                usuario.setCpf(rsReserva.getString("usuario_cpf"));
                 
+                
+                Reserva reserva = new Reserva();
+                reserva.setUsuario(usuario);
+                reserva.setId(rsReserva.getInt("reserva_id"));
+                reserva.setDataCheckin(rsReserva.getDate("reserva_checkin"));
+                reserva.setDataCheckout(rsReserva.getDate("reserva_checkout"));
+
                 reservas.add(reserva);
             }
         } catch (SQLException sqlErro) {
