@@ -85,8 +85,10 @@
                                 <td><%= reserva.getDataCheckin()%></td>
                                 <td><%= reserva.getDataCheckout()%></td>
                                 <td>
-                                    <button class="btn">Finalizar estadia</button>
+                                    <button class="btn">Ver detalhes</button>
                                     <a class="waves-effect waves-light btn modal-trigger" href="#modal<%= reserva.getId()%>">Lançar produto</a>
+                                    <button class="btn">Finalizar estadia</button>
+                                    
                                 </td>
                             </tr>
                             <!-- Modal Structure -->
