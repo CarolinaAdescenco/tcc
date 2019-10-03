@@ -30,12 +30,7 @@
         </header>
 
         <section class="container page-acomodacao">
-            <div class="row">
-                <button class="btn col s2 m2" data-toggle="tooltip" data-placement="top"
-                        title="Área restrita">
-                    <i class="material-icons">widgets</i>
-                </button>
-                
+            <div class="row">                
                  <a class="btn col s3 m3" href="/tcc/principal.jsp">
                 <i class="material-icons">layers</i> Página Principal </a>
             </div>

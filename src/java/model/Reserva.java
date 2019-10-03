@@ -3,13 +3,18 @@ package model;
 import java.sql.Date;
 
 public class Reserva {
+
+    private int id;
     private int acomodacaoID;
     private int usuarioID;
-    private Date dataCheckin;
-    private Date dataCheckout;
     private int adultos;
     private int criancas;
     private Double subTotal;
+    private Date dataCheckin;
+    private Date dataCheckout;
+    private Usuario usuario = new Usuario();
+    private Acomodacao acomodacao = new Acomodacao();
+
 
     public Reserva(int acomodacaoID, int usuarioID, Date dataCheckin, Date dataCheckout, int adultos, int criancas) {
         this.acomodacaoID = acomodacaoID;
@@ -18,6 +23,33 @@ public class Reserva {
         this.dataCheckout = dataCheckout;
         this.adultos = adultos;
         this.criancas = criancas;
+    }
+
+    Reserva() {}
+    
+    
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Acomodacao getAcomodacao() {
+        return acomodacao;
+    }
+
+    public void setAcomodacao(Acomodacao acomodacao) {
+        this.acomodacao = acomodacao;
+    }
+    
+    public void setId(int ID) {
+        this.id = ID;
+    }
+    
+    public int getId() {
+        return this.id;
     }
 
     public int getAcomodacaoID() {

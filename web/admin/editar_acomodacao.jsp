@@ -3,35 +3,37 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-         Fonts and icons     
-    <link rel="stylesheet" type="text/css"
-        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
-     CSS Files 
-    <link href="/tcc/assets/css/style.min.css?v=2.0.5" rel="stylesheet" />
-     CSS Just for demo purpose, don't include it in your project 
-    <link href="/tcc/assets/css/demo.css" rel="stylesheet" />
-    <link href="/tcc/assets/css/custom.css" rel="stylesheet" />
-    <title>Editar Acomodação</title>
-</head>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />   
+        <link rel="stylesheet" type="text/css"
+              href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">    
+        <link href="/tcc/assets/css/custom.css" rel="stylesheet" />
+        <title>Editar Acomodação</title>
+    </head>
 
-<body>
+    <body>
 
+        <header> 
+            <nav>
+                <div class="nav-wrapper">
+                    <a href="#" class="brand-logo">Logo</a>
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+                        <li><a href="/tcc/ControleAcomodacao?acao=Listar">Acomodações</a></li>
+                        <li><a href="/tcc/ControleUsuario?acao=Listar">Usuários</a></li>
+                        <li><a href="/tcc/ControleProduto?acao=Listar">Produtos</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
 
+        <section class="container page-acomodacao">
+            <div class="row">                
+                 <a class="btn col s3 m3" href="/tcc/principal.jsp">
+                <i class="material-icons">layers</i> Página Principal </a>
+            </div>
 
-    <section class="container page-acomodacao">
-        <div class="row justify-content-end">
-            <button class="btn btn-primary btn-fab  btn-round" data-toggle="tooltip" data-placement="top"
-                title="Área restrita">
-                <i class="material-icons">widgets</i>
-            </button>
-        </div>
-
-        <a class="btn btn-primary btn-round my-3" href="/tcc/principal.jsp">
-            <i class="material-icons">layers</i> Página Principal </a>
 
         <h2>Editar acomodação</h2>
 

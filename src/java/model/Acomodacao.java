@@ -5,10 +5,6 @@
  */
 package model;
 
-/**
- *
- * @author alunocmc
- */
 public class Acomodacao {
     private int id;
     private String tipo;
