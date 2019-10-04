@@ -85,9 +85,7 @@
                                 <td><%= reserva.getDataCheckin()%></td>
                                 <td><%= reserva.getDataCheckout()%></td>
                                 <td>
-                                    <button class="btn">Ver detalhes</button>
-                                    <a class="waves-effect waves-light btn modal-trigger" href="#modal<%= reserva.getId()%>">Lançar produto</a>
-                                    <button class="btn">Finalizar estadia</button>
+                                    <a class="btn" href="ControlReserva?acao=Detalhes&reservaID=<%= reserva.getId() %>&usuarioID=<%= reserva.getUsuario().getId() %>">Ver detalhes</a>
                                     
                                 </td>
                             </tr>

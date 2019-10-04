@@ -11,6 +11,7 @@ import util.ConectaBanco;
 
 public class ReservaDAO {
     
+    private static final String CONSULTAR = "SELECT * FROM reservas WHERE id = ?";
     private static final String CADASTRAR_NOVA_RESERVA = "INSERT INTO reservas(acomodacoes_id, usuarios_id, data_checkin, data_checkout, adultos, criancas, sub_total) VALUES(?, ?, ? , ?, ?, ?, ?)";
     private static final String CONSULTAR_DISPONIBILIDADE = "SELECT COUNT(*) FROM reservas WHERE acomodacoes_id = ? AND ? BETWEEN data_checkin AND data_checkout";
     private static final String LISTAR_RESERVAS = "SELECT usuario.id as usuario_id, usuario.email as usuario_email, reserva.id as reserva_id FROM usuarios as usuario, reservas as reserva WHERE reserva.usuarios_id = usuario.id";
@@ -130,6 +131,43 @@ public class ReservaDAO {
             pstmt.execute();
 
             return true;
+        } catch (SQLException sqlErro) {
+            throw new RuntimeException(sqlErro);
+        } finally {
+            if (conexao != null) {
+                try {
+                    conexao.close();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        }
+    }
+    
+    public Reserva consultar(int reservaID) {
+        Reserva reserva = new Reserva();
+
+        Connection conexao = null;
+        PreparedStatement pstmt = null;
+        ResultSet rsReserva = null;
+        try {
+            conexao = ConectaBanco.getConnection();
+            pstmt = conexao.prepareStatement(CONSULTAR);
+            rsReserva = pstmt.executeQuery();
+            while (rsReserva.next()) {
+                Usuario usuario = new Usuario();
+                usuario.setNome(rsReserva.getString("usuario_nome"));
+                usuario.setId(rsReserva.getInt("usuario_id"));
+                usuario.setCpf(rsReserva.getString("usuario_cpf"));
+                
+                
+                reserva.setUsuario(usuario);
+                reserva.setId(rsReserva.getInt("reserva_id"));
+                reserva.setDataCheckin(rsReserva.getDate("reserva_checkin"));
+                reserva.setDataCheckout(rsReserva.getDate("reserva_checkout"));
+            }
+            
+            return reserva;
         } catch (SQLException sqlErro) {
             throw new RuntimeException(sqlErro);
         } finally {

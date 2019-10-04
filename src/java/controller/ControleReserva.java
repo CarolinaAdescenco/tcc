@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Acomodacao;
 import model.AcomodacaoDAO;
+import model.ConsumoDAO;
 import model.Produto;
 import model.ProdutoDAO;
 import model.Reserva;
@@ -30,10 +31,26 @@ public class ControleReserva extends HttpServlet {
             throws ServletException, IOException {
         
         String acao = request.getParameter("acao");
+        UsuarioDAO usDAO = new UsuarioDAO();
         
         switch (acao) {
             case "finalizar":
                 // TODO: implementar a finalização da reserva
+                break;
+            case "Detalhe":
+                int reservaID = Integer.parseInt(request.getParameter("reservaID"));
+                int usuarioID = Integer.parseInt(request.getParameter("usuarioID"));
+                
+                ConsumoDAO conDAO = new ConsumoDAO();
+                ReservaDAO resDAO = new ReservaDAO();
+                
+                Usuario usuario = usDAO.consultar(usuarioID);
+                usuario.setConsumo(conDAO.consultar(reservaID, usuarioID));
+                usuario.setReserva(resDAO.consultar(reservaID));
+                
+                request.setAttribute("reserva", usuario);
+                
+                request.getRequestDispatcher("/admin/editar_reserva.jsp").forward(request, response);
                 break;
             default:
                 // -- Dados para preencher os campos de cadastro de nova reserva        
@@ -42,7 +59,6 @@ public class ControleReserva extends HttpServlet {
                 acomodacoes = acomodacao.listar();
                 request.setAttribute("acomodacoes", acomodacoes);
 
-                UsuarioDAO usuario = new UsuarioDAO();
                 ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
                 UsuarioDAO dao = new UsuarioDAO();
                 usuarios = dao.listar();

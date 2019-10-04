@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Usuario {
     private int id;
     private String nome;
@@ -8,6 +10,25 @@ public class Usuario {
     private PerfilDeAcesso perfil;
     private String cpf;
     private Endereco endereco = new Endereco();
+
+    private ArrayList<Consumo> consumo = new ArrayList<>();
+    private Reserva reserva = new Reserva();
+
+    public ArrayList<Consumo> getConsumo() {
+        return consumo;
+    }
+
+    public void setConsumo(ArrayList<Consumo> consumo) {
+        this.consumo = consumo;
+    }
+
+    public Reserva getReserva() {
+        return reserva;
+    }
+
+    public void setReserva(Reserva reserva) {
+        this.reserva = reserva;
+    }
     
     public void setNome(String nome) {
         this.nome = nome;
