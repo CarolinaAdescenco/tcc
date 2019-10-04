@@ -8,6 +8,16 @@ public class Usuario {
     private PerfilDeAcesso perfil;
     private String cpf;
     private Endereco endereco = new Endereco();
+
+    public Usuario() {}
+
+    public Usuario(String nome, String email, String senha, PerfilDeAcesso perfil, String cpf) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.perfil = perfil;
+        this.cpf = cpf;
+    }
     
     public void setNome(String nome) {
         this.nome = nome;

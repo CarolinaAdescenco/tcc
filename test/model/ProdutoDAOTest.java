@@ -39,7 +39,7 @@ public class ProdutoDAOTest {
         Produto produto = this.dao.listar().get(0);
         assertEquals("descricao", produto.getDescricao());
     }
-    
+
     @Test
     public void deveListarProdutos() {
         for(int i = 0; i <= 3; i++) {
