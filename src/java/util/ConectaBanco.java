@@ -11,7 +11,7 @@ public class ConectaBanco {
         
         try{
             Class.forName("org.postgresql.Driver");            
-            conexao = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "Postgres2019!");
+            conexao = DriverManager.getConnection("jdbc:postgresql://localhost:15432/postgres", "postgres", "Postgres2019!");
         } catch(ClassNotFoundException | SQLException erro1){
             throw new RuntimeException(erro1);
         }

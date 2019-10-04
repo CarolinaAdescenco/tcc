@@ -23,7 +23,7 @@ public class ControleProduto extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        Connection conexao = ConectaBanco.getConnection();        
+        Connection conexao = ConectaBanco.getConnection();
         ProdutoDAO dao = new ProdutoDAO(conexao);
 
         try {
