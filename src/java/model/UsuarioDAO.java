@@ -19,6 +19,10 @@ public class UsuarioDAO {
 
     private final Connection conexao;
 
+    public UsuarioDAO() {
+        this.conexao = ConectaBanco.getConnection();
+    }
+
     public UsuarioDAO(Connection conexao) {
         this.conexao = conexao;
     }

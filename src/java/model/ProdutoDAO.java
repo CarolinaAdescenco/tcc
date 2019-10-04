@@ -18,6 +18,10 @@ public class ProdutoDAO {
     private static final String DELETAR_PRODUTO = "DELETE from produtos WHERE id = ?";
     private static final String ATUALIZAR_PRODUTO = "UPDATE produtos SET descricao = ?, valor_unitario = ?, quantidade_estoque = ?  WHERE id = ?";
 
+    public ProdutoDAO() {
+        this.conexao = ConectaBanco.getConnection();
+    }
+
     public ProdutoDAO(Connection conexao) {
         this.conexao = conexao;
     }

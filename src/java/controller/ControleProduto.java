@@ -24,7 +24,7 @@ public class ControleProduto extends HttpServlet {
             throws ServletException, IOException {
         
         Connection conexao = ConectaBanco.getConnection();
-        ProdutoDAO dao = new ProdutoDAO(conexao);
+        ProdutoDAO dao = new ProdutoDAO();
 
         try {
             String acao = request.getParameter("acao");

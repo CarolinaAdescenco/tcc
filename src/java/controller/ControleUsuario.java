@@ -21,8 +21,6 @@ public class ControleUsuario extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        Connection conexao = ConectaBanco.getConnection();
 
         try {
             String acao = request.getParameter("acao");
@@ -53,7 +51,7 @@ public class ControleUsuario extends HttpServlet {
                     usuario.setPerfil(PerfilDeAcesso.HOSPEDE);
                 }
 
-                UsuarioDAO usuarioDAO = new UsuarioDAO(conexao);
+                UsuarioDAO usuarioDAO = new UsuarioDAO();
                 usuarioDAO.cadastrar(usuario);
                 
                 EnderecoDAO enderecoDAO = new EnderecoDAO();
@@ -64,7 +62,7 @@ public class ControleUsuario extends HttpServlet {
                 rd.forward(request, response);
             } else if(acao.equals("Consultar")) {
                 int usuarioID = Integer.parseInt(request.getParameter("usuarioID"));
-                UsuarioDAO usuarioDAO = new UsuarioDAO(conexao);
+                UsuarioDAO usuarioDAO = new UsuarioDAO();
                 Usuario usuario;
                 usuario = usuarioDAO.consultar(usuarioID);
                 
@@ -77,7 +75,7 @@ public class ControleUsuario extends HttpServlet {
             } else if(acao.equals("Listar")) {
                 
                 ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
-                UsuarioDAO dao = new UsuarioDAO(conexao);
+                UsuarioDAO dao = new UsuarioDAO();
                 usuarios = dao.listar();
                 request.setAttribute("usuarios", usuarios);
                 
@@ -109,7 +107,7 @@ public class ControleUsuario extends HttpServlet {
                 
                 int usuarioID = Integer.parseInt(request.getParameter("usuarioID"));
 
-                UsuarioDAO usuarioDAO = new UsuarioDAO(conexao);
+                UsuarioDAO usuarioDAO = new UsuarioDAO();
                 usuarioDAO.editar(usuario, usuarioID);
                 
                 EnderecoDAO enderecoDAO = new EnderecoDAO();
@@ -120,7 +118,7 @@ public class ControleUsuario extends HttpServlet {
                 rd.forward(request, response);
             } else if(acao.equals("Excluir")) {
                 int usuarioID = Integer.parseInt(request.getParameter("usuarioID"));
-                UsuarioDAO dao = new UsuarioDAO(conexao);
+                UsuarioDAO dao = new UsuarioDAO();
                 dao.excluir(usuarioID);
                 
                 EnderecoDAO enderecoDAO = new EnderecoDAO();

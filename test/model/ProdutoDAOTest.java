@@ -10,26 +10,26 @@ import static org.junit.Assert.*;
 import util.ConectaBanco;
 
 public class ProdutoDAOTest {
-    
+
     private Connection conexao;
     private ProdutoDAO dao;
-    
+
     @Before
     public void setUp() throws SQLException {
         this.conexao = ConectaBanco.getConnection();
         this.conexao.setAutoCommit(false);
         this.dao = new ProdutoDAO(this.conexao);
     }
-    
+
     @After
     public void tearDown() throws SQLException {
         this.conexao.rollback();
     }
-    
+
     public Produto produto() {
         return new Produto("descricao", 10.99, 1);
     }
-    
+
     @Test
     public void deveCadastrarNovoProduto() {
         this.dao.cadastrar(this.produto());
