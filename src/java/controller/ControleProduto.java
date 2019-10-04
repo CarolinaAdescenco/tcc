@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import model.Produto;
 import model.ProdutoDAO;
 import model.Reserva;
 import model.ReservaDAO;
+import util.ConectaBanco;
 
 
 @WebServlet(name = "ControleProduto", urlPatterns = {"/ControleProduto"})
@@ -20,15 +22,17 @@ public class ControleProduto extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        Connection conexao = ConectaBanco.getConnection();
+        ProdutoDAO dao = new ProdutoDAO();
+
         try {
             String acao = request.getParameter("acao");
 
             if (acao.equals("Listar")) {
-                
-                ProdutoDAO produto = new ProdutoDAO();
                 ArrayList<Produto> produtos = new ArrayList<Produto>();
                 
-                produtos = produto.listar();
+                produtos = dao.listar();
                 request.setAttribute("produtos", produtos);
                 
                 ReservaDAO reservaDAO = new ReservaDAO();
@@ -41,7 +45,6 @@ public class ControleProduto extends HttpServlet {
                 
             } else if (acao.equals("Cadastrar")) {
                 
-                ProdutoDAO dao = new ProdutoDAO();
                 Produto produto = new Produto(
                     request.getParameter("descricao"),
                     Double.parseDouble(request.getParameter("valor_unitario")),
@@ -55,7 +58,6 @@ public class ControleProduto extends HttpServlet {
 
             } else if (acao.equals("Excluir")) {
                 int acoID = Integer.parseInt(request.getParameter("produtoID"));
-                ProdutoDAO dao = new ProdutoDAO();
                 dao.excluir(acoID);
 
                 request.setAttribute("msg", "Produto excluido com sucesso!");
@@ -63,14 +65,12 @@ public class ControleProduto extends HttpServlet {
 
             } else if (acao.equals("Consultar")) {
                 int produtoID = Integer.parseInt(request.getParameter("produtoID"));
-                ProdutoDAO dao = new ProdutoDAO();
                 Produto produto = dao.consultar(produtoID);
 
                 request.setAttribute("produto", produto);
                 request.getRequestDispatcher("/admin/editar_produto.jsp").forward(request, response);
 
             } else if (acao.equals("Editar")) {
-                ProdutoDAO dao = new ProdutoDAO();
                 Produto produto = new Produto(
                     Integer.parseInt(request.getParameter("produtoID")),
                     request.getParameter("descricao"),
@@ -88,13 +88,12 @@ public class ControleProduto extends HttpServlet {
                 int quantidade = Integer.parseInt(request.getParameter("quantidade"));
                 String observacao = request.getParameter("observacao");
                 
-                ProdutoDAO prodDAO = new ProdutoDAO();
-                Produto produto = prodDAO.consultar(produtoID);
+                Produto produto = dao.consultar(produtoID);
                 
                 Double total = produto.getValor_unitario() * quantidade;
                 
-                ReservaDAO dao = new ReservaDAO();
-                dao.adicionarItem(produtoID, reservaID, quantidade, total, observacao);
+                ReservaDAO resDAO = new ReservaDAO();
+                resDAO.adicionarItem(produtoID, reservaID, quantidade, total, observacao);
 
                 request.setAttribute("msg", "Item adicionado à reserva com sucesso!");
                 request.getRequestDispatcher("/admin/principal.jsp").forward(request, response);

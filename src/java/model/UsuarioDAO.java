@@ -16,16 +16,24 @@ public class UsuarioDAO {
     private static final String LISTAR_USUARIO = "SELECT * FROM usuarios";
     private static final String DELETAR_USUARIO = "DELETE from usuarios WHERE id = ?";
     private static final String ATUALIZAR_USUARIO = "UPDATE usuarios SET email = ?, senha = ?, perfil = ?, cpf = ?  WHERE id = ?";
+
+    private final Connection conexao;
+
+    public UsuarioDAO() {
+        this.conexao = ConectaBanco.getConnection();
+    }
+
+    public UsuarioDAO(Connection conexao) {
+        this.conexao = conexao;
+    }
     
     
     public Usuario cadastrar(Usuario usuario){
-        Connection conexao = null;
         PreparedStatement pstmt = null;
         ResultSet resUser;
         
         try{
-            conexao = ConectaBanco.getConnection();
-            pstmt = conexao.prepareStatement(CADASTRAR_NOVO_USUARIO, Statement.RETURN_GENERATED_KEYS);
+            pstmt = this.conexao.prepareStatement(CADASTRAR_NOVO_USUARIO, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, usuario.getEmail());
             pstmt.setString(2, usuario.getSenha());
             pstmt.setString(3, usuario.getPerfil().toString());
@@ -41,9 +49,9 @@ public class UsuarioDAO {
         } catch(SQLException sqlErro){
             throw new RuntimeException(sqlErro);
         }finally{
-            if(conexao != null){
+            if(this.conexao != null){
                 try{
-                    conexao.close();
+                    this.conexao.close();
                 } catch(SQLException ex){
                     throw new RuntimeException(ex);
                 }
@@ -54,12 +62,10 @@ public class UsuarioDAO {
     public Usuario autenticaUsuario(Usuario usuario){
         Usuario usuarioAutenticado = null;
         
-        Connection conexao = null;
         PreparedStatement pstmt = null;
         ResultSet rsUsuario = null;
         try {
-            conexao = ConectaBanco.getConnection();
-            pstmt = conexao.prepareStatement(AUTENTICA_USUARIO);
+            pstmt = this.conexao.prepareStatement(AUTENTICA_USUARIO);
             pstmt.setString(1, usuario.getEmail());
             pstmt.setString(2, usuario.getSenha());
             rsUsuario = pstmt.executeQuery();
@@ -72,9 +78,9 @@ public class UsuarioDAO {
         } catch (SQLException sqlErro) {
             throw new RuntimeException(sqlErro);
         } finally {
-            if (conexao != null) {
+            if (this.conexao != null) {
                 try {
-                    conexao.close();
+                    this.conexao.close();
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -87,12 +93,10 @@ public class UsuarioDAO {
     public Usuario consultar(int usuarioID) {
         Usuario usuario = null;
         
-        Connection conexao = null;
         PreparedStatement pstmt = null;
         ResultSet rsUsuario = null;
         try {
-            conexao = ConectaBanco.getConnection();
-            pstmt = conexao.prepareStatement(BUSCAR_USUARIO);
+            pstmt = this.conexao.prepareStatement(BUSCAR_USUARIO);
             pstmt.setInt(1, usuarioID);
             rsUsuario = pstmt.executeQuery();
             if (rsUsuario.next()) {
@@ -106,9 +110,9 @@ public class UsuarioDAO {
         } catch (SQLException sqlErro) {
             throw new RuntimeException(sqlErro);
         } finally {
-            if (conexao != null) {
+            if (this.conexao != null) {
                 try {
-                    conexao.close();
+                    this.conexao.close();
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -121,12 +125,10 @@ public class UsuarioDAO {
     public ArrayList<Usuario> listar() {
         ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
         
-        Connection conexao = null;
         PreparedStatement pstmt = null;
         ResultSet rsUsuario = null;
         try {
-            conexao = ConectaBanco.getConnection();
-            pstmt = conexao.prepareStatement(LISTAR_USUARIO);
+            pstmt = this.conexao.prepareStatement(LISTAR_USUARIO);
             rsUsuario = pstmt.executeQuery();
             while (rsUsuario.next()) {
                 Usuario usuario = new Usuario();
@@ -140,9 +142,9 @@ public class UsuarioDAO {
         } catch (SQLException sqlErro) {
             throw new RuntimeException(sqlErro);
         } finally {
-            if (conexao != null) {
+            if (this.conexao != null) {
                 try {
-                    conexao.close();
+                    this.conexao.close();
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -153,12 +155,10 @@ public class UsuarioDAO {
     }
 
     public void editar(Usuario usuario, int usuarioID) {
-        Connection conexao = null;
         PreparedStatement pstmt = null;
         ResultSet rsUsuario = null;
         try {
-            conexao = ConectaBanco.getConnection();
-            pstmt = conexao.prepareStatement(ATUALIZAR_USUARIO);
+            pstmt = this.conexao.prepareStatement(ATUALIZAR_USUARIO);
             pstmt.setString(1, usuario.getEmail());
             pstmt.setString(2, usuario.getSenha());
             pstmt.setString(3, usuario.getPerfil().toString());
@@ -168,9 +168,9 @@ public class UsuarioDAO {
         } catch(SQLException sqlErro){
             throw new RuntimeException(sqlErro);
         } finally {
-            if(conexao != null){
+            if(this.conexao != null){
                 try{
-                    conexao.close();
+                    this.conexao.close();
                 } catch(SQLException ex){
                     throw new RuntimeException(ex);
                 }
@@ -179,19 +179,17 @@ public class UsuarioDAO {
     }
     
     public void excluir(int usuarioID) {
-        Connection conexao = null;
         PreparedStatement pstmt = null;
         try {
-            conexao = ConectaBanco.getConnection();
-            pstmt = conexao.prepareStatement(DELETAR_USUARIO);
+            pstmt = this.conexao.prepareStatement(DELETAR_USUARIO);
             pstmt.setInt(1, usuarioID);
             pstmt.execute();
         } catch(SQLException sqlErro){
             throw new RuntimeException(sqlErro);
         } finally {
-            if(conexao != null){
+            if(this.conexao != null){
                 try{
-                    conexao.close();
+                    this.conexao.close();
                 } catch(SQLException ex){
                     throw new RuntimeException(ex);
                 }

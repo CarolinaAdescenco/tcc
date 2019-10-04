@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import model.EnderecoDAO;
 import model.PerfilDeAcesso;
 import model.Usuario;
 import model.UsuarioDAO;
+import util.ConectaBanco;
 
 @WebServlet(name = "ControleUsuario", urlPatterns = {"/ControleUsuario"})
 public class ControleUsuario extends HttpServlet {

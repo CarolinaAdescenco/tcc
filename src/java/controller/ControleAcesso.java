@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Usuario;
 import model.UsuarioDAO;
+import util.ConectaBanco;
 
 @WebServlet(name = "ControleAcesso", urlPatterns = {"/ControleAcesso"})
 public class ControleAcesso extends HttpServlet {
@@ -19,13 +21,16 @@ public class ControleAcesso extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
+        Connection conexao = ConectaBanco.getConnection();
+        
         try {
             String acao = request.getParameter("acao");
             if (acao.equals("Entrar")) {
                 Usuario usuario = new Usuario();
                 usuario.setEmail(request.getParameter("txtLogin"));
                 usuario.setSenha(request.getParameter("txtSenha"));
-                UsuarioDAO usuarioDAO = new UsuarioDAO();
+                UsuarioDAO usuarioDAO = new UsuarioDAO(conexao);
                 Usuario usuarioAutenticado = usuarioDAO.autenticaUsuario(usuario);
                 if (usuarioAutenticado != null) {
                     HttpSession sessaoUsuario = request.getSession();

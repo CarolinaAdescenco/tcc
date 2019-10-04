@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,6 +22,7 @@ import model.Reserva;
 import model.ReservaDAO;
 import model.Usuario;
 import model.UsuarioDAO;
+import util.ConectaBanco;
 
 @WebServlet(name = "ControleReserva", urlPatterns = {"/ControleReserva"})
 public class ControleReserva extends HttpServlet {
@@ -30,6 +32,7 @@ public class ControleReserva extends HttpServlet {
             throws ServletException, IOException {
         
         String acao = request.getParameter("acao");
+        Connection conexao = ConectaBanco.getConnection();        
         
         switch (acao) {
             case "finalizar":
@@ -42,15 +45,15 @@ public class ControleReserva extends HttpServlet {
                 acomodacoes = acomodacao.listar();
                 request.setAttribute("acomodacoes", acomodacoes);
 
-                UsuarioDAO usuario = new UsuarioDAO();
+                UsuarioDAO usuario = new UsuarioDAO(conexao);
                 ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
-                UsuarioDAO dao = new UsuarioDAO();
+                UsuarioDAO dao = new UsuarioDAO(conexao);
                 usuarios = dao.listar();
                 request.setAttribute("usuarios", usuarios);
                 // -- FIM
                 
                 // -- Dados para preencher os campos de lançamento de produto
-                ProdutoDAO produto = new ProdutoDAO();
+                ProdutoDAO produto = new ProdutoDAO(conexao);
                 ArrayList<Produto> produtos = produto.listar();
                 request.setAttribute("produtos", produtos);
                 // -- FIM
