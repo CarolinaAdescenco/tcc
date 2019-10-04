@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class Reserva {
 
@@ -14,6 +15,7 @@ public class Reserva {
     private Date dataCheckout;
     private Usuario usuario = new Usuario();
     private Acomodacao acomodacao = new Acomodacao();
+    private ArrayList<Consumo> consumos = new ArrayList<>();
 
 
     public Reserva(int acomodacaoID, int usuarioID, Date dataCheckin, Date dataCheckout, int adultos, int criancas) {
@@ -25,7 +27,7 @@ public class Reserva {
         this.criancas = criancas;
     }
 
-    Reserva() {}
+    public Reserva() {}
     
     
     public Usuario getUsuario() {
@@ -58,6 +60,14 @@ public class Reserva {
 
     public void setAcomodacaoID(int acomodacaoID) {
         this.acomodacaoID = acomodacaoID;
+    }
+
+    public ArrayList<Consumo> getConsumo() {
+        return this.consumos;
+    }
+
+    public void setConsumo(ArrayList<Consumo> consumo) {
+        this.consumos = consumo;
     }
 
     public int getUsuarioID() {

@@ -97,6 +97,7 @@ public class UsuarioDAO {
             rsUsuario = pstmt.executeQuery();
             if (rsUsuario.next()) {
                 usuario = new Usuario();
+                usuario.setNome(rsUsuario.getString("nome"));
                 usuario.setId(rsUsuario.getInt("id"));
                 usuario.setEmail(rsUsuario.getString("email"));
                 usuario.setSenha(rsUsuario.getString("senha"));
