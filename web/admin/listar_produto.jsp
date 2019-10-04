@@ -89,8 +89,6 @@
                 <div id="listar">
                     <h2>Produtos</h2>
 
-                    <% ArrayList<Produto> produtos = (ArrayList<Produto>) request.getAttribute("produtos"); %>
-
                     <table>
                         <thead>
                             <tr>
@@ -116,7 +114,6 @@
                                 <td>
                                     <a href="ControleProduto?acao=Excluir&produtoID=<%= produto.getId()%>"> <i
                                             class="material-icons">delete</i> </a>
-
                                 </td>
                             </tr>
                             <% }%>
@@ -135,7 +132,7 @@
                                     <option selected disabled>Selecione...</option>
                                     <% for (Reserva reserva : reservas) {%>
                                         <option value="<%= reserva.getId()%>">
-                                            <%= reserva.usuario.getNome() %> - CPF: <%= reserva.usuario.getCpf() %>
+                                            <%= reserva.getUsuario().getNome() %> - CPF: <%= reserva.getUsuario().getCpf() %>
                                         </option>
                                     <% } %>
                                 </select>   
