@@ -3,48 +3,9 @@
 <%@page import="model.Reserva"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="model.Usuario"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
 
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />   
-        <link rel="stylesheet" type="text/css"
-              href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">    
-        <link href="/tcc/assets/css/custom.css" rel="stylesheet" />
-        <title>Listar Usu√°rios</title>
-    </head>
-
-    <body>
-
-        <header> 
-            <nav>
-                <div class="nav-wrapper">
-                    <a href="#" class="brand-logo">Logo</a>
-                    <ul id="nav-mobile" class="right hide-on-med-and-down">
-                        <li><a href="/tcc/ControleAcomodacao?acao=Listar">Acomoda√ß√µes</a></li>
-                        <li><a href="/tcc/ControleUsuario?acao=Listar">Usu√°rios</a></li>
-                        <li><a href="/tcc/ControleProduto?acao=Listar">Produtos</a></li>
-                    </ul>
-                </div>
-            </nav>
-        </header>
-
-        <section class="container page-acomodacao">
-            <div class="row justify-content-end">
-                <button class="btn btn-primary btn-fab  btn-round" data-toggle="tooltip" data-placement="top"
-                        title="√Årea restrita">
-                    <i class="material-icons">widgets</i>
-                </button>
-            </div>
-
-
-            <p>
-                <a class="btn btn-primary btn-round my-3" href="/tcc/principal.jsp">
-                    <i class="material-icons">layers</i> P√°gina Principal </a>
-            </p>
+<%@ include file="../template/includes.jsp" %>
+<%@ include file="../template/header.jsp" %>
 
             <%
                 String msg = (String) request.getAttribute("msg");
@@ -74,7 +35,7 @@
                                 <th>CPF</th>
                                 <th>Data de checkin</th>
                                 <th>Data de checkout</th>
-                                <th>A√ß√µes</th>
+                                <th>AÁıes</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -86,7 +47,7 @@
                                 <td><%= reserva.getDataCheckout()%></td>
                                 <td>
                                     <button class="btn">Ver detalhes</button>
-                                    <a class="waves-effect waves-light btn modal-trigger" href="#modal<%= reserva.getId()%>">Lan√ßar produto</a>
+                                    <a class="waves-effect waves-light btn modal-trigger" href="#modal<%= reserva.getId()%>">LanÁar produto</a>
                                     <button class="btn">Finalizar estadia</button>
                                     
                                 </td>
@@ -94,7 +55,7 @@
                             <!-- Modal Structure -->
                         <div id="modal<%= reserva.getId()%>" class="modal">
                             <div class="modal-content">
-                                <h4>Lan√ßar produto para: <%= reserva.getUsuario().getNome()%></h4>
+                                <h4>LanÁar produto para: <%= reserva.getUsuario().getNome()%></h4>
                                 <form action="ControleProduto?acao=LancarProduto" method="POST">
                                     <div class="row justify-content-center">
                                         
@@ -137,7 +98,7 @@
 
                     <div class="row justify-content-center">
                         <div class="form-group col-12 col-md-4">
-                            <label for="tipoAcomodacao">Tipo de acomoda√ß√£o</label>
+                            <label for="tipoAcomodacao">Tipo de acomodaÁ„o</label>
                             <select name="acomodacaoID" class="form-control selectpicker" data-style="btn btn-link" id="acomodacaoID">
                                 <% ArrayList<Acomodacao> acomodacoes = (ArrayList<Acomodacao>) request.getAttribute("acomodacoes"); %>
                                 <% for (Acomodacao acomodacao : acomodacoes) {%>
@@ -148,7 +109,7 @@
                             </select>
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            <label for="tipoAcomodacao">Usu√°rio</label>
+                            <label for="tipoAcomodacao">Usu·rio</label>
                             <select name="usuarioID" class="form-control selectpicker" data-style="btn btn-link" id="usuarioID">
                                 <% ArrayList<Usuario> usuarios = (ArrayList<Usuario>) request.getAttribute("usuarios"); %>
                                 <% for (Usuario usuario : usuarios) {%>
@@ -159,14 +120,14 @@
                             </select>
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            <label for="criancas">Crian√ßas</label>
+                            <label for="criancas">CrianÁas</label>
                             <input type="number" name="criancas" id="criancas" min="0"/>
                             <br />
                             <label for="adultos">Adultos</label>
                             <input type="number" name="adultos" id="adultos" min="0"/>
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            <label for="checkin">Crian√ßas</label>
+                            <label for="checkin">CrianÁas</label>
                             <input type="date" name="checkin" class="datepicker" id="checkin"/>
                             <br />
                             <label for="checkout">Adultos</label>
@@ -178,20 +139,11 @@
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!--   Core JS Files   -->
-        <script src="/tcc/assets/js/core/jquery.min.js" type="text/javascript"></script>
-        <script src="/tcc/assets/js/core/popper.min.js" type="text/javascript"></script>
-        <!-- Compiled and minified JavaScript -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-        <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
-        <script src="/tcc/assets/js/main.js" type="text/javascript"></script>
         <script>
             $(document).ready(function () {
                 $('.modal').modal();
             });
         </script>
-    </body>
-
-</html>
+        
+<%@ include file="../template/footer.jsp" %>

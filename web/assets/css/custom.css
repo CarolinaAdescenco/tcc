@@ -18,13 +18,18 @@ form .btn {
 .btn {
   background-color: #9c27b0;
   display: flex;
-  justify-content: space-around;
-  margin: 0 10px; }
+  justify-content: center;
+  margin: 0 10px;
+  max-width: 250px; }
+  .btn i {
+    padding: 0 10px; }
   .btn:hover {
     background-color: #771e86; }
 
-.nav-wrapper {
+.navbar {
   background-color: #9c27b0; }
+  .navbar a {
+    color: #fff; }
 
 .background-home {
   background-image: url("../images/background-city.jpg");

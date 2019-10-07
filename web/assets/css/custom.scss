@@ -29,16 +29,25 @@ form{
 .btn{
     background-color: $cor-primaria;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     margin: 0 10px; 
+    max-width: 250px;
+    
+    i{
+        padding: 0 10px;
+    }
     
     &:hover{
         background-color: darken($cor-primaria, 10);
     }
 }
 
-.nav-wrapper{
+.navbar{
     background-color: $cor-primaria;
+    
+    a{
+        color: #fff;
+    }
 }
 
 .background-home{
