@@ -1,5 +1,7 @@
 package controller;
 
+import builders.ReservaBuilder;
+import builders.ReservaResolver;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
@@ -34,6 +36,19 @@ public class ControleReserva extends HttpServlet {
         switch (acao) {
             case "finalizar":
                 // TODO: implementar a finalização da reserva
+                break;
+            case "Detalhes":
+                int reservaID = Integer.parseInt(request.getParameter("reservaID"));
+                int usuarioID = Integer.parseInt(request.getParameter("usuarioID"));
+                
+                ReservaResolver reserva = new ReservaResolver();
+                ReservaBuilder builder = new ReservaBuilder();
+                
+                reserva.construir(builder, reservaID, usuarioID);
+                
+                request.setAttribute("reserva", builder.getResult());
+                
+                request.getRequestDispatcher("/admin/editar_reserva.jsp").forward(request, response);
                 break;
             default:
                 // -- Dados para preencher os campos de cadastro de nova reserva        
