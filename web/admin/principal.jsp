@@ -2,24 +2,32 @@
 <%@ include file="../template/header.jsp" %>
 
 
-        <h2>Bem vindo</h2>
+        <h2 class="my-5 text-center">O que deseja ver?</h2>
 
         <%
                 String msg = (String) request.getAttribute("msg");
                 if(msg != null){
             %>
-        <font color="blue"><%= msg %></font>
+        <h3><%= msg %></h2>
         <% } %>
 
-        <div class="row justify-content-center">
-            <a class="btn btn-primary btn-round mx-2" href="/tcc/ControleUsuario?acao=Listar"> <i
-                    class="material-icons">person</i>
-                Usuários</a>
-            <a class="btn btn-primary btn-round mx-2" href="/tcc/ControleAcomodacao?acao=Listar"> <i
+        <div class="row">
+            <div class="col-12 col-md-3">
+                <a class="btn mx-2" href="/tcc/ControleUsuario?acao=Listar"> <i
+                        class="material-icons">person</i>
+                    Usuários</a>
+            </div>
+            <div class="col-12 col-md-3">
+            <a class="btn mx-2" href="/tcc/ControleAcomodacao?acao=Listar"> <i
                     class="material-icons">local_hotel</i> Acomodações</a>
-            <a class="btn btn-primary btn-round mx-2" href="/tcc/ControleReserva?acao=Listar"> <i class="material-icons">vpn_key</i>
-                Reservas</a>
-            <a class="btn btn-primary btn-round mx-2" href="/tcc/ControleProduto?acao=Listar"> <i class="material-icons">vpn_key</i>
-                Produtos</a>
+            </div>
+            <div class="col-12 col-md-3">
+                <a class="btn mx-2" href="/tcc/ControleReserva?acao=Listar"> <i class="material-icons">vpn_key</i>
+                    Reservas</a>
+            </div>
+            <div class="col-12 col-md-3">
+                <a class="btn mx-2" href="/tcc/ControleProduto?acao=Listar"> <i class="material-icons">vpn_key</i>
+                    Produtos</a>
+            </div>
         </div>
  <%@ include file="../template/footer.jsp" %>

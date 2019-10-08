@@ -30,8 +30,8 @@ form{
     background-color: $cor-primaria;
     display: flex;
     justify-content: center;
-    margin: 0 10px; 
-    max-width: 250px;
+    margin: 0 10px;
+    color: white !important;
     
     i{
         padding: 0 10px;
@@ -76,13 +76,6 @@ form{
     margin: 2rem auto;
 }
 
-.row{  
-    @for $i from 1 through 12{
-        .col.s#{$i}, .col.m#{$i}{
-            margin-left: 0;
-        }
-    } 
-}  
 
 table{
     td{
@@ -125,4 +118,19 @@ ul{
     .indicator{
         background-color: $cor-primaria;
     }
+}
+
+ul{
+    li{
+        list-style: none;
+        
+        a{
+           color: white; 
+        }
+        
+    }
+}
+
+.select-dropdown.dropdown-trigger, .dropdown-content.select-dropdown, .caret{
+    display: none;
 }

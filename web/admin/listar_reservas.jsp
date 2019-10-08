@@ -15,12 +15,7 @@
             <% } %>
 
             <div class="row">
-                <div class="col s12">
-                    <ul class="tabs">
-                        <li class="tab col s3"><a class="active" href="#listar">Listar</a></li>
-                        <li class="tab col s3"><a href="#cadastrar">Cadastrar</a></li>
-                    </ul>
-                </div>
+                <%@ include file="../template/tabs.jsp" %>
 
 
                 <div id="listar" class="col s12">

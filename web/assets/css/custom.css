@@ -20,7 +20,7 @@ form .btn {
   display: flex;
   justify-content: center;
   margin: 0 10px;
-  max-width: 250px; }
+  color: white !important; }
   .btn i {
     padding: 0 10px; }
   .btn:hover {
@@ -49,31 +49,6 @@ form .btn {
 .container {
   margin: 2rem auto; }
 
-.row .col.s1, .row .col.m1 {
-  margin-left: 0; }
-.row .col.s2, .row .col.m2 {
-  margin-left: 0; }
-.row .col.s3, .row .col.m3 {
-  margin-left: 0; }
-.row .col.s4, .row .col.m4 {
-  margin-left: 0; }
-.row .col.s5, .row .col.m5 {
-  margin-left: 0; }
-.row .col.s6, .row .col.m6 {
-  margin-left: 0; }
-.row .col.s7, .row .col.m7 {
-  margin-left: 0; }
-.row .col.s8, .row .col.m8 {
-  margin-left: 0; }
-.row .col.s9, .row .col.m9 {
-  margin-left: 0; }
-.row .col.s10, .row .col.m10 {
-  margin-left: 0; }
-.row .col.s11, .row .col.m11 {
-  margin-left: 0; }
-.row .col.s12, .row .col.m12 {
-  margin-left: 0; }
-
 table td {
   padding: 5px; }
   table td .material-icons {
@@ -96,5 +71,13 @@ ul.tabs {
     color: #9c27b0; }
 .tabs .indicator {
   background-color: #9c27b0; }
+
+ul li {
+  list-style: none; }
+  ul li a {
+    color: white; }
+
+.select-dropdown.dropdown-trigger, .dropdown-content.select-dropdown, .caret {
+  display: none; }
 
 /*# sourceMappingURL=custom.css.map */

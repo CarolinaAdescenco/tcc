@@ -13,18 +13,13 @@
             <% } %>
 
             <div class="row">
-                <div class="col s12">
-                    <ul class="tabs">
-                        <li class="tab col s3"><a class="active" href="#cadastrar">Cadastrar</a></li>
-                        <li class="tab col s3"><a href="#listar">Listar</a></li>
-                    </ul>
-                </div>
+                <%@ include file="../template/tabs.jsp" %>
 
                 <div id="cadastrar" class="col s12">
                     <h2>Cadastrar nova acomodação</h2>
                     <form action="ControleAcomodacao" method="POST">
                         <div class="row justify-content-center">
-                            <div class="form-group col s12 m4">
+                            <div class="form-group col-12 col-md-4">
                                 <label for="tipoAcomodacao">Tipo</label>
                                 <select name="tipo" class="form-control selectpicker" data-style="btn btn-link"
                                         id="tipoAcomodacao">
@@ -32,16 +27,16 @@
                                     <option value="SOLTEIRO">Solteiro</option>
                                 </select>
                             </div>
-                            <div class="form-group col s12 m4">
+                            <div class="form-group col-12 col-md-4">
                                 <label class="ml-3" for="descricao">Descrição</label>
                                 <input class="form-control" type="text" required name="descricao" id="descricao">                
                             </div>            
-                            <div class="form-group col s12 m4">
+                            <div class="form-group col-12 col-md-4">
                                 <label class="ml-3" for="valor_unitario">Valor Padrão:</label>
                                 <input class="form-control" type="text" required name="valor_padrao" id="valor_unitario">
                             </div>
-                            <div class="form-group col s12 m4">
-                                <input class="btn btn-primary" type="submit" value="Cadastrar" required name="acao" readonly>
+                            <div class="form-group col-12 col-md-4">
+                                <input class="btn" type="submit" value="Cadastrar" required name="acao" readonly>
                             </div>
                         </div>
                     </form>
@@ -53,7 +48,7 @@
 
                     <h2>Acomodações</h2>
 
-                    <table>
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th>ID</th>

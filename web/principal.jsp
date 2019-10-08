@@ -6,14 +6,20 @@
             Usuario usuario = (Usuario)session.getAttribute("usuarioAutenticado");
             if(usuario != null){
         %>
-            <h1>Bem vindo, <%= usuario.getEmail()%></h1>
+            <h1>Olá, <%= usuario.getEmail()%>!</h1>
         <% } %>
-
-        <div class="row justify-content-center">
-            <a class="btn btn-primary btn-round mx-2" href="admin/principal.jsp"> <i class="material-icons">person</i>
-                Área restrita</a>
-            <a class="btn btn-primary btn-round mx-2" href="ControleAcesso?acao=Sair"> <i
-                    class="material-icons">exit_to_app</i> Logout</a>
+        
+        <div class="row justify-content-center my-5">
+            <div class="col-12 col-md-4">
+                <a class="btn mx-2" href="admin/principal.jsp"> <i class="material-icons">person</i>
+                    Área restrita</a>
+            </div>
+                 
+            <div class="col-12 col-md-4">
+                <a class="btn mx-2" href="ControleAcesso?acao=Sair"> <i
+                        class="material-icons">exit_to_app</i> Logout</a>
+             </div>       
+                    
         </div>
     </section>
 

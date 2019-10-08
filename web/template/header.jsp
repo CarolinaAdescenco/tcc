@@ -15,7 +15,9 @@
 </header>
 
 <section class="container page-acomodacao">
-    <div class="row">                
-        <a class="btn col s3 m3" href="/tcc/principal.jsp">
-            <i class="material-icons">layers</i> Página Principal</a>
+    <div class="row">
+        <div class="col-12 col-md-4">
+            <a class="btn" href="/tcc/principal.jsp">
+                <i class="material-icons">layers</i> Página Principal</a>            
+         </div>
     </div>

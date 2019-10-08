@@ -14,12 +14,7 @@
             <% } %>
 
             <div class="row">
-                <div class="col s12">
-                    <ul class="tabs">
-                        <li class="tab col s3"><a class="active" href="#cadastrar">Cadastrar</a></li>
-                        <li class="tab col s3"><a href="#listar">Listar</a></li>
-                    </ul>
-                </div>
+                <%@ include file="../template/tabs.jsp" %>
 
                 <div id="cadastrar" class="col s12">
 
@@ -28,7 +23,7 @@
 
                     <form action="ControleAcomodacao" method="POST">
                         <div class="row justify-content-center">
-                            <div class="form-group col s12 m4">
+                            <div class="form-group col-12 col-md-4">
                                 <label for="tipoAcomodacao">Tipo</label>
                                 <select name="tipo" class="form-control selectpicker" data-style="btn btn-link" id="tipoAcomodacao">
                                     <option value="SUITE">Suite</option>
@@ -36,18 +31,18 @@
                                 </select>
                             </div>
 
-                            <div class="form-group col s12 m4">
+                            <div class="form-group col-12 col-md-4">
                                 <label class="ml-3" for="descricao">Descrição</label>
                                 <input type="text" name="descricao" class="form-control" id="descricao">
                             </div>
 
-                            <div class="form-group col s12 m4">
+                            <div class="form-group col-12 col-md-4">
                                 <label class="ml-3" for="valor_padrao">Valor Padrão</label>
                                 <input type="text" name="valor_padrao" class="form-control" id="valor_padrao">
                             </div>
 
-                            <div class="form-group col s12 m4">
-                                <input class="btn btn-primary" type="submit" value="Cadastrar" name="acao">
+                            <div class="form-group col-12 col-md-4">
+                                <input class="btn mx-0" type="submit" value="Cadastrar" name="acao">
                             </div>
                         </div>
                     </form>

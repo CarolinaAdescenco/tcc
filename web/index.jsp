@@ -4,10 +4,10 @@
 
     <section class="container page-login">        
 
-        <div class="row">
-            <div class="col s10 m6 offset-m3">               
+        <div class="row justify-content-center">
+            <div class="col-10 col-md-5">               
                 <form action="ControleAcesso" method="POST">
-                    <h3 class="text-center">Bem vindo!</h3>
+                    <h3 class="text-center mb-5">Bem vindo!</h3>
                     <%
                         String msg = (String) request.getAttribute("msg");
                         if(msg != null){
@@ -15,14 +15,12 @@
                         <font color="red"><%=msg%></font>
                     <% } %>
                     <div class="form-group">
-                        <label for="login">Login</label>
-                        <input type="text" name="txtLogin" class="form-control" id="login">
+                        <input type="text" name="txtLogin" class="form-control" id="login" placeholder="Usuário">
                     </div>
                     <div class="form-group">
-                        <label for="senha">Senha</label>
-                        <input type="password" name="txtSenha" class="form-control" id="senha">
+                        <input type="password" name="txtSenha" class="form-control" id="senha" placeholder="Senha">
                     </div>
-                    <input class="btn btn-primary" type="submit" value="Entrar" name="acao">
+                    <input class="btn m-0" type="submit" value="Entrar" name="acao">
                 </form>
             </div>
         </div>

@@ -16,12 +16,11 @@
 <% ArrayList<Reserva> reservas = (ArrayList<Reserva>) request.getAttribute("reservas"); %>
 
 <div class="row">
-    <div class="col s12">
+    <div class="col-12">
         <ul class="tabs">
-
-            <li class="tab col s3"><a class="active" href="#listar">Listar</a></li>
-            <li class="tab col s3"><a href="#lancar">Lançar</a></li>
-            <li class="tab col s3"><a href="#cadastrar">Cadastrar</a></li>
+            <li class="tab col-3"><a class="active" href="#listar">Listar</a></li>
+            <li class="tab col-3"><a href="#lancar">Lançar</a></li>
+            <li class="tab col-3"><a href="#cadastrar">Cadastrar</a></li>
         </ul>
     </div>
 
@@ -31,21 +30,21 @@
         <h2>Cadastrar novo produto</h2>
         <form action="ControleProduto" method="POST">
             <div class="row justify-content-center">
-                <div class="form-group col s12 m4">
+                <div class="form-group col-12 col-md-4">
                     <label class="ml-3" for="descricao">Descrição</label>
                     <input class="form-control" type="text" required name="descricao" id="descricao">
                 </div>
-                <div class="form-group col s12 m4">
+                <div class="form-group col-12 col-md-4">
                     <label class="ml-3" for="valor_unitario">Valor Unitário</label>
                     <input class="form-control" type="text" required name="valor_unitario" id="valor_unitario">
                 </div>
-                <div class="form-group col s12 m4">
+                <div class="form-group col-12 col-md-4">
                     <label class="ml-3" for="quantidade">Quantidade em Estoque</label>
                     <input class="form-control" type="text" required name="quantidade_estoque" id="quantidade">
                 </div>             
 
-                <div class="form-group col s12 m4">
-                    <input class="btn btn-primary" type="submit" value="Cadastrar" required name="acao" readonly>
+                <div class="form-group col-12 col-md-4">
+                    <input class="btn" type="submit" value="Cadastrar" required name="acao" readonly>
                 </div>
             </div>
         </form>
@@ -56,7 +55,7 @@
 
         <% ArrayList<Produto> produtos = (ArrayList<Produto>) request.getAttribute("produtos"); %>
 
-        <table>
+        <table class="table">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -94,7 +93,7 @@
         <h1>Lançar produto</h1>
         <form action="ControleProduto?acao=LancarProduto" method="POST">
             <div class="row justify-content-center">
-                <div class="form-group col s12 m4">
+                <div class="form-group col-12 col-md-4">
                     <label class="ml-3" for="valor_unitario">Hospede</label>
                     <select name="reservaID">
                         <option selected disabled>Selecione...</option>
@@ -105,7 +104,7 @@
                         <% } %>
                     </select>   
                 </div>
-                <div class="form-group col s12 m4">
+                <div class="form-group col-12 col-md-4">
                     <label class="ml-3" for="descricao">Produto</label>
                     <select name="produtoID">
                         <option selected disabled>Selecione...</option>
@@ -114,17 +113,17 @@
                         <% }%>
                     </select>
                 </div>
-                <div class="form-group col s12 m4">
+                <div class="form-group col-12 col-md-4">
                     <label class="ml-3" for="quantidade">Quantidade</label>
                     <input class="form-control" type="number" min="1" required name="quantidade" id="quantidade">
                 </div>
-                <div class="form-group col s12 m4">
+                <div class="form-group col-12 col-md-4">
                     <label class="ml-3" for="observacao">Observacao</label>
                     <input class="form-control" type="text" required name="observacao" id="observacao">
                 </div>             
                 <br />
-                <div class="form-group col s12 m4">
-                    <input class="btn btn-primary" type="submit" value="Cadastrar" required name="acao">
+                <div class="form-group col-12 col-md-4">
+                    <input class="btn " type="submit" value="Cadastrar" required name="acao">
                 </div>
             </div>
         </form>
@@ -135,21 +134,21 @@
         <h1>Cadastrar novo produto</h1>
         <form action="ControleProduto" method="POST">
             <div class="row justify-content-center">
-                <div class="form-group col s12 m4">
+                <div class="form-group col-12 col-md-4">
                     <label class="ml-3" for="descricao">Descrição</label>
                     <input class="form-control" type="text" required name="descricao" id="descricao">
                 </div>
-                <div class="form-group col s12 m4">
+                <div class="form-group col-12 col-md-4">
                     <label class="ml-3" for="valor_unitario">Valor Unitário</label>
                     <input class="form-control" type="text" required name="valor_unitario" id="valor_unitario">
                 </div>
-                <div class="form-group col s12 m4">
+                <div class="form-group col-12 col-md-4">
                     <label class="ml-3" for="quantidade">Quantidade em Estoque</label>
                     <input class="form-control" type="text" required name="quantidade_estoque" id="quantidade">
                 </div>             
 
-                <div class="form-group col s12 m4">
-                    <input class="btn btn-primary" type="submit" value="Cadastrar" required name="acao" readonly>
+                <div class="form-group col-12 col-md-4">
+                    <input class="btn " type="submit" value="Cadastrar" required name="acao" readonly>
                 </div>
             </div>
         </form>
