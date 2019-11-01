@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Acomodacao;
 import model.AcomodacaoDAO;
+import model.Consumo;
+import model.ConsumoDAO;
 import model.Produto;
 import model.ProdutoDAO;
 import model.Reserva;
@@ -46,6 +48,8 @@ public class ControleReserva extends HttpServlet {
                 
                 reserva.construir(builder, reservaID, usuarioID);
                 
+                ProdutoDAO prodDAO = new ProdutoDAO();
+                request.setAttribute("produtos", prodDAO.listar());
                 request.setAttribute("reserva", builder.getResult());
                 
                 request.getRequestDispatcher("/admin/editar_reserva.jsp").forward(request, response);
