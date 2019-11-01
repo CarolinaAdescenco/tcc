@@ -1,3 +1,5 @@
+<%@page import="model.Produto"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="model.Consumo"%>
 <%@page import="model.Reserva"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -64,23 +66,31 @@
                         <h4>Adicionar produto</h4>
                         <p>Incluir produto para <%= reserva.getUsuario().getNome() %></p>
                         
-                        <form action="action">
+                        <% ArrayList<Produto> produtos = (ArrayList<Produto>)request.getAttribute("produtos"); %>
+                        <form action="ControleConsumo" method="POST">
+                            <input type="hidden" name="reservaID" value="<%= reserva.getId() %>" />
                             <label>
                                 Selecione o produto
-                                <select>
-                                    <option value="">Refri</option>
+                                <select name="produtoID">
+                                    <% for (Produto produto : produtos) { %>
+                                        <option value="<%= produto.getId() %>"><%= produto.getDescricao() %></option>
+                                    <% } %>
                                 </select>
                             </label>
                             <label>
                                 Quantidade
-                                <input type="number" />
+                                <input type="number" min="0" name="quantidade"/>
                             </label>
-                        </form>
+                            <label>
+                                Observação:
+                                <textarea name="observacao" class="materialize-textarea"></textarea>
+                            </label>
                       </div>
                       <div class="modal-footer">
-                          <a href="#!" class="waves-effect waves-green btn-flat">Adicionar</a>
-                        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
-                      </div>
+                          <button type="submit" class="waves-effect waves-green btn-flat">Adicionar</button>
+                            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+                      </div> 
+                        </form>
                     </div>
 
                     <table>
