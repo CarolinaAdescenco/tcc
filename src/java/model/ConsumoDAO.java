@@ -9,7 +9,7 @@ import util.ConectaBanco;
 
 public class ConsumoDAO {
     
-    private static final String CONSULTAR = "SELECT consumo.quantidade, consumo.sub_total, consumo.observacao, produto.descricao as descricao_produto FROM produtos as produto, produtos_reservas as consumo WHERE consumo.reservas_id = ? AND produto.id = consumo.produtos_id";
+    private static final String CONSULTAR = "SELECT consumo.id, consumo.quantidade, consumo.sub_total, consumo.observacao, produto.descricao as descricao_produto FROM produtos as produto, produtos_reservas as consumo WHERE consumo.reservas_id = ? AND produto.id = consumo.produtos_id";
     
     public ArrayList<Consumo> consultar(int reservaID) {
         Connection conexao = null;
@@ -25,6 +25,7 @@ public class ConsumoDAO {
             
             while (rsConsumo.next()) {
                 Consumo consumo = new Consumo();
+                consumo.setId(rsConsumo.getInt("id"));
                 consumo.setObservacao(rsConsumo.getString("observacao"));
                 consumo.setSubTotal(rsConsumo.getDouble("sub_total"));
                 consumo.setQuantidade(rsConsumo.getInt("quantidade"));
