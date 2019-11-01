@@ -46,7 +46,10 @@
                 <% Reserva reserva = (Reserva)request.getAttribute("reserva"); %>
                 <div class="col 12">
                     <h1><%= reserva.getUsuario().getNome() %></h1>
-                    <p>Check-in: <%= reserva.getDataCheckin() %></p>
+                    <p>
+                        Check-in: <%= reserva.getDataCheckin() %>
+                        <a class="waves-effect waves-light btn-small" href="">Confirmar</a>
+                    </p>
                     <p>Check-out: <%= reserva.getDataCheckout() %></p>
                     <p>Acomodação: <%= reserva.getAcomodacao().getDescricao() %></p>
                 </div>
