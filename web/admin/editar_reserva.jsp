@@ -98,6 +98,7 @@
                             <tr>
                                 <th>Descrição</th>
                                 <th>Quantidade</th>
+                                <th>Observação</th>
                                 <th>Subtotal</th>
                                 <th>Ações</th>
                             </tr>
@@ -107,6 +108,7 @@
                                 <tr>
                                     <td><%= consumo.getProduto().getDescricao() %></td>
                                     <td><%= consumo.getQuantidade() %></td>
+                                    <td><%= consumo.getObservacao() %></td>
                                     <td><%= consumo.getSubTotal() %></td>
                                     <td>
                                         <a class="btn col s3 m3" href="ContoleReserva?acao=ExcluirProduto&id=<%= consumo.getId() %>">Excluir</a>
