@@ -4,11 +4,7 @@ import builders.ReservaBuilder;
 import builders.ReservaResolver;
 import java.io.IOException;
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -94,7 +90,10 @@ public class ControleReserva extends HttpServlet {
                 Integer.parseInt(request.getParameter("adultos")),
                 Integer.parseInt(request.getParameter("criancas"))
         );
-        reserva.calcularSubTotal(9.90);
+        
+        AcomodacaoDAO acoDAO = new AcomodacaoDAO();
+        Acomodacao aco = acoDAO.consultar(acomodacaoID);
+        reserva.calcularSubTotal(aco.getValorPadrao());
 
         ReservaDAO dao = new ReservaDAO();
         if (dao.estaDisponivel(acomodacaoID, checkin)) {

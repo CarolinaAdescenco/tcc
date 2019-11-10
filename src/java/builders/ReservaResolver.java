@@ -15,6 +15,6 @@ public class ReservaResolver {
         builder.setConsumo(conDAO.consultar(reservaID));
         
         ReservaDAO resDAO = new ReservaDAO();
-        builder.setReserva(resDAO.consultar(reservaID));
+        builder.setReserva(resDAO.consultar(usuarioID));
     }
 }
