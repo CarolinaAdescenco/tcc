@@ -67,7 +67,7 @@
                         <p>Incluir produto para <%= reserva.getUsuario().getNome() %></p>
                         
                         <% ArrayList<Produto> produtos = (ArrayList<Produto>)request.getAttribute("produtos"); %>
-                        <form action="ControleConsumo" method="POST">
+                        <form action="ControleConsumo?acao=Cadastrar" method="POST">
                             <input type="hidden" name="reservaID" value="<%= reserva.getId() %>" />
                             <label>
                                 Selecione o produto
@@ -111,31 +111,31 @@
                                     <td><%= consumo.getObservacao() %></td>
                                     <td><%= consumo.getSubTotal() %></td>
                                     <td>
-                                        <a class="btn col s3 m3" href="ContoleReserva?acao=ExcluirProduto&id=<%= consumo.getId() %>">Excluir</a>
+                                        <a class="btn col s3 m3 acaoExcluir" href="ControleConsumo?acao=Excluir&id=<%= consumo.getId() %>">Excluir</a>
                                         
                                         <a class="waves-effect waves-light btn modal-trigger col s3 m3" href="#modal<%= consumo.getId() %>">Editar</a>
                                         <div id="modal<%= consumo.getId() %>" class="modal">
                                             <div class="modal-content">
                                               <h4>Alterar produto</h4>
-                                              <p>Alterar produto para <%= reserva.getUsuario().getNome() %></p>
+                                              <p>Hospede <%= reserva.getUsuario().getNome() %></p>
 
-                                              <form action="action">
-                                                  <label>
-                                                      Selecione o produto
-                                                      <select>
-                                                          <option value="" selected disabled>Refri</option>
-                                                      </select>
-                                                  </label>
-                                                  <label>
-                                                      Quantidade
-                                                      <input type="number" value="<%= consumo.getQuantidade() %>"/>
-                                                  </label>
-                                              </form>
+                                              <form action="ControleConsumo?acao=Editar&id=<%= consumo.getId() %>" method="POST">
+                                                <p>Produto: <%= consumo.getProduto().getDescricao() %></p>
+                                                <input name="produtoID" value="<%= consumo.getProduto().getId() %>" type="hidden"/>
+                                                <label>
+                                                    Quantidade
+                                                    <input type="number" name="quantidade" value="<%= consumo.getQuantidade() %>"/>
+                                                </label>
+                                                <label>
+                                                    Observação:
+                                                    <textarea name="observacao" class="materialize-textarea"><%= consumo.getProduto().getDescricao() %></textarea>
+                                                </label>
                                             </div>
                                             <div class="modal-footer">
-                                                <a href="#!" class="waves-effect waves-green btn-flat">Adicionar</a>
-                                              <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+                                                <button class="waves-effect waves-green btn-flat" type="submit">Editar</button>
+                                                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
                                             </div>
+                                            </form>
                                           </div>
                                     </td>
                                 </tr>
