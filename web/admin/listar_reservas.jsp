@@ -84,7 +84,7 @@
                                 <td><%= reserva.getDataCheckin()%></td>
                                 <td><%= reserva.getDataCheckout()%></td>
                                 <td>
-                                    <a class="btn" href="ControleReserva?acao=Detalhes&reservaID=<%= reserva.getId() %>&usuarioID=<%= reserva.getUsuario().getId() %>">Ver detalhes</a>
+                                    <a class="btn" href="ControleReserva?acao=Detalhes&reservaID=<%= reserva.getId()%>&usuarioID=<%= reserva.getUsuario().getId()%>">Ver detalhes</a>
                                 </td>
                             </tr>
                             <!-- Modal Structure -->
@@ -93,11 +93,11 @@
                                 <h4>Lançar produto para: <%= reserva.getUsuario().getNome()%></h4>
                                 <form action="ControleProduto?acao=LancarProduto" method="POST">
                                     <div class="row justify-content-center">
-                                        
+
                                         <!-- ID do hospede -->
-                                        <input name="reservaID" type="hidden" value="<%= reserva.getId() %>" />
+                                        <input name="reservaID" type="hidden" value="<%= reserva.getId()%>" />
                                         <!-- Fim -->
-                                        
+
                                         <div class="form-group col s12 m4">
                                             <label class="ml-3" for="descricao">Produto</label>
                                             <% ArrayList<Produto> produtos = (ArrayList<Produto>) request.getAttribute("produtos"); %>
@@ -130,7 +130,6 @@
                 </div>
                 <div id="cadastrar" class="col s12">
                     <h2>Cadastrar</h2>
-
                     <div class="row justify-content-center">
                         <form action="ControleReserva" method="post">
                         <div class="form-group col-12 col-md-4">
