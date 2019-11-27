@@ -55,6 +55,10 @@
                     <h2>Cadastrar novo usuario</h2>
                     <form action="/tcc/ControleUsuario" method="POST">
                         <div class="row justify-content-center">
+                            <div class="form-group col s12 m12">
+                                <label class="ml-3" for="email">Nome</label>
+                                <input class="form-control" type="text" required name="txtNome" id="nome">
+                            </div>
                             <div class="form-group col s12 m6">
                                 <label class="ml-3" for="email">E-mail</label>
                                 <input class="form-control" type="text" required name="txtLogin" id="email">

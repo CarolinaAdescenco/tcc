@@ -10,7 +10,7 @@ import util.ConectaBanco;
 
 public class UsuarioDAO {
     
-    private static final String CADASTRAR_NOVO_USUARIO = "INSERT INTO usuarios (email, senha, perfil, cpf) VALUES(?,?,?,?)";
+    private static final String CADASTRAR_NOVO_USUARIO = "INSERT INTO usuarios (email, senha, perfil, cpf, nome) VALUES(?,?,?,?, ?)";
     private static final String AUTENTICA_USUARIO = "SELECT * FROM usuarios WHERE email=? AND senha=?";
     private static final String BUSCAR_USUARIO = "SELECT * FROM usuarios WHERE id=?";
     private static final String LISTAR_USUARIO = "SELECT * FROM usuarios";
@@ -30,6 +30,7 @@ public class UsuarioDAO {
             pstmt.setString(2, usuario.getSenha());
             pstmt.setString(3, usuario.getPerfil().toString());
             pstmt.setString(4, usuario.getCpf());
+            pstmt.setString(5, usuario.getNome());
             pstmt.executeUpdate();
             resUser = pstmt.getGeneratedKeys();
 

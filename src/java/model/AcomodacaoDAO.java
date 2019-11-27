@@ -58,8 +58,8 @@ public class AcomodacaoDAO {
         try{
             conexao = ConectaBanco.getConnection();
             pstmt = conexao.prepareStatement(INSERIR_ACOMODACAO);
-            pstmt.setString(1, acomodacao.getDescricao());
-            pstmt.setString(2, TipoAcomodacao.valueOf(acomodacao.getTipo()).toString());
+            pstmt.setString(1, TipoAcomodacao.valueOf(acomodacao.getTipo()).toString());
+            pstmt.setString(2, acomodacao.getDescricao());
             pstmt.setDouble(3, acomodacao.getValorPadrao());
             pstmt.execute();
         } catch(SQLException sqlErro){

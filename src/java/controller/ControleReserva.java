@@ -34,7 +34,7 @@ public class ControleReserva extends HttpServlet {
             throws ServletException, IOException {
         
         String acao = request.getParameter("acao");
-        
+
         switch (acao) {
             case "finalizar":
                 // TODO: implementar a finalização da reserva
@@ -42,7 +42,7 @@ public class ControleReserva extends HttpServlet {
             case "Detalhes":
                 int reservaID = Integer.parseInt(request.getParameter("reservaID"));
                 int usuarioID = Integer.parseInt(request.getParameter("usuarioID"));
-                
+
                 ReservaResolver reserva = new ReservaResolver();
                 ReservaBuilder builder = new ReservaBuilder();
                 
@@ -62,7 +62,7 @@ public class ControleReserva extends HttpServlet {
                 request.setAttribute("acomodacoes", acomodacoes);
 
                 UsuarioDAO usuario = new UsuarioDAO();
-                ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+                ArrayList<Usuario> usuarios = new ArrayList<>();
                 UsuarioDAO dao = new UsuarioDAO();
                 usuarios = dao.listar();
                 request.setAttribute("usuarios", usuarios);

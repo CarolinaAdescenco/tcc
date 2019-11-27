@@ -18,8 +18,7 @@
     </head>
 
     <body>
-
-        <header> 
+        <header>
             <nav>
                 <div class="nav-wrapper">
                     <a href="#" class="brand-logo">Logo</a>
@@ -133,6 +132,7 @@
                     <h2>Cadastrar</h2>
 
                     <div class="row justify-content-center">
+                        <form action="ControleReserva" method="post">
                         <div class="form-group col-12 col-md-4">
                             <label for="tipoAcomodacao">Tipo de acomodação</label>
                             <select name="acomodacaoID" class="form-control selectpicker" data-style="btn btn-link" id="acomodacaoID">
@@ -172,6 +172,7 @@
                         <div class="form-group col-12 col-md-4">
                             <input class="btn btn-primary" type="submit" value="Cadastrar" name="acao">
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
