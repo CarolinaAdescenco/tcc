@@ -2,9 +2,8 @@ $(document).ready(function () {
 
     $("#cep").blur(function () {
         var cep = $("#cep").val().replace(/\D/g, '');
-        console.log(cep);
 
-        if (cep != null) {
+        if (cep !== null) {
             let validaCep = /^[0-9]{8}$/;
 
             if (validaCep.test(cep)) {
@@ -20,5 +19,6 @@ $(document).ready(function () {
     
     $('.tabs').tabs();
     $('select').formSelect();
+    $('.modal').modal();
 });
 

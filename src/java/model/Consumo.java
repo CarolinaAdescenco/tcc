@@ -3,10 +3,19 @@ package model;
 
 public class Consumo {
     
+    private int id;
     private Double subTotal;
     private String observacao;
     private int quantidade;
     private Produto produtos = new Produto();
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getQuantidade() {
         return quantidade;

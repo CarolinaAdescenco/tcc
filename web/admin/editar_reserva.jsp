@@ -1,32 +1,159 @@
-<%-- 
-    Document   : editar_reserva
-    Created on : Oct 4, 2019, 3:00:57 PM
-    Author     : rafael
---%>
-
+<%@page import="model.Produto"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="model.Consumo"%>
 <%@page import="model.Reserva"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />   
+        <link rel="stylesheet" type="text/css"
+              href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">    
+        <link href="/tcc/assets/css/custom.css" rel="stylesheet" />
+        <title>Listar Acomodações</title>
     </head>
+
     <body>
-        <% Reserva reserva = (Reserva)request.getAttribute("reserva"); %>
-        
-        <h1><%= reserva.getUsuario().getNome() %></h1>
-        <p>Check-in: <%= reserva.getDataCheckin() %></p>
-        <p>Check-out: <%= reserva.getDataCheckout() %></p>
-        <p>Acomodação: <%= reserva.getAcomodacao().getDescricao() %></p>
-        
-        <hr>
-        
-        <% for (Consumo consumo : reserva.getConsumo()) { %>
-            <h2><%= consumo.getProduto().getDescricao() %></h2>
-            <p><%= consumo.getQuantidade() %></p>
-            <p><%= consumo.getSubTotal() %></p>
-        <% } %>
+
+        <header> 
+            <nav>
+                <div class="nav-wrapper">
+                    <a href="#" class="brand-logo">Logo</a>
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+                        <li><a href="/tcc/ControleAcomodacao?acao=Listar">Acomodações</a></li>
+                        <li><a href="/tcc/ControleUsuario?acao=Listar">Usuários</a></li>
+                        <li><a href="/tcc/ControleProduto?acao=Listar">Produtos</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <section class="container page-acomodacao">
+            <div class="row">                
+                 <a class="btn col s3 m3" href="/tcc/principal.jsp">
+                <i class="material-icons">layers</i> Página Principal </a>
+            </div>
+
+            <%
+                String msg = (String) request.getAttribute("msg");
+                if (msg != null) {
+            %>
+            <font color="blue"><%=msg%></font>
+            <% } %>
+
+            <div class="row">
+                <% Reserva reserva = (Reserva)request.getAttribute("reserva"); %>
+                <div class="col 12">
+                    <h1><%= reserva.getUsuario().getNome() %></h1>
+                    <p>
+                        Check-in: <%= reserva.getDataCheckin() %>
+                        <a class="waves-effect waves-light btn-small" href="">Confirmar</a>
+                    </p>
+                    <p>Check-out: <%= reserva.getDataCheckout() %></p>
+                    <p>Acomodação: <%= reserva.getAcomodacao().getDescricao() %></p>
+                </div>
+                <div id="listar" class="col s12">
+
+                    <h2>Produtos</h2>
+                    
+                    <a class="waves-effect waves-light btn modal-trigger col s3 m3" href="#modal1">Adicionar produto</a>
+
+                    <div id="modal1" class="modal">
+                      <div class="modal-content">
+                        <h4>Adicionar produto</h4>
+                        <p>Incluir produto para <%= reserva.getUsuario().getNome() %></p>
+                        
+                        <% ArrayList<Produto> produtos = (ArrayList<Produto>)request.getAttribute("produtos"); %>
+                        <form action="ControleConsumo?acao=Cadastrar" method="POST">
+                            <input type="hidden" name="reservaID" value="<%= reserva.getId() %>" />
+                            <label>
+                                Selecione o produto
+                                <select name="produtoID">
+                                    <% for (Produto produto : produtos) { %>
+                                        <option value="<%= produto.getId() %>"><%= produto.getDescricao() %></option>
+                                    <% } %>
+                                </select>
+                            </label>
+                            <label>
+                                Quantidade
+                                <input type="number" min="0" name="quantidade"/>
+                            </label>
+                            <label>
+                                Observação:
+                                <textarea name="observacao" class="materialize-textarea"></textarea>
+                            </label>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="submit" class="waves-effect waves-green btn-flat">Adicionar</button>
+                            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+                      </div> 
+                        </form>
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Descrição</th>
+                                <th>Quantidade</th>
+                                <th>Observação</th>
+                                <th>Subtotal</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for (Consumo consumo : reserva.getConsumo()) { %>
+                                <tr>
+                                    <td><%= consumo.getProduto().getDescricao() %></td>
+                                    <td><%= consumo.getQuantidade() %></td>
+                                    <td><%= consumo.getObservacao() %></td>
+                                    <td><%= consumo.getSubTotal() %></td>
+                                    <td>
+                                        <a class="btn col s3 m3 acaoExcluir" href="ControleConsumo?acao=Excluir&id=<%= consumo.getId() %>">Excluir</a>
+                                        
+                                        <a class="waves-effect waves-light btn modal-trigger col s3 m3" href="#modal<%= consumo.getId() %>">Editar</a>
+                                        <div id="modal<%= consumo.getId() %>" class="modal">
+                                            <div class="modal-content">
+                                              <h4>Alterar produto</h4>
+                                              <p>Hospede <%= reserva.getUsuario().getNome() %></p>
+
+                                              <form action="ControleConsumo?acao=Editar&id=<%= consumo.getId() %>" method="POST">
+                                                <p>Produto: <%= consumo.getProduto().getDescricao() %></p>
+                                                <input name="produtoID" value="<%= consumo.getProduto().getId() %>" type="hidden"/>
+                                                <label>
+                                                    Quantidade
+                                                    <input type="number" name="quantidade" value="<%= consumo.getQuantidade() %>"/>
+                                                </label>
+                                                <label>
+                                                    Observação:
+                                                    <textarea name="observacao" class="materialize-textarea"><%= consumo.getProduto().getDescricao() %></textarea>
+                                                </label>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button class="waves-effect waves-green btn-flat" type="submit">Editar</button>
+                                                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+                                            </div>
+                                            </form>
+                                          </div>
+                                    </td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+
+        <!--   Core JS Files   -->
+        <script src="/tcc/assets/js/core/jquery.min.js" type="text/javascript"></script>
+        <script src="/tcc/assets/js/core/popper.min.js" type="text/javascript"></script>
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
+        <script src="/tcc/assets/js/main.js" type="text/javascript"></script>
     </body>
+
 </html>

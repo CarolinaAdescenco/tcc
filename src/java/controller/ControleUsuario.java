@@ -30,6 +30,7 @@ public class ControleUsuario extends HttpServlet {
                 usuario.setEmail(request.getParameter("txtLogin"));
                 usuario.setSenha(request.getParameter("txtSenha"));
                 usuario.setCpf(request.getParameter("cpf"));
+                usuario.setNome(request.getParameter("txtNome"));
                 
                 endereco.setLogradouro(request.getParameter("logradouro"));
                 endereco.setNumero(Integer.parseInt(request.getParameter("numero")));

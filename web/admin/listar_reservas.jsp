@@ -18,8 +18,7 @@
     </head>
 
     <body>
-
-        <header> 
+        <header>
             <nav>
                 <div class="nav-wrapper">
                     <a href="#" class="brand-logo">Logo</a>
@@ -131,50 +130,49 @@
                 </div>
                 <div id="cadastrar" class="col s12">
                     <h2>Cadastrar</h2>
-
-                    <form method="POST" action="ControleReserva">
-                        <div class="row justify-content-center">
-                            <div class="form-group col-12 col-md-4">
-                                <label for="tipoAcomodacao">Tipo de acomodação</label>
-                                <select name="acomodacaoID" class="form-control selectpicker" data-style="btn btn-link" id="acomodacaoID">
-                                    <% ArrayList<Acomodacao> acomodacoes = (ArrayList<Acomodacao>) request.getAttribute("acomodacoes"); %>
-                                    <% for (Acomodacao acomodacao : acomodacoes) {%>
-                                    <option value="<%= acomodacao.getId()%>">
-                                        <%= acomodacao.getDescricao()%> - R$ <%= acomodacao.getValorPadrao()%>
-                                    </option>
-                                    <% } %>
-                                </select>
-                            </div>
-                            <div class="form-group col-12 col-md-4">
-                                <label for="tipoAcomodacao">Usuário</label>
-                                <select name="usuarioID" class="form-control selectpicker" data-style="btn btn-link" id="usuarioID">
-                                    <% ArrayList<Usuario> usuarios = (ArrayList<Usuario>) request.getAttribute("usuarios"); %>
-                                    <% for (Usuario usuario : usuarios) {%>
-                                    <option value="<%= usuario.getId()%>">
-                                        <%= usuario.getEmail()%> - <%= usuario.getCpf()%>
-                                    </option>
-                                    <% }%>
-                                </select>
-                            </div>
-                            <div class="form-group col-12 col-md-4">
-                                <label for="criancas">Crianças</label>
-                                <input type="number" name="criancas" id="criancas" min="0"/>
-                                <br />
-                                <label for="adultos">Adultos</label>
-                                <input type="number" name="adultos" id="adultos" min="0"/>
-                            </div>
-                            <div class="form-group col-12 col-md-4">
-                                <label for="checkin">Crianças</label>
-                                <input type="date" name="checkin" class="datepicker" id="checkin"/>
-                                <br />
-                                <label for="checkout">Adultos</label>
-                                <input type="date" name="checkout" id="checkout"/>
-                            </div>
-                            <div class="form-group col-12 col-md-4">
-                                <input class="btn btn-primary" type="submit" value="Cadastrar" name="acao">
-                            </div>
+                    <div class="row justify-content-center">
+                        <form action="ControleReserva" method="post">
+                        <div class="form-group col-12 col-md-4">
+                            <label for="tipoAcomodacao">Tipo de acomodação</label>
+                            <select name="acomodacaoID" class="form-control selectpicker" data-style="btn btn-link" id="acomodacaoID">
+                                <% ArrayList<Acomodacao> acomodacoes = (ArrayList<Acomodacao>) request.getAttribute("acomodacoes"); %>
+                                <% for (Acomodacao acomodacao : acomodacoes) {%>
+                                <option value="<%= acomodacao.getId()%>">
+                                    <%= acomodacao.getDescricao()%> - R$ <%= acomodacao.getValorPadrao()%>
+                                </option>
+                                <% } %>
+                            </select>
                         </div>
-                    </form>
+                        <div class="form-group col-12 col-md-4">
+                            <label for="tipoAcomodacao">Usuário</label>
+                            <select name="usuarioID" class="form-control selectpicker" data-style="btn btn-link" id="usuarioID">
+                                <% ArrayList<Usuario> usuarios = (ArrayList<Usuario>) request.getAttribute("usuarios"); %>
+                                <% for (Usuario usuario : usuarios) {%>
+                                <option value="<%= usuario.getId()%>">
+                                    <%= usuario.getEmail()%> - <%= usuario.getCpf()%>
+                                </option>
+                                <% }%>
+                            </select>
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            <label for="criancas">Crianças</label>
+                            <input type="number" name="criancas" id="criancas" min="0"/>
+                            <br />
+                            <label for="adultos">Adultos</label>
+                            <input type="number" name="adultos" id="adultos" min="0"/>
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            <label for="checkin">Crianças</label>
+                            <input type="date" name="checkin" class="datepicker" id="checkin"/>
+                            <br />
+                            <label for="checkout">Adultos</label>
+                            <input type="date" name="checkout" id="checkout"/>
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            <input class="btn btn-primary" type="submit" value="Cadastrar" name="acao">
+                        </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </section>

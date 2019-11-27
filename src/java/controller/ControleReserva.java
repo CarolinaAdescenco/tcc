@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Acomodacao;
 import model.AcomodacaoDAO;
+import model.Consumo;
+import model.ConsumoDAO;
 import model.Produto;
 import model.ProdutoDAO;
 import model.Reserva;
@@ -28,7 +30,7 @@ public class ControleReserva extends HttpServlet {
             throws ServletException, IOException {
         
         String acao = request.getParameter("acao");
-        
+
         switch (acao) {
             case "finalizar":
                 // TODO: implementar a finalização da reserva
@@ -36,12 +38,14 @@ public class ControleReserva extends HttpServlet {
             case "Detalhes":
                 int reservaID = Integer.parseInt(request.getParameter("reservaID"));
                 int usuarioID = Integer.parseInt(request.getParameter("usuarioID"));
-                
+
                 ReservaResolver reserva = new ReservaResolver();
                 ReservaBuilder builder = new ReservaBuilder();
                 
                 reserva.construir(builder, reservaID, usuarioID);
                 
+                ProdutoDAO prodDAO = new ProdutoDAO();
+                request.setAttribute("produtos", prodDAO.listar());
                 request.setAttribute("reserva", builder.getResult());
                 
                 request.getRequestDispatcher("/admin/editar_reserva.jsp").forward(request, response);
@@ -54,7 +58,7 @@ public class ControleReserva extends HttpServlet {
                 request.setAttribute("acomodacoes", acomodacoes);
 
                 UsuarioDAO usuario = new UsuarioDAO();
-                ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+                ArrayList<Usuario> usuarios = new ArrayList<>();
                 UsuarioDAO dao = new UsuarioDAO();
                 usuarios = dao.listar();
                 request.setAttribute("usuarios", usuarios);
