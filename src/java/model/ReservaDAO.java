@@ -21,6 +21,7 @@ public class ReservaDAO {
     private static final String ADICIONAR_ITEM_PEDIDO = "INSERT INTO produtos_reservas(produtos_id, reservas_id, quantidade, sub_total, observacao) VALUES(?, ?, ?, ?, ?)";
     private static final String DEFINIR_CHEGADA = "UPDATE reservas SET data_entrada = ? WHERE id = ?";
     private static final String CANCELAR_RESERVA = "UPDATE reservas SET data_entrada = ?, data_saida = ? WHERE id = ?";
+    private static String FINALIZAR_RESERVA = "UPDATE reservas SET data_saida = ? WHERE id = ?";
     
     
     public void cadastrar(Reserva reserva) {
@@ -267,6 +268,32 @@ public class ReservaDAO {
             pstmt.setDate(1, hoje);
             pstmt.setDate(2, hoje);
             pstmt.setInt(3, reservaID);
+            pstmt.execute();
+            
+        } catch(SQLException sqlErro){
+            throw new RuntimeException(sqlErro);
+        }finally{
+            if(conexao != null){
+                try{
+                    conexao.close();
+                } catch(SQLException ex){
+                    throw new RuntimeException(ex);
+                }
+            }
+        }
+    }
+    
+    public static void finalizar(Integer reservaID) {
+        Connection conexao = null;
+        PreparedStatement pstmt = null;
+        
+        Date hoje = new Date(Calendar.getInstance().getTime().getTime());
+        
+        try{
+            conexao = ConectaBanco.getConnection();
+            pstmt = conexao.prepareStatement(FINALIZAR_RESERVA);
+            pstmt.setDate(1, hoje);
+            pstmt.setInt(2, reservaID);
             pstmt.execute();
             
         } catch(SQLException sqlErro){

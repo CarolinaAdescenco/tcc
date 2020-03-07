@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.Acomodacao;
 import model.AcomodacaoDAO;
 import model.Consumo;
+import model.PagamentoDAO;
 import model.Produto;
 import model.ProdutoDAO;
 import model.Reserva;
@@ -182,8 +183,16 @@ public class ControleReserva extends HttpServlet {
         // -- FIM
     }
 
-    private void finalizar(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void finalizar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Integer reservaID = Integer.parseInt(request.getParameter("reservaID"));
+        Integer parcelas = Integer.parseInt(request.getParameter("parcelas"));
+        Double subTotal = Double.parseDouble(request.getParameter("subTotal"));
+
+        ReservaDAO.finalizar(reservaID);
+        PagamentoDAO.cadastrar(reservaID, subTotal, parcelas);
+        
+        request.setAttribute("msg", "Hospedagem concluida com sucesso.");
+        request.getRequestDispatcher("/admin/listar_reservas.jsp").forward(request, response);
     }
 
     private void cancelar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
