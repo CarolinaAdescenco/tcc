@@ -50,7 +50,7 @@
                 String msg = (String) request.getAttribute("msg");
                 if (msg != null) {
             %>
-            <font color="blue"><%=msg%></font>
+                <font color="blue"><%= msg %></font>
             <% } %>
 
             <div class="row">
@@ -88,7 +88,7 @@
                                 <td><%= reserva.getSituacao() %></td>
                                 <td>
                                     <a class="btn green" href="ControleReserva?acao=Detalhes&reservaID=<%= reserva.getId()%>&usuarioID=<%= reserva.getUsuario().getId()%>">Ver detalhes</a>
-                                    <a class="btn" href="ControleReserva?acao=Cancelar&reservaID=<%= reserva.getId()%>&usuarioID=<%= reserva.getUsuario().getId()%>">Cancelar</a>
+                                    <a class="btn cancelarReserva" href="ControleReserva?acao=Cancelar&reservaID=<%= reserva.getId()%>&usuarioID=<%= reserva.getUsuario().getId()%>">Cancelar</a>
                                 </td>
                             </tr>
                             <!-- Modal Structure -->
@@ -114,11 +114,11 @@
                                         </div>
                                         <div class="form-group col s12 m4">
                                             <label class="ml-3" for="quantidade">Quantidade</label>
-                                            <input class="form-control" type="number" min="1" required name="quantidade" id="quantidade">
+                                            <input class="form-control" type="number" min="1" required name="quantidade">
                                         </div>
                                         <div class="form-group col s12 m4">
                                             <label class="ml-3" for="observacao">Observacao</label>
-                                            <input class="form-control" type="text" required name="observacao" id="observacao">
+                                            <input class="form-control" type="text" required name="observacao">
                                         </div>
                                     </div>
                                 </form>
@@ -190,6 +190,9 @@
         <script src="/tcc/assets/js/main.js" type="text/javascript"></script>
         <script>
             $(document).ready(function () {
+                $('.cancelarReserva').on('click', function () {
+                    return confirm('Deseja cancelar? 50% do valor sera cobrado.');
+                });
                 $('.modal').modal();
             });
         </script>
