@@ -170,23 +170,23 @@
                         Subtotal:
                         R$ <%= (Double) reserva.getSubTotal() + (Double) request.getAttribute("totalConsumo") %>
                     </h5>
-                    <a class="waves-effect waves-light btn modal-trigger col s3 m3 <%= reserva.getDataEntrada() == null ? "disabled" : ""%>" href="#modal-finalizar">Finalizar</a>
+                    <a class="waves-effect waves-light btn modal-trigger col s3 m3 <%= reserva.getDataEntrada() == null || reserva.getDataSaida() == null ? "disabled" : ""%>" href="#modal-finalizar">Finalizar</a>
                     <div id="modal-finalizar" class="modal">
                         <div class="modal-content">
                             <h4>Finalizar hospedagem</h4>
                             <p>Hospede <%= reserva.getUsuario().getNome()%></p>
 
-                            <form action="ControleConsumo?acao=Finalizar" method="POST">
+                            <form action="ControlePagamento" method="POST">
                                 <input name="reservaID" value="<%= reserva.getId() %>" type="hidden"/>
                                 <label>
                                     Valor total:
-                                    <input type="number" name="subTotal" disabled value="<%= (Double) reserva.getSubTotal() + (Double) request.getAttribute("totalConsumo") %>"/>
+                                    <input type="number" name="subTotal" value="<%= (Double) reserva.getSubTotal() + (Double) request.getAttribute("totalConsumo") %>"/>
                                 </label>
                                 <label>
                                     Parcelas:
                                     <input type="number" name="parcelas" min="1" required/>
                                 </label>
-                                Parcelas: <p id="valorParcelas">1x de <%= (Double) reserva.getSubTotal() + (Double) request.getAttribute("totalConsumo") %></p>
+                                Parcelas: <p id="valorParcelas">1x de R$ <%= (Double) reserva.getSubTotal() + (Double) request.getAttribute("totalConsumo") %></p>
                         </div>
                         <div class="modal-footer">
                             <button class="waves-effect waves-green btn-flat" type="submit">Confirmar</button>

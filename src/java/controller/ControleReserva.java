@@ -52,9 +52,6 @@ public class ControleReserva extends HttpServlet {
             case "Cancelar":
                 this.cancelar(request, response);
                 break;
-            case "Finalizar":
-                this.finalizar(request, response);
-                break;
         }
     }
 
@@ -183,17 +180,6 @@ public class ControleReserva extends HttpServlet {
         // -- FIM
     }
 
-    private void finalizar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer reservaID = Integer.parseInt(request.getParameter("reservaID"));
-        Integer parcelas = Integer.parseInt(request.getParameter("parcelas"));
-        Double subTotal = Double.parseDouble(request.getParameter("subTotal"));
-
-        ReservaDAO.finalizar(reservaID);
-        PagamentoDAO.cadastrar(reservaID, subTotal, parcelas);
-        
-        request.setAttribute("msg", "Hospedagem concluida com sucesso.");
-        request.getRequestDispatcher("/admin/listar_reservas.jsp").forward(request, response);
-    }
 
     private void cancelar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Integer reservaID = Integer.parseInt(request.getParameter("reservaID"));
