@@ -1,6 +1,6 @@
 package model;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 
 public class Reserva {
@@ -13,6 +13,8 @@ public class Reserva {
     private Double subTotal;
     private Date dataCheckin;
     private Date dataCheckout;
+    private Date dataEntrada;
+    private Date dataSaida;
     private Usuario usuario = new Usuario();
     private Acomodacao acomodacao = new Acomodacao();
     private ArrayList<Consumo> consumos = new ArrayList<>();
@@ -28,7 +30,7 @@ public class Reserva {
     }
 
     public Reserva() {}
-    
+
     
     public Usuario getUsuario() {
         return usuario;
@@ -94,6 +96,22 @@ public class Reserva {
         this.dataCheckout = dataCheckout;
     }
 
+    public Date getDataEntrada() {
+        return dataEntrada;
+    }
+
+    public void setDataEntrada(Date dataEntrada) {
+        this.dataEntrada = dataEntrada;
+    }
+
+    public Date getDataSaida() {
+        return dataSaida;
+    }
+
+    public void setDataSaida(Date dataSaida) {
+        this.dataSaida = dataSaida;
+    }
+
     public int getAdultos() {
         return adultos;
     }
@@ -120,5 +138,30 @@ public class Reserva {
     
     public void calcularSubTotal(Double valorQuarto) {
         this.subTotal = this.adultos * valorQuarto;
+    }
+    
+    public String getSituacao() {
+        String situacao = null;
+        
+        if (this.dataEntrada == null) {
+            situacao = "Aguardando entrada";
+        }
+        
+        
+        if (this.dataEntrada != null && this.dataEntrada.equals(this.dataSaida)) {
+            situacao = "Cancelado";
+        }
+        
+        
+        if (this.dataEntrada != null && !this.dataEntrada.equals(this.dataSaida)) {
+            situacao = "Finalizado";
+        }
+        
+        
+        if (this.dataSaida == null && this.dataEntrada != null) {
+            situacao = "Em progresso";
+        }
+
+        return situacao == null ? "Confirmado" : situacao;
     }
 }

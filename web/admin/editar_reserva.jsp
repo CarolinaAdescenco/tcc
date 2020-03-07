@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="model.Produto"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="model.Consumo"%>
@@ -49,11 +50,24 @@
                 <div class="col 12">
                     <h1><%= reserva.getUsuario().getNome() %></h1>
                     <p>
-                        Check-in: <%= reserva.getDataCheckin() %>
-                        <a class="waves-effect waves-light btn-small" href="">Confirmar</a>
+                        Data reserva:
+                        <%= new SimpleDateFormat("dd-MM-yyyy").format(reserva.getDataCheckin()) %>
+                        á
+                        <%= new SimpleDateFormat("dd-MM-yyyy").format(reserva.getDataCheckout()) %>
+                        <a 
+                            class="waves-effect waves-light btn-small <%= reserva.getDataEntrada() != null ? "disabled" : "" %>"
+                            href="/tcc/ControleReserva?acao=DefinirChegada&reservaID=<%= reserva.getId() %>">
+                            Confirmar
+                        </a>
                     </p>
-                    <p>Check-out: <%= reserva.getDataCheckout() %></p>
-                    <p>Acomodação: <%= reserva.getAcomodacao().getDescricao() %></p>
+                    <p>
+                        Data entrada:
+                        <%= reserva.getDataEntrada() == null ? "Não confirmada" : new SimpleDateFormat("dd-MM-yyyy").format(reserva.getDataEntrada()) %>
+                    </p>
+                    <p>
+                        Data saída:
+                        <%= reserva.getDataSaida() == null ? "Não definida" : new SimpleDateFormat("dd-MM-yyyy").format(reserva.getDataSaida()) %>
+                    </p>
                 </div>
                 <div id="listar" class="col s12">
 
@@ -65,7 +79,7 @@
                       <div class="modal-content">
                         <h4>Adicionar produto</h4>
                         <p>Incluir produto para <%= reserva.getUsuario().getNome() %></p>
-                        
+
                         <% ArrayList<Produto> produtos = (ArrayList<Produto>)request.getAttribute("produtos"); %>
                         <form action="ControleConsumo?acao=Cadastrar" method="POST">
                             <input type="hidden" name="reservaID" value="<%= reserva.getId() %>" />
@@ -142,6 +156,22 @@
                             <% } %>
                         </tbody>
                     </table>
+                        
+                    <h5>
+                        Total em consumo:
+                        R$ <%= (Double)request.getAttribute("totalConsumo") %>
+                    </h5>
+                    <h5>
+                        Total em hospedagem:
+                        R$ <%= (Double)reserva.getSubTotal() %>
+                    </h5>
+                    <hr>
+                    <h5>
+                        Subtotal:
+                        R$ <%= (Double)reserva.getSubTotal() + (Double)request.getAttribute("totalConsumo") %>
+                    </h5>
+                    
+                    <a class="waves-effect waves-light btn modal-trigger col s3 m3 <%= reserva.getDataSaida() != null ? "disabled": "" %>" href="#modal1">Finalizar</a>
                 </div>
             </div>
         </section>

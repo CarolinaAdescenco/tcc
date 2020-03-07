@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="model.Produto"%>
 <%@page import="model.Acomodacao"%>
 <%@page import="model.Reserva"%>
@@ -73,18 +74,21 @@
                                 <th>CPF</th>
                                 <th>Data de checkin</th>
                                 <th>Data de checkout</th>
+                                <th>Situação</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
                             <% for (Reserva reserva : reservas) {%>
                             <tr>
-                                <td><%= reserva.getUsuario().getNome()%></td>
-                                <td><%= reserva.getUsuario().getCpf()%></td>
-                                <td><%= reserva.getDataCheckin()%></td>
-                                <td><%= reserva.getDataCheckout()%></td>
+                                <td><%= reserva.getUsuario().getNome() %></td>
+                                <td><%= reserva.getUsuario().getCpf() %></td>
+                                <td><%= new SimpleDateFormat("dd-MM-yyyy").format(reserva.getDataCheckin()) %></td>
+                                <td><%= new SimpleDateFormat("dd-MM-yyyy").format(reserva.getDataCheckout()) %></td>
+                                <td><%= reserva.getSituacao() %></td>
                                 <td>
-                                    <a class="btn" href="ControleReserva?acao=Detalhes&reservaID=<%= reserva.getId()%>&usuarioID=<%= reserva.getUsuario().getId()%>">Ver detalhes</a>
+                                    <a class="btn green" href="ControleReserva?acao=Detalhes&reservaID=<%= reserva.getId()%>&usuarioID=<%= reserva.getUsuario().getId()%>">Ver detalhes</a>
+                                    <a class="btn" href="ControleReserva?acao=Cancelar&reservaID=<%= reserva.getId()%>&usuarioID=<%= reserva.getUsuario().getId()%>">Cancelar</a>
                                 </td>
                             </tr>
                             <!-- Modal Structure -->
@@ -162,11 +166,11 @@
                             <input type="number" name="adultos" id="adultos" min="0"/>
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            <label for="checkin">Crianças</label>
+                            <label for="checkin">Checkin</label>
                             <input type="date" name="checkin" class="datepicker" id="checkin"/>
                             <br />
-                            <label for="checkout">Adultos</label>
-                            <input type="date" name="checkout" id="checkout"/>
+                            <label for="checkout">Checkout</label>
+                            <input type="date" name="checkout" class="datepicker" id="checkout"/>
                         </div>
                         <div class="form-group col-12 col-md-4">
                             <input class="btn btn-primary" type="submit" value="Cadastrar" name="acao">

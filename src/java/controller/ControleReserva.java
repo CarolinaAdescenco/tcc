@@ -3,8 +3,16 @@ package controller;
 import builders.ReservaBuilder;
 import builders.ReservaResolver;
 import java.io.IOException;
-import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 import model.Acomodacao;
 import model.AcomodacaoDAO;
 import model.Consumo;
-import model.ConsumoDAO;
 import model.Produto;
 import model.ProdutoDAO;
 import model.Reserva;
@@ -28,54 +35,25 @@ public class ControleReserva extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String acao = request.getParameter("acao");
 
         switch (acao) {
-            case "finalizar":
-                // TODO: implementar a finalização da reserva
-                break;
             case "Detalhes":
-                int reservaID = Integer.parseInt(request.getParameter("reservaID"));
-                int usuarioID = Integer.parseInt(request.getParameter("usuarioID"));
-
-                ReservaResolver reserva = new ReservaResolver();
-                ReservaBuilder builder = new ReservaBuilder();
-                
-                reserva.construir(builder, reservaID, usuarioID);
-                
-                ProdutoDAO prodDAO = new ProdutoDAO();
-                request.setAttribute("produtos", prodDAO.listar());
-                request.setAttribute("reserva", builder.getResult());
-                
-                request.getRequestDispatcher("/admin/editar_reserva.jsp").forward(request, response);
+                this.exibirDetalhe(request, response);
                 break;
-            default:
-                // -- Dados para preencher os campos de cadastro de nova reserva        
-                AcomodacaoDAO acomodacao = new AcomodacaoDAO();
-                ArrayList<Acomodacao> acomodacoes = new ArrayList<>();
-                acomodacoes = acomodacao.listar();
-                request.setAttribute("acomodacoes", acomodacoes);
-
-                UsuarioDAO usuario = new UsuarioDAO();
-                ArrayList<Usuario> usuarios = new ArrayList<>();
-                UsuarioDAO dao = new UsuarioDAO();
-                usuarios = dao.listar();
-                request.setAttribute("usuarios", usuarios);
-                // -- FIM
-                
-                // -- Dados para preencher os campos de lançamento de produto
-                ProdutoDAO produto = new ProdutoDAO();
-                ArrayList<Produto> produtos = produto.listar();
-                request.setAttribute("produtos", produtos);
-                // -- FIM
-
-                // -- Dados das reservas ocupadas
-                ReservaDAO reservasDAO = new ReservaDAO();
-                ArrayList<Reserva> reservas = reservasDAO.listarOcupacoes();
-                request.setAttribute("reservas", reservas);
-                request.getRequestDispatcher("/admin/listar_reservas.jsp").forward(request, response);
-                // -- FIM
+            case "DefinirChegada":
+                this.definirChegada(request, response);
+                break;
+            case "Listar":
+                this.listar(request, response);
+                break;
+            case "Cancelar":
+                this.cancelar(request, response);
+                break;
+            case "Finalizar":
+                this.finalizar(request, response);
+                break;
         }
     }
 
@@ -83,21 +61,33 @@ public class ControleReserva extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        int acomodacaoID = Integer.parseInt(request.getParameter("acomodacaoID"));
-        Date checkin = Date.valueOf(request.getParameter("checkin"));
+        Date checkin;
+        Date checkout;
+        try {
+            checkin = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("checkin"));
+            checkout = new SimpleDateFormat("yyy-MM-dd").parse(request.getParameter("checkout"));
+        } catch (ParseException ex) {
+            Logger.getLogger(ControleReserva.class.getName()).log(Level.SEVERE, null, ex);
+            return;
+        }
 
+        int acomodacaoID = Integer.parseInt(request.getParameter("acomodacaoID"));
         Reserva reserva = new Reserva(
                 acomodacaoID,
                 Integer.parseInt(request.getParameter("usuarioID")),
-                checkin,
-                Date.valueOf(request.getParameter("checkout")),
+                checkin, checkout,
                 Integer.parseInt(request.getParameter("adultos")),
                 Integer.parseInt(request.getParameter("criancas"))
         );
-        
+
         AcomodacaoDAO acoDAO = new AcomodacaoDAO();
         Acomodacao aco = acoDAO.consultar(acomodacaoID);
-        reserva.calcularSubTotal(aco.getValorPadrao());
+
+        long diferenca = Math.abs(checkin.getTime() - checkout.getTime());
+        long quantidadeDias = diferenca / (24 * 60 * 60 * 1000);
+        Double valoHospedagem = aco.getValorPadrao() * quantidadeDias;
+
+        reserva.setSubTotal(valoHospedagem);
 
         ReservaDAO dao = new ReservaDAO();
         if (dao.estaDisponivel(acomodacaoID, checkin)) {
@@ -112,4 +102,96 @@ public class ControleReserva extends HttpServlet {
         RequestDispatcher rd = request.getRequestDispatcher("/admin/principal.jsp");
         rd.forward(request, response);
     }
+
+    private void definirChegada(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int resID = Integer.parseInt(request.getParameter("reservaID"));
+        ReservaDAO resDao = new ReservaDAO();
+
+        // TODO: Comparar data de "agora" com data de check-in
+        // para "bloquear" a entrada caso a data de check-in seja no futuro.
+        Reserva reserv = resDao.consultar(resID);
+
+        if (reserv.getDataCheckin().after(new Date())) {
+            request.setAttribute("msg", "Não é possivel efetuar a entrada antes da data de checkin");
+            request.getRequestDispatcher("/admin/principal.jsp").forward(request, response);
+            return;
+        }
+
+        if (reserv.getDataCheckout().before(new Date())) {
+            request.setAttribute("msg", "Não é possivel efetuar a entrada depois da data de checkout");
+            request.getRequestDispatcher("/admin/principal.jsp").forward(request, response);
+            return;
+        }
+
+        resDao.definirChegada(resID);
+        request.setAttribute("msg", "Data de chegada definida com sucesso.");
+        request.getRequestDispatcher("/admin/principal.jsp").forward(request, response);
+
+    }
+
+    private void exibirDetalhe(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int reservaID = Integer.parseInt(request.getParameter("reservaID"));
+        int usuarioID = Integer.parseInt(request.getParameter("usuarioID"));
+
+        ReservaResolver reserva = new ReservaResolver();
+        ReservaBuilder builder = new ReservaBuilder();
+
+        reserva.construir(builder, reservaID, usuarioID);
+        Reserva res = builder.getResult();
+
+        ProdutoDAO prodDAO = new ProdutoDAO();
+        ArrayList<Produto> produtos = prodDAO.listar();
+
+        Double subTotalConsumo = 0.0;
+        for (Consumo consumo : res.getConsumo()) {
+            subTotalConsumo += consumo.getSubTotal();
+        }
+
+        request.setAttribute("produtos", produtos);
+        request.setAttribute("reserva", res);
+        request.setAttribute("totalConsumo", subTotalConsumo);
+
+        request.getRequestDispatcher("/admin/editar_reserva.jsp").forward(request, response);
+    }
+
+    private void listar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // -- Dados para preencher os campos de cadastro de nova reserva        
+        AcomodacaoDAO acomodacao = new AcomodacaoDAO();
+        ArrayList<Acomodacao> acomodacoes = new ArrayList<>();
+        acomodacoes = acomodacao.listar();
+        request.setAttribute("acomodacoes", acomodacoes);
+
+        UsuarioDAO usuario = new UsuarioDAO();
+        ArrayList<Usuario> usuarios = new ArrayList<>();
+        UsuarioDAO dao = new UsuarioDAO();
+        usuarios = dao.listar();
+        request.setAttribute("usuarios", usuarios);
+        // -- FIM
+
+        // -- Dados para preencher os campos de lançamento de produto
+        ProdutoDAO produto = new ProdutoDAO();
+        ArrayList<Produto> prods = produto.listar();
+        request.setAttribute("produtos", prods);
+        // -- FIM
+
+        // -- Dados das reservas ocupadas
+        ReservaDAO reservasDAO = new ReservaDAO();
+        ArrayList<Reserva> reservas = reservasDAO.listarOcupacoes();
+        request.setAttribute("reservas", reservas);
+        request.getRequestDispatcher("/admin/listar_reservas.jsp").forward(request, response);
+        // -- FIM
+    }
+
+    private void finalizar(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void cancelar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Integer reservaID = Integer.parseInt(request.getParameter("reservaID"));
+
+        ReservaDAO.cancelar(reservaID);
+        request.setAttribute("msg", "Reserva canceada com sucesso.");
+        response.sendRedirect(request.getHeader("referer"));
+    }
+
 }
