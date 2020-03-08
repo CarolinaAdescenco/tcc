@@ -45,9 +45,44 @@
             <div class="row">
                 <div class="col s12">
                     <ul class="tabs">
-                        <li class="tab col s3"><a class="active" href="#cadastrar">Cadastrar</a></li>
-                        <li class="tab col s3"><a href="#listar">Listar</a></li>
+                        <li class="tab col s3"><a class="active" href="#listar">Listar</a></li>
+                        <li class="tab col s3"><a href="#cadastrar">Cadastrar</a></li>
                     </ul>
+                </div>
+                
+                <div id="listar" class="col s12">
+                    <h2>Usuarios</h2>
+
+                    <% ArrayList<Usuario> usuarios = (ArrayList<Usuario>) request.getAttribute("usuarios"); %>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Email</th>
+                                <th>Perfil</th>
+                                <th>Editar</th>
+                                <th>Excluir</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for (Usuario usuario : usuarios) {%>
+                            <tr>
+                                <td><%= usuario.getId()%></td>
+                                <td><%= usuario.getEmail()%></td>
+                                <td><%= usuario.getPerfil()%></td>
+                                <td>
+                                    <a href="ControleUsuario?acao=Consultar&usuarioID=<%= usuario.getId()%>"> <i
+                                            class="material-icons">edit</i> </a>
+                                </td>
+                                <td>
+                                    <a href="ControleUsuario?acao=Excluir&usuarioID=<%= usuario.getId()%>"> <i class="material-icons">delete</i> </a>
+
+                                </td>
+                            </tr>
+                            <% }%>
+                        </tbody>
+                    </table>
                 </div>
 
                 <div id="cadastrar" class="col s12">
@@ -128,40 +163,7 @@
                 </div>
 
 
-                <div id="listar" class="col s12">
-                    <h2>Usuarios</h2>
-
-                    <% ArrayList<Usuario> usuarios = (ArrayList<Usuario>) request.getAttribute("usuarios"); %>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Email</th>
-                                <th>Perfil</th>
-                                <th>Editar</th>
-                                <th>Excluir</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% for (Usuario usuario : usuarios) {%>
-                            <tr>
-                                <td><%= usuario.getId()%></td>
-                                <td><%= usuario.getEmail()%></td>
-                                <td><%= usuario.getPerfil()%></td>
-                                <td>
-                                    <a href="ControleUsuario?acao=Consultar&usuarioID=<%= usuario.getId()%>"> <i
-                                            class="material-icons">edit</i> </a>
-                                </td>
-                                <td>
-                                    <a href="ControleUsuario?acao=Excluir&usuarioID=<%= usuario.getId()%>"> <i class="material-icons">delete</i> </a>
-
-                                </td>
-                            </tr>
-                            <% }%>
-                        </tbody>
-                    </table>
-                </div>
+                
             </div>
         </section>
 
