@@ -88,7 +88,7 @@
                                 <td><%= reserva.getSituacao() %></td>
                                 <td>
                                     <a class="btn green" href="ControleReserva?acao=Detalhes&reservaID=<%= reserva.getId()%>&usuarioID=<%= reserva.getUsuario().getId()%>">Ver detalhes</a>
-                                    <a class="btn cancelarReserva" href="ControleReserva?acao=Cancelar&reservaID=<%= reserva.getId()%>&usuarioID=<%= reserva.getUsuario().getId()%>">Cancelar</a>
+                                    <a class="btn cancelarReserva <%= reserva.getDataEntrada() != null ? "disabled": "" %>" href="ControlePagamento?reservaID=<%= reserva.getId()%>">Cancelar</a>
                                 </td>
                             </tr>
                             <!-- Modal Structure -->

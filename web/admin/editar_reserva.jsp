@@ -73,7 +73,7 @@
 
                     <h2>Produtos</h2>
 
-                    <a class="waves-effect waves-light btn modal-trigger col s3 m3" href="#modal1">Adicionar produto</a>
+                    <a class="waves-effect waves-light btn modal-trigger col s3 m3 <%= reserva.getDataEntrada() == null || reserva.getDataSaida() != null ? "disabled" : ""%>" href="#modal1">Adicionar produto</a>
 
                     <div id="modal1" class="modal">
                         <div class="modal-content">
@@ -170,7 +170,7 @@
                         Subtotal:
                         R$ <%= (Double) reserva.getSubTotal() + (Double) request.getAttribute("totalConsumo") %>
                     </h5>
-                    <a class="waves-effect waves-light btn modal-trigger col s3 m3 <%= reserva.getDataEntrada() == null || reserva.getDataSaida() == null ? "disabled" : ""%>" href="#modal-finalizar">Finalizar</a>
+                    <a class="waves-effect waves-light btn modal-trigger col s3 m3 <%= reserva.getDataEntrada() == null || reserva.getDataSaida() != null ? "disabled" : ""%>" href="#modal-finalizar">Finalizar</a>
                     <div id="modal-finalizar" class="modal">
                         <div class="modal-content">
                             <h4>Finalizar hospedagem</h4>
