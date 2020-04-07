@@ -1,9 +1,9 @@
 CREATE TABLE usuarios (
   id SERIAL NOT NULL,
-  email VARCHAR NOT NULL,
-  senha VARCHAR NOT NULL,
-  perfil VARCHAR NOT NULL,
-  cpf VARCHAR NOT NULL
+  enderecos_id INTEGER NOT NULL,
+  email VARCHAR NULL,
+  senha VARCHAR NULL,
+  tipo_usuario INTEGER NULL,
   PRIMARY KEY(id)
 );
 
@@ -23,7 +23,7 @@ CREATE TABLE enderecos (
   complemento VARCHAR NULL,
   estado VARCHAR NULL,
   municipio VARCHAR NULL,
-  cpf VARCHAR NULL,
+  cep VARCHAR NULL,
   PRIMARY KEY(id)
 );
 
@@ -47,8 +47,8 @@ CREATE TABLE reservas (
   id SERIAL NOT NULL,
   acomodacoes_id INTEGER NOT NULL,
   usuarios_id INTEGER NOT NULL,
-  data_checkin DATETIME NULL,
-  data_checkout DATETIME NULL,
+  data_checkin date NULL,
+  data_checkout date NULL,
   adultos INTEGER NULL,
   criancas INTEGER NULL,
   sub_total DECIMAL NULL,
@@ -59,8 +59,8 @@ CREATE TABLE tarifas (
   id SERIAL NOT NULL,
   tipo_acomodacao_id INTEGER NOT NULL,
   valor DECIMAL NULL,
-  data_inicio DATETIME NULL,
-  data_fim DATETIME NULL,
+  data_inicio date NULL,
+  data_fim date NULL,
   PRIMARY KEY(id)
 );
 
@@ -70,13 +70,5 @@ CREATE TABLE tipo_acomodacao (
   PRIMARY KEY(id)
 );
 
-CREATE TABLE usuarios (
-  id SERIAL NOT NULL,
-  enderecos_id INTEGER NOT NULL,
-  email VARCHAR NULL,
-  senha VARCHAR NULL,
-  tipo_usuario INTEGER NULL,
-  PRIMARY KEY(id)
-);
 
 

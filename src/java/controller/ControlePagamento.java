@@ -20,7 +20,7 @@ public class ControlePagamento extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        Integer reservaID = Integer.parseInt(request.getParameter("reservaID"));
+        Integer reservaID = Integer.parseInt(request.getParameter("reservaID"));    
         ReservaDAO dao = new ReservaDAO();
         Reserva reserva = dao.consultar(reservaID);
     
