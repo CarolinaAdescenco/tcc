@@ -59,6 +59,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Status<th>
                                 <th>Email</th>
                                 <th>Perfil</th>
                                 <th>Editar</th>
@@ -69,6 +70,7 @@
                             <% for (Usuario usuario : usuarios) {%>
                             <tr>
                                 <td><%= usuario.getId()%></td>
+                                <td><%= usuario.getStatus()%></td>
                                 <td><%= usuario.getEmail()%></td>
                                 <td><%= usuario.getPerfil()%></td>
                                 <td>

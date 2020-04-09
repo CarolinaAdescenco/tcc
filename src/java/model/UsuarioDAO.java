@@ -1,5 +1,6 @@
 package model;
 
+import enums.StatusUsuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +15,7 @@ public class UsuarioDAO {
     private static final String AUTENTICA_USUARIO = "SELECT * FROM usuarios WHERE email=? AND senha=?";
     private static final String BUSCAR_USUARIO = "SELECT * FROM usuarios WHERE id=?";
     private static final String LISTAR_USUARIO = "SELECT * FROM usuarios";
-    private static final String DELETAR_USUARIO = "DELETE from usuarios WHERE id = ?";
+    private static final String DELETAR_USUARIO = "UPDATE usuarios SET status = ? WHERE id = ?";
     private static final String ATUALIZAR_USUARIO = "UPDATE usuarios SET email = ?, senha = ?, perfil = ?, cpf = ?  WHERE id = ?";
     
     
@@ -98,6 +99,7 @@ public class UsuarioDAO {
             rsUsuario = pstmt.executeQuery();
             if (rsUsuario.next()) {
                 usuario = new Usuario();
+                usuario.setStatus(StatusUsuario.valueOf(rsUsuario.getString("status")));
                 usuario.setNome(rsUsuario.getString("nome"));
                 usuario.setId(rsUsuario.getInt("id"));
                 usuario.setEmail(rsUsuario.getString("email"));
@@ -186,6 +188,7 @@ public class UsuarioDAO {
         try {
             conexao = ConectaBanco.getConnection();
             pstmt = conexao.prepareStatement(DELETAR_USUARIO);
+            pstmt.setString(1, StatusUsuario.INATIVO.toString());
             pstmt.setInt(1, usuarioID);
             pstmt.execute();
         } catch(SQLException sqlErro){

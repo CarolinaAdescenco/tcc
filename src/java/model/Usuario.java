@@ -1,14 +1,25 @@
 package model;
 
+import enums.StatusUsuario;
+
 public class Usuario {
     private int id;
+    private StatusUsuario status = StatusUsuario.ATIVO;
     private String nome;
     private String email;
     private String senha;
     private PerfilDeAcesso perfil;
     private String cpf;
     private Endereco endereco = new Endereco();
-    
+
+    public StatusUsuario getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusUsuario status) {
+        this.status = status;
+    }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
