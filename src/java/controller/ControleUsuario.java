@@ -13,6 +13,7 @@ import model.EnderecoDAO;
 import model.PerfilDeAcesso;
 import model.Usuario;
 import model.UsuarioDAO;
+import services.PasswordService;
 
 @WebServlet(name = "ControleUsuario", urlPatterns = {"/ControleUsuario"})
 public class ControleUsuario extends HttpServlet {
@@ -28,7 +29,7 @@ public class ControleUsuario extends HttpServlet {
                 Usuario usuario = new Usuario();
                 Endereco endereco = new Endereco();
                 usuario.setEmail(request.getParameter("txtLogin"));
-                usuario.setSenha(request.getParameter("txtSenha"));
+                usuario.setSenha(PasswordService.hashPassword(request.getParameter("txtSenha")));
                 usuario.setCpf(request.getParameter("cpf"));
                 usuario.setNome(request.getParameter("txtNome"));
                 
@@ -84,7 +85,7 @@ public class ControleUsuario extends HttpServlet {
 
                 Usuario usuario = new Usuario();
                 usuario.setEmail(request.getParameter("txtLogin"));
-                usuario.setSenha(request.getParameter("txtSenha"));
+                usuario.setSenha(PasswordService.hashPassword(request.getParameter("txtSenha")));
                 usuario.setCpf(request.getParameter("cpf"));
                 
                 
