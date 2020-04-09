@@ -57,7 +57,7 @@
                         <a 
                             class="waves-effect waves-light btn-small <%= reserva.getDataEntrada() != null ? "disabled" : ""%>"
                             href="/tcc/ControleReserva?acao=DefinirChegada&reservaID=<%= reserva.getId()%>">
-                            Confirmar
+                            Confirmar entrada
                         </a>
                     </p>
                     <p>
