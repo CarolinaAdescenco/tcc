@@ -65,6 +65,16 @@
                         <option value="hospede">Hospede</option>
                     </select>
                 </div>
+                        
+                <div class="form-group col-12 col-md-6">
+                    <label for="tipoUsuario">Status</label>
+                    <select name="status" class="form-control selectpicker" data-style="btn btn-link"
+                        id="status">
+                        <option value="<%= usuario.getStatus() %>" selected disabled><%= usuario.getStatus() %></option>
+                        <option value="ativo">Ativo</option>
+                        <option value="inativo">Inativo</option>
+                    </select>
+                </div>
 
                 <div class="col-12 mb-4">
                     <h3>Endereço</h3>

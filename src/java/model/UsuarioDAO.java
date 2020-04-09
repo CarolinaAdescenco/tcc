@@ -16,7 +16,7 @@ public class UsuarioDAO {
     private static final String BUSCAR_USUARIO = "SELECT * FROM usuarios WHERE id=?";
     private static final String LISTAR_USUARIO = "SELECT * FROM usuarios";
     private static final String DELETAR_USUARIO = "UPDATE usuarios SET status = ? WHERE id = ?";
-    private static final String ATUALIZAR_USUARIO = "UPDATE usuarios SET email = ?, senha = ?, perfil = ?, cpf = ?  WHERE id = ?";
+    private static final String ATUALIZAR_USUARIO = "UPDATE usuarios SET email = ?, senha = ?, perfil = ?, cpf = ?, status = ?  WHERE id = ?";
     
     
     public Usuario cadastrar(Usuario usuario){
@@ -128,6 +128,7 @@ public class UsuarioDAO {
         Connection conexao = null;
         PreparedStatement pstmt = null;
         ResultSet rsUsuario = null;
+
         try {
             conexao = ConectaBanco.getConnection();
             pstmt = conexao.prepareStatement(LISTAR_USUARIO);
@@ -135,6 +136,7 @@ public class UsuarioDAO {
             while (rsUsuario.next()) {
                 Usuario usuario = new Usuario();
                 usuario.setId(rsUsuario.getInt("id"));
+                usuario.setStatus(StatusUsuario.valueOf(rsUsuario.getString("status")));
                 usuario.setEmail(rsUsuario.getString("email"));
                 usuario.setSenha(rsUsuario.getString("senha"));
                 usuario.setPerfil(PerfilDeAcesso.valueOf(rsUsuario.getString("perfil")));
@@ -167,7 +169,8 @@ public class UsuarioDAO {
             pstmt.setString(2, usuario.getSenha());
             pstmt.setString(3, usuario.getPerfil().toString());
             pstmt.setString(4, usuario.getCpf());
-            pstmt.setInt(5, usuarioID);
+            pstmt.setString(5, usuario.getStatus().toString());
+            pstmt.setInt(6, usuarioID);
             pstmt.execute();
         } catch(SQLException sqlErro){
             throw new RuntimeException(sqlErro);
@@ -189,7 +192,7 @@ public class UsuarioDAO {
             conexao = ConectaBanco.getConnection();
             pstmt = conexao.prepareStatement(DELETAR_USUARIO);
             pstmt.setString(1, StatusUsuario.INATIVO.toString());
-            pstmt.setInt(1, usuarioID);
+            pstmt.setInt(2, usuarioID);
             pstmt.execute();
         } catch(SQLException sqlErro){
             throw new RuntimeException(sqlErro);

@@ -1,5 +1,6 @@
 package controller;
 
+import enums.StatusUsuario;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
@@ -82,6 +83,7 @@ public class ControleUsuario extends HttpServlet {
                 request.getRequestDispatcher("/admin/listar_usuario.jsp").forward(request, response);
             } else if(acao.equals("Editar")) {
                 String perfil = request.getParameter("optPerfil");
+                String status = request.getParameter("status");
 
                 Usuario usuario = new Usuario();
                 usuario.setEmail(request.getParameter("txtLogin"));
@@ -105,6 +107,12 @@ public class ControleUsuario extends HttpServlet {
                     usuario.setPerfil(PerfilDeAcesso.HOSPEDE);
                 }
                 
+                if (status.equalsIgnoreCase("ativo")) {
+                    usuario.setStatus(StatusUsuario.ATIVO);
+                } else {
+                    usuario.setStatus(StatusUsuario.INATIVO);
+                }
+
                 int usuarioID = Integer.parseInt(request.getParameter("usuarioID"));
 
                 UsuarioDAO usuarioDAO = new UsuarioDAO();

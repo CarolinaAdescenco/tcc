@@ -1,3 +1,4 @@
+<%@page import="enums.StatusUsuario"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="model.Produto"%>
 <%@page import="model.Acomodacao"%>
@@ -152,9 +153,11 @@
                             <select name="usuarioID" class="form-control selectpicker" data-style="btn btn-link" id="usuarioID">
                                 <% ArrayList<Usuario> usuarios = (ArrayList<Usuario>) request.getAttribute("usuarios"); %>
                                 <% for (Usuario usuario : usuarios) {%>
-                                <option value="<%= usuario.getId()%>">
-                                    <%= usuario.getEmail()%> - <%= usuario.getCpf()%>
-                                </option>
+                                    <% if (usuario.getStatus() == StatusUsuario.ATIVO) { %>
+                                        <option value="<%= usuario.getId()%>">
+                                            <%= usuario.getEmail()%> - <%= usuario.getCpf()%>
+                                        </option>
+                                    <% } %>
                                 <% }%>
                             </select>
                         </div>
