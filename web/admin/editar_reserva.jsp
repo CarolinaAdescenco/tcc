@@ -125,7 +125,7 @@
                                 <td><%= consumo.getObservacao()%></td>
                                 <td><%= consumo.getSubTotal()%></td>
                                 <td>
-                                    <a class="btn col s3 m3 acaoExcluir" href="ControleConsumo?acao=Excluir&id=<%= consumo.getId()%>">Excluir</a>
+                                    <a class="btn col s3 m3 acaoExcluir" href="ControleConsumo?acao=Excluir&id=<%= consumo.getId() %>">Excluir</a>
 
                                     <a class="waves-effect waves-light btn modal-trigger col s3 m3" href="#modal<%= consumo.getId()%>">Editar</a>
                                     <div id="modal<%= consumo.getId()%>" class="modal">
@@ -136,6 +136,7 @@
                                             <form action="ControleConsumo?acao=Editar&id=<%= consumo.getId()%>" method="POST">
                                                 <p>Produto: <%= consumo.getProduto().getDescricao()%></p>
                                                 <input name="produtoID" value="<%= consumo.getProduto().getId()%>" type="hidden"/>
+                                                <input name="consumoID" value="<%= consumo.getId() %>" type="hidden" />
                                                 <label>
                                                     Quantidade
                                                     <input type="number" name="quantidade" value="<%= consumo.getQuantidade()%>"/>

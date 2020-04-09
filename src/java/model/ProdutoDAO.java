@@ -15,6 +15,8 @@ public class ProdutoDAO {
     private static final String LISTAR_PRODUTO = "SELECT * FROM produtos";
     private static final String DELETAR_PRODUTO = "DELETE from produtos WHERE id = ?";
     private static final String ATUALIZAR_PRODUTO = "UPDATE produtos SET descricao = ?, valor_unitario = ?, quantidade_estoque = ?  WHERE id = ?";
+    private static final String INCREMENTAR_ESTOQUE = "UPDATE produtos SET quantidade_estoque = quantidade_estoque + ? WHERE id = ?";
+    private static final String DECREMENTAR_ESTOQUE = "UPDATE produtos SET quantidade_estoque = quantidade_estoque - ? WHERE id = ?";
     
     public void cadastrar(Produto produto){
         Connection conexao = null;
@@ -156,4 +158,52 @@ public class ProdutoDAO {
             }
         }
     }    
+
+    public void incrementarEstoque(int produtoID, int quantidade) {
+        Connection conexao = null;
+        PreparedStatement pstmt = null;
+        ResultSet rsProduto = null;
+        try{
+            conexao = ConectaBanco.getConnection();
+            pstmt = conexao.prepareStatement(INCREMENTAR_ESTOQUE);
+            pstmt.setInt(1, quantidade);
+            pstmt.setInt(2, produtoID);
+
+            pstmt.execute();
+        } catch(SQLException sqlErro){
+            throw new RuntimeException(sqlErro);
+        } finally {
+            if(conexao != null){
+                try{
+                    conexao.close();
+                } catch(SQLException ex){
+                    throw new RuntimeException(ex);
+                }
+            }
+        }
+    }
+    
+    public void decrementarEstoque(int produtoID, int quantidade) {
+        Connection conexao = null;
+        PreparedStatement pstmt = null;
+        ResultSet rsProduto = null;
+        try{
+            conexao = ConectaBanco.getConnection();
+            pstmt = conexao.prepareStatement(DECREMENTAR_ESTOQUE);
+            pstmt.setInt(1, quantidade);
+            pstmt.setInt(2, produtoID);
+
+            pstmt.execute();
+        } catch(SQLException sqlErro){
+            throw new RuntimeException(sqlErro);
+        } finally {
+            if(conexao != null){
+                try{
+                    conexao.close();
+                } catch(SQLException ex){
+                    throw new RuntimeException(ex);
+                }
+            }
+        }
+    }
 }
