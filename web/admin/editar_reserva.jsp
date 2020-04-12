@@ -42,11 +42,14 @@
                 String msg = (String) request.getAttribute("msg");
                 if (msg != null) {
             %>
-            <font color="blue"><%=msg%></font>
+                <font color="blue"><%=msg%></font>
             <% } %>
 
             <div class="row">
                 <% Reserva reserva = (Reserva) request.getAttribute("reserva");%>
+
+                <% Boolean inativar = reserva.getDataEntrada() == null || reserva.getDataSaida() != null; %>
+
                 <div class="col 12">
                     <h1><%= reserva.getUsuario().getNome()%></h1>
                     <p>
@@ -55,7 +58,7 @@
                         á
                         <%= new SimpleDateFormat("dd-MM-yyyy").format(reserva.getDataCheckout())%>
                         <a 
-                            class="waves-effect waves-light btn-small <%= reserva.getDataEntrada() != null ? "disabled" : ""%>"
+                            class="waves-effect waves-light btn-small <%= inativar ? "disabled" : ""%>"
                             href="/tcc/ControleReserva?acao=DefinirChegada&reservaID=<%= reserva.getId()%>">
                             Confirmar entrada
                         </a>
@@ -125,9 +128,17 @@
                                 <td><%= consumo.getObservacao()%></td>
                                 <td><%= consumo.getSubTotal()%></td>
                                 <td>
-                                    <a class="btn col s3 m3 acaoExcluir" href="ControleConsumo?acao=Excluir&id=<%= consumo.getId() %>">Excluir</a>
+                                    <a
+                                        class="btn col s3 m3 acaoExcluir <%= inativar ? "disabled" : ""%>"
+                                        href="ControleConsumo?acao=Excluir&id=<%= consumo.getId() %>">
+                                        Excluir
+                                    </a>
 
-                                    <a class="waves-effect waves-light btn modal-trigger col s3 m3" href="#modal<%= consumo.getId()%>">Editar</a>
+                                    <a
+                                        class="waves-effect waves-light btn modal-trigger col s3 m3 <%= inativar ? "disabled" : ""%>"
+                                        href="#modal<%= consumo.getId()%>">
+                                        Editar
+                                    </a>
                                     <div id="modal<%= consumo.getId()%>" class="modal">
                                         <div class="modal-content">
                                             <h4>Alterar produto</h4>
@@ -171,7 +182,7 @@
                         Subtotal:
                         R$ <%= (Double) reserva.getSubTotal() + (Double) request.getAttribute("totalConsumo") %>
                     </h5>
-                    <a class="waves-effect waves-light btn modal-trigger col s3 m3 <%= reserva.getDataEntrada() == null || reserva.getDataSaida() != null ? "disabled" : ""%>" href="#modal-finalizar">Finalizar</a>
+                    <a class="waves-effect waves-light btn modal-trigger col s3 m3 <%= inativar ? "disabled" : ""%>" href="#modal-finalizar">Finalizar</a>
                     <div id="modal-finalizar" class="modal">
                         <div class="modal-content">
                             <h4>Finalizar hospedagem</h4>
