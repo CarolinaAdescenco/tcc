@@ -4,29 +4,36 @@
 <%@include file="../template/sidebar.jsp"%>
 <%@include file="../template/navbar.jsp"%>
 
-           
+<%
+    String msg = (String) request.getAttribute("msg");
+    if (msg != null) {
+%>
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong><%= msg%></strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<% } %>
 
-            <%
-                String msg = (String) request.getAttribute("msg");
-                if (msg != null) {
-            %>
-            <font color="blue"><%=msg%></font>
-            <% } %>
+<div class="content">
+    <div class="container-fluid">
+        <div class="section">
+            <h2 class="my-4 title"> <i class="icon icon-bookmark-2"></i> Acomodações</h2>
 
-            <div class="row">
-                <div class="col s12">
-                    <ul class="tabs">
-                        <li class="tab col s3"><a class="active" href="#listar">Listar</a></li>
-                        <li class="tab col s3"><a href="#cadastrar">Cadastrar</a></li>
-                    </ul>
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-list-tab" data-toggle="tab" href="#nav-list" role="tab" aria-controls="nav-list" aria-selected="true">Listar</a>
+                    <a class="nav-item nav-link" id="nav-add-tab" data-toggle="tab" href="#nav-add" role="tab" aria-controls="nav-add" aria-selected="false">Cadastrar</a>   
                 </div>
-                
-                <div id="listar" class="col s12">
-                    <% ArrayList<Acomodacao> acomodacoes = (ArrayList<Acomodacao>) request.getAttribute("acomodacoes"); %>
+            </nav>
 
-                    <h2>Acomodações</h2>
-                    
-                    <div class="table-responsive table-full-width">
+            <div class="tab-content pt-3" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-list" role="tabpanel" aria-labelledby="nav-list-tab">
+                    <% ArrayList<Acomodacao> acomodacoes = (ArrayList<Acomodacao>) request.getAttribute("acomodacoes"); %>
+   
+
+                    <div class="table-responsive table-full-width container">
                         <table class="table table-hover table-striped">
                             <thead>
                                 <tr>
@@ -46,24 +53,21 @@
                                     <td><%= acomodacao.getDescricao()%></td>
                                     <td><%= acomodacao.getValorPadrao()%></td>
                                     <td>
-                                        <a href="ControleAcomodacao?acao=Consultar&acomodacaoID=<%= acomodacao.getId()%>"><i class="material-icons">edit</i></a>
+                                        <a href="ControleAcomodacao?acao=Consultar&acomodacaoID=<%= acomodacao.getId()%>"><i class="icon icon-pencil  mx-2"></i></a>
                                     </td>
                                     <td>
-                                        <a href="ControleAcomodacao?acao=Excluir&acomodacaoID=<%= acomodacao.getId()%>"><i class="material-icons">delete</i></a>
+                                        <a href="ControleAcomodacao?acao=Excluir&acomodacaoID=<%= acomodacao.getId()%>"><i class="icon icon-trash-simple mx-3"></i></a>
                                     </td>
                                 </tr>
                                 <% }%>
                             </tbody>
                         </table>
                     </div>
-                    
                 </div>
-
-                <div id="cadastrar" class="col s12">
-                    <h2>Cadastrar nova acomodação</h2>
+                <div class="tab-pane fade" id="nav-add" role="tabpanel" aria-labelledby="nav-add-tab">                   
                     <form action="ControleAcomodacao" method="POST">
                         <div class="row justify-content-center">
-                            <div class="form-group col s12 m4">
+                            <div class="form-group col-12 col-lg-6">
                                 <label for="tipoAcomodacao">Tipo</label>
                                 <select name="tipo" class="form-control selectpicker" data-style="btn btn-link"
                                         id="tipoAcomodacao">
@@ -71,22 +75,25 @@
                                     <option value="SOLTEIRO">Solteiro</option>
                                 </select>
                             </div>
-                            <div class="form-group col s12 m4">
-                                <label class="ml-3" for="descricao">Descrição</label>
-                                <input class="form-control" type="text" required name="descricao" id="descricao">                
-                            </div>            
-                            <div class="form-group col s12 m4">
-                                <label class="ml-3" for="valor_unitario">Valor Padrão:</label>
+                                      
+                            <div class="form-group col-12 col-lg-6">
+                                <label for="valor_unitario">Valor Padrão:</label>
                                 <input class="form-control" type="text" required name="valor_padrao" id="valor_unitario">
                             </div>
-                            <div class="form-group col s12 m4">
-                                <input class="btn btn-primary" type="submit" value="Cadastrar" required name="acao" readonly>
+                            <div class="form-group col-12 col-lg-12">
+                                <label for="descricao">Descrição</label>
+                                <input class="form-control" type="text" required name="descricao" id="descricao">                
+                            </div>  
+                            <div class="form-group col-12 col-lg-4 mt-3">
+                                <input class="btn btn-primary btn-block" type="submit" value="Cadastrar" required name="acao" readonly>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
+</div>
 
 
-  <%@include file="../template/footer.jsp"%>
+<%@include file="../template/footer.jsp"%>
