@@ -1,3 +1,5 @@
+<%@page import="java.util.concurrent.TimeUnit"%>
+<%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="model.Produto"%>
 <%@page import="java.util.ArrayList"%>
@@ -54,14 +56,22 @@
                     <h1><%= reserva.getUsuario().getNome()%></h1>
                     <p>
                         Data reserva:
-                        <%= new SimpleDateFormat("dd-MM-yyyy").format(reserva.getDataCheckin())%>
+                        <% SimpleDateFormat formatador = new SimpleDateFormat("dd-MM-yyyy"); %>
+                        
+                        <%= formatador.format(reserva.getDataCheckin())%>
                         á
-                        <%= new SimpleDateFormat("dd-MM-yyyy").format(reserva.getDataCheckout())%>
+                        <%= formatador.format(reserva.getDataCheckout())%>
                         <a 
                             class="waves-effect waves-light btn-small <%= reserva.getDataEntrada() != null ? "disabled" : ""%>"
                             href="/tcc/ControleReserva?acao=DefinirChegada&reservaID=<%= reserva.getId()%>">
                             Confirmar entrada
                         </a>
+                    </p>
+                    <p>
+                        <% long diffInMilli = Math.abs(reserva.getDataCheckout().getTime() - reserva.getDataCheckin().getTime()); %>
+                        <% long quantidadeDias = TimeUnit.DAYS.convert(diffInMilli, TimeUnit.MILLISECONDS); %>
+                        
+                        Numero de Diarias: <%= quantidadeDias %>
                     </p>
                     <p>
                         Data entrada:
@@ -169,14 +179,19 @@
                         </tbody>
                     </table>
 
-                    <h5>
-                        Total em consumo:
+                    <p>
+                        <strong>Total em consumo:</strong>
                         R$ <%= (Double) request.getAttribute("totalConsumo")%>
-                    </h5>
-                    <h5>
-                        Total em hospedagem:
-                        R$ <%= (Double) reserva.getSubTotal()%>
-                    </h5>
+                    </p>
+                    
+                    <p>
+                        <strong>Valor de cada diaria:</strong>
+                        R$ <%= reserva.getAcomodacao().getValorPadrao() %>
+                    </p>
+                    <p>
+                        <strong>Total em hospedagem:</strong>
+                        R$ <%= (Double) reserva.getSubTotal() %>
+                    </p>
                     <hr>
                     <h5>
                         Subtotal:

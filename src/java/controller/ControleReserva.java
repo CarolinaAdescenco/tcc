@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -82,7 +83,7 @@ public class ControleReserva extends HttpServlet {
         Acomodacao aco = acoDAO.consultar(acomodacaoID);
 
         long diferenca = Math.abs(checkin.getTime() - checkout.getTime());
-        long quantidadeDias = diferenca / (24 * 60 * 60 * 1000);
+        long quantidadeDias = TimeUnit.DAYS.convert(diferenca, TimeUnit.MILLISECONDS);
         Double valoHospedagem = aco.getValorPadrao() * quantidadeDias;
 
         reserva.setSubTotal(valoHospedagem);

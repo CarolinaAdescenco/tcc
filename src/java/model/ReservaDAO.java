@@ -170,6 +170,7 @@ public class ReservaDAO {
         PreparedStatement pstmt = null;
         ResultSet rsReserva = null;
         Reserva reserva = new Reserva();
+        AcomodacaoDAO acoDAO = new AcomodacaoDAO();
         try {
             conexao = ConectaBanco.getConnection();
             pstmt = conexao.prepareStatement(CONSULTAR);
@@ -177,6 +178,7 @@ public class ReservaDAO {
             rsReserva = pstmt.executeQuery();
 
             while (rsReserva.next()) {
+                reserva.setAcomodacao(acoDAO.consultar(rsReserva.getInt("acomodacoes_id")));
                 reserva.setId(rsReserva.getInt("id"));
                 reserva.setSubTotal(rsReserva.getDouble("sub_total"));
                 reserva.setAcomodacaoID(rsReserva.getInt("acomodacoes_id"));
