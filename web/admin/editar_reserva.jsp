@@ -58,7 +58,7 @@
                         á
                         <%= new SimpleDateFormat("dd-MM-yyyy").format(reserva.getDataCheckout())%>
                         <a 
-                            class="waves-effect waves-light btn-small <%= inativar ? "disabled" : ""%>"
+                            class="waves-effect waves-light btn-small <%= reserva.getDataEntrada() != null ? "disabled" : ""%>"
                             href="/tcc/ControleReserva?acao=DefinirChegada&reservaID=<%= reserva.getId()%>">
                             Confirmar entrada
                         </a>
