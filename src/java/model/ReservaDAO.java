@@ -54,11 +54,17 @@ public class ReservaDAO {
     }
     
     public Boolean estaDisponivel(int acomodacaoID, java.util.Date data) {
+        /**
+         * Conta a quantidade de ocorrencias em que o ID da acomodação esta
+         * presente na tabela de reservas e a data desejada esta entre "checkin" e "checkout",
+         * Se nenhuma ocorrencia for encontrada, significa que a acomodação
+         * esta disponivel.
+         */
         Connection conexao = null;
         PreparedStatement pstmt = null;
         ResultSet rsReserva = null;
         
-        try{
+        try {
             conexao = ConectaBanco.getConnection();
             pstmt = conexao.prepareStatement(CONSULTAR_DISPONIBILIDADE);
             pstmt.setInt(1, acomodacaoID);
@@ -67,6 +73,11 @@ public class ReservaDAO {
             rsReserva.next();
             int achou = rsReserva.getInt(1);
             
+            /**
+             * Se a contagem for menor que 1 significa que nenhuma reserva
+             * foi encontrada entre a data desejada para o ID da acomodacação,
+             * logo, a reserva está disponivel.
+             */
             return achou < 1;
             
         } catch(SQLException sqlErro){
@@ -83,6 +94,9 @@ public class ReservaDAO {
     }
 
     public ArrayList<Reserva> listarOcupacoes() {
+        /**
+         * Lista todos os usuarios com suas respectivas reservas.
+         */
         ArrayList<Reserva> reservas = new ArrayList<>();
 
         Connection conexao = null;
@@ -230,9 +244,11 @@ public class ReservaDAO {
         return reserva;
     }
 
-    // Define a data de entrada do cliente ao hotel.
-    // Por padrão a data é inserida como a data atual a execução desse método.
     public void definirChegada(int reservaID) {
+        /**
+         * Define a data de entrada do cliente ao hotel,
+         * Por padrão a data é inserida como a data atual a execução desse método.
+         */
         Connection conexao = null;
         PreparedStatement pstmt = null;
         

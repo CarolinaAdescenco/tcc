@@ -1,3 +1,5 @@
+<%@page import="java.util.Date"%>
+<%@page import="model.ReservaDAO"%>
 <%@page import="enums.StatusUsuario"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="model.Produto"%>
@@ -132,6 +134,29 @@
                         <% }%>
                         </tbody>
                     </table>
+                    
+                    <% ArrayList<Acomodacao> acomodacoes = (ArrayList<Acomodacao>) request.getAttribute("acomodacoes"); %>
+                    <h3>Situação das acomodações</h3>
+                    
+                    <div class="row">
+                        <% ReservaDAO resDAO = new ReservaDAO(); %>
+                        <% for (Acomodacao acomodacao : acomodacoes) {%>
+                        <div class="col s3 justify-content-center">
+                            <% if (resDAO.estaDisponivel(acomodacao.getId(), new Date())) { %>
+                            <figure>
+                                    <img src="/tcc/assets/images/free.png">
+                                    <figcaption><%= acomodacao.getDescricao() %></figcaption>
+                                </figure>
+                            <%  } else { %>
+                                <figure>
+                                    <img src="/tcc/assets/images/closed.png">
+                                    <figcaption><%= acomodacao.getDescricao() %></figcaption>
+                                </figure>
+                            <% } %>
+                        </div>
+                        <% } %>
+                    </div>
+                    
                 </div>
                 <div id="cadastrar" class="col s12">
                     <h2>Cadastrar</h2>
@@ -140,11 +165,10 @@
                         <div class="form-group col-12 col-md-4">
                             <label for="tipoAcomodacao">Tipo de acomodação</label>
                             <select name="acomodacaoID" class="form-control selectpicker" data-style="btn btn-link" id="acomodacaoID">
-                                <% ArrayList<Acomodacao> acomodacoes = (ArrayList<Acomodacao>) request.getAttribute("acomodacoes"); %>
                                 <% for (Acomodacao acomodacao : acomodacoes) {%>
-                                <option value="<%= acomodacao.getId()%>">
-                                    <%= acomodacao.getDescricao()%> - R$ <%= acomodacao.getValorPadrao()%>
-                                </option>
+                                    <option value="<%= acomodacao.getId()%>">
+                                        <%= acomodacao.getDescricao()%> - R$ <%= acomodacao.getValorPadrao()%>
+                                    </option>
                                 <% } %>
                             </select>
                         </div>
