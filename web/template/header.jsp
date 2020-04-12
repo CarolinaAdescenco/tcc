@@ -11,6 +11,7 @@
         <link href="/tcc/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="/tcc/assets/css/light-bootstrap-dashboard.css" rel="stylesheet" type="text/css"/>
 
+        <link href="/tcc/assets/css/fonts.css" rel="stylesheet" />
         <link href="/tcc/assets/css/custom.css" rel="stylesheet" />
         <title>Principal</title>
     </head>

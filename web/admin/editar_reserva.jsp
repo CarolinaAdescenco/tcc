@@ -3,227 +3,278 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="model.Consumo"%>
 <%@page import="model.Reserva"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
+<%@include file="../template/header.jsp"%>
+<%@include file="../template/sidebar.jsp"%>
+<%@include file="../template/navbar.jsp"%>
 
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />   
-        <link rel="stylesheet" type="text/css"
-              href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">    
-        <link href="/tcc/assets/css/custom.css" rel="stylesheet" />
-        <title>Listar Acomoda√ß√µes</title>
-    </head>
 
-    <body>
+<%
+    String msg = (String) request.getAttribute("msg");
+    if (msg != null) {
+%>
+<font color="blue"><%=msg%></font>
+<% } %>
 
-        <header> 
-            <nav>
-                <div class="nav-wrapper">
-                    <a href="#" class="brand-logo">Logo</a>
-                    <ul id="nav-mobile" class="right hide-on-med-and-down">
-                        <li><a href="/tcc/ControleAcomodacao?acao=Listar">Acomoda√ß√µes</a></li>
-                        <li><a href="/tcc/ControleUsuario?acao=Listar">Usu√°rios</a></li>
-                        <li><a href="/tcc/ControleProduto?acao=Listar">Produtos</a></li>
-                    </ul>
+<div class="content">
+    <div class="container-fluid">
+        <div class="section">
+            <div class="row align-items-center justify-content-between">
+                <% Reserva reserva = (Reserva) request.getAttribute("reserva");%>
+                <div class="col-12 col-lg-3">
+                    <h2 class="my-4 title"> <i class="icon icon-calendar-60"></i> Reserva</h2>
                 </div>
-            </nav>
-        </header>
-
-        <section class="container page-acomodacao">
-            <div class="row">                
-                <a class="btn col s3 m3" href="/tcc/principal.jsp">
-                    <i class="material-icons">layers</i> P√°gina Principal </a>
+                <div class="col-12 col-lg-auto">
+                    <h4 class="m-0">
+                        <strong>Reserva:</strong>
+                        <%= new SimpleDateFormat("dd-MM-yyyy").format(reserva.getDataCheckin())%>
+                        ·
+                        <%= new SimpleDateFormat("dd-MM-yyyy").format(reserva.getDataCheckout())%>                        
+                    </h4>
+                </div>
+                <div class="col-12 col-lg-3">
+                    <a class="btn btn-success btn-block" <%= reserva.getDataEntrada() != null ? "disabled" : ""%>
+                       href="/tcc/ControleReserva?acao=DefinirChegada&reservaID=<%= reserva.getId()%>">
+                        Confirmar check-in
+                    </a>
+                </div>
+            </div>
+            <div class="row align-items-center justify-content-between">
+                <div class="col-12 col-lg-auto">
+                    <h4 class="m-0"> <strong> HÛspede:</strong> <%= reserva.getUsuario().getNome()%></h4>
+                </div>
+                <div class="col-12 col-lg-3">
+                    <p class="m-0"> <i class="icon icon-calendar-60"></i>
+                        <strong>Data entrada:</strong>
+                        <%= reserva.getDataEntrada() == null ? "N„o confirmada" : new SimpleDateFormat("dd-MM-yyyy").format(reserva.getDataEntrada())%>
+                    </p>
+                </div>
+                <div class="col-12 col-lg-3">
+                    <p class="m-0"> <i class="icon icon-calendar-60"></i>
+                        <strong>Data saÌda:</strong>
+                        <%= reserva.getDataSaida() == null ? "N„o definida" : new SimpleDateFormat("dd-MM-yyyy").format(reserva.getDataSaida())%>
+                    </p>
+                </div>
             </div>
 
-            <%
-                String msg = (String) request.getAttribute("msg");
-                if (msg != null) {
-            %>
-            <font color="blue"><%=msg%></font>
-            <% } %>
+            <hr class="my-5">
 
-            <div class="row">
-                <% Reserva reserva = (Reserva) request.getAttribute("reserva");%>
-                <div class="col 12">
-                    <h1><%= reserva.getUsuario().getNome()%></h1>
-                    <p>
-                        Data reserva:
-                        <%= new SimpleDateFormat("dd-MM-yyyy").format(reserva.getDataCheckin())%>
-                        √°
-                        <%= new SimpleDateFormat("dd-MM-yyyy").format(reserva.getDataCheckout())%>
-                        <a 
-                            class="waves-effect waves-light btn-small <%= reserva.getDataEntrada() != null ? "disabled" : ""%>"
-                            href="/tcc/ControleReserva?acao=DefinirChegada&reservaID=<%= reserva.getId()%>">
-                            Confirmar
-                        </a>
-                    </p>
-                    <p>
-                        Data entrada:
-                        <%= reserva.getDataEntrada() == null ? "N√£o confirmada" : new SimpleDateFormat("dd-MM-yyyy").format(reserva.getDataEntrada())%>
-                    </p>
-                    <p>
-                        Data sa√≠da:
-                        <%= reserva.getDataSaida() == null ? "N√£o definida" : new SimpleDateFormat("dd-MM-yyyy").format(reserva.getDataSaida())%>
-                    </p>
+            <div class="row align-items-center justify-content-between">
+                <div class="col-12 col-lg-6">
+                    <h4 class="my-4 title"> <i class="icon icon-cart-simple"></i> Produtos</h4>
                 </div>
-                <div id="listar" class="col s12">
+                <div class="col-12 col-lg-3">
+                    <button type="button" class="btn btn-primary btn-block" <%= reserva.getDataEntrada() == null || reserva.getDataSaida() != null ? "disabled" : ""%> data-toggle="modal" data-target="#modal-incluir-produto">
+                        Adicionar produto
+                    </button>
+                </div>                       
+            </div>
 
-                    <h2>Produtos</h2>
 
-                    <a class="waves-effect waves-light btn modal-trigger col s3 m3 <%= reserva.getDataEntrada() == null || reserva.getDataSaida() != null ? "disabled" : ""%>" href="#modal1">Adicionar produto</a>
 
-                    <div id="modal1" class="modal">
-                        <div class="modal-content">
-                            <h4>Adicionar produto</h4>
-                            <p>Incluir produto para <%= reserva.getUsuario().getNome()%></p>
-
+            <div class="modal fade" id="modal-incluir-produto" tabindex="-1" role="dialog" aria-labelledby="modal-incluir-produtoLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modal-incluir-produtoLabel">
+                                Incluir produto para <%= reserva.getUsuario().getNome()%>
+                            </h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
                             <% ArrayList<Produto> produtos = (ArrayList<Produto>) request.getAttribute("produtos");%>
                             <form action="ControleConsumo?acao=Cadastrar" method="POST">
-                                <input type="hidden" name="reservaID" value="<%= reserva.getId()%>" />
-                                <label>
-                                    Selecione o produto
-                                    <select name="produtoID">
-                                        <% for (Produto produto : produtos) {%>
-                                        <option value="<%= produto.getId()%>"><%= produto.getDescricao()%></option>
-                                        <% } %>
-                                    </select>
-                                </label>
-                                <label>
-                                    Quantidade
-                                    <input type="number" min="0" name="quantidade"/>
-                                </label>
-                                <label>
-                                    Observa√ß√£o:
-                                    <textarea name="observacao" class="materialize-textarea"></textarea>
-                                </label>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="waves-effect waves-green btn-flat">Adicionar</button>
-                            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
-                        </div> 
-                        </form>
-                    </div>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Descri√ß√£o</th>
-                                <th>Quantidade</th>
-                                <th>Observa√ß√£o</th>
-                                <th>Subtotal</th>
-                                <th>A√ß√µes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% for (Consumo consumo : reserva.getConsumo()) {%>
-                            <tr>
-                                <td><%= consumo.getProduto().getDescricao()%></td>
-                                <td><%= consumo.getQuantidade()%></td>
-                                <td><%= consumo.getObservacao()%></td>
-                                <td><%= consumo.getSubTotal()%></td>
-                                <td>
-                                    <a class="btn col s3 m3 acaoExcluir" href="ControleConsumo?acao=Excluir&id=<%= consumo.getId()%>">Excluir</a>
-
-                                    <a class="waves-effect waves-light btn modal-trigger col s3 m3" href="#modal<%= consumo.getId()%>">Editar</a>
-                                    <div id="modal<%= consumo.getId()%>" class="modal">
-                                        <div class="modal-content">
-                                            <h4>Alterar produto</h4>
-                                            <p>Hospede <%= reserva.getUsuario().getNome()%></p>
-
-                                            <form action="ControleConsumo?acao=Editar&id=<%= consumo.getId()%>" method="POST">
-                                                <p>Produto: <%= consumo.getProduto().getDescricao()%></p>
-                                                <input name="produtoID" value="<%= consumo.getProduto().getId()%>" type="hidden"/>
-                                                <label>
-                                                    Quantidade
-                                                    <input type="number" name="quantidade" value="<%= consumo.getQuantidade()%>"/>
-                                                </label>
-                                                <label>
-                                                    Observa√ß√£o:
-                                                    <textarea name="observacao" class="materialize-textarea"><%= consumo.getProduto().getDescricao()%></textarea>
-                                                </label>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button class="waves-effect waves-green btn-flat" type="submit">Editar</button>
-                                            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
-                                        </div>
-                                        </form>
+                                <div>
+                                    <input type="hidden" name="reservaID" value="<%= reserva.getId()%>" />
+                                    <div class="form-group">
+                                        <label for="produtoID">Produto</label>
+                                        <select name="produtoID" class="form-control selectpicker" data-style="btn btn-link" id="produtoID">
+                                            <option selected disabled>Selecione o produto</option>
+                                            <% for (Produto produto : produtos) {%>
+                                            <option value="<%= produto.getId()%>"><%= produto.getDescricao()%></option>
+                                            <% }%>                                               
+                                        </select>
                                     </div>
-                                </td>
-                            </tr>
-                            <% }%>
-                        </tbody>
-                    </table>
 
-                    <h5>
-                        Total em consumo:
-                        R$ <%= (Double) request.getAttribute("totalConsumo")%>
-                    </h5>
-                    <h5>
-                        Total em hospedagem:
-                        R$ <%= (Double) reserva.getSubTotal()%>
-                    </h5>
-                    <hr>
-                    <h5>
-                        Subtotal:
-                        R$ <%= (Double) reserva.getSubTotal() + (Double) request.getAttribute("totalConsumo") %>
-                    </h5>
-                    <a class="waves-effect waves-light btn modal-trigger col s3 m3 <%= reserva.getDataEntrada() == null || reserva.getDataSaida() != null ? "disabled" : ""%>" href="#modal-finalizar">Finalizar</a>
-                    <div id="modal-finalizar" class="modal">
-                        <div class="modal-content">
-                            <h4>Finalizar hospedagem</h4>
-                            <p>Hospede <%= reserva.getUsuario().getNome()%></p>
+                                    <div class="form-group">
+                                        <label for="quantidade">Quantidade</label>
+                                        <input type="number" min="0" name="quantidade" class="form-control" id="quantidade">
+                                    </div>
 
-                            <form action="ControlePagamento" method="POST">
-                                <input name="reservaID" value="<%= reserva.getId() %>" type="hidden"/>
-                                <label>
-                                    Valor total:
-                                    <input type="number" name="subTotal" value="<%= (Double) reserva.getSubTotal() + (Double) request.getAttribute("totalConsumo") %>"/>
-                                </label>
-                                <label>
-                                    Parcelas:
-                                    <input type="number" name="parcelas" min="1" required/>
-                                </label>
-                                Parcelas: <p id="valorParcelas">1x de R$ <%= (Double) reserva.getSubTotal() + (Double) request.getAttribute("totalConsumo") %></p>
+                                    <div class="form-group">
+                                        <label for="observacao">ObservaÁ„o</label>
+                                        <textarea  name="observacao" class="form-control" id="observacao"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row mx-0">
+                                    <div class="col-12 col-lg-6">
+                                        <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cancelar</button>
+                                    </div>
+                                    <div class="col-12 col-lg-6">
+                                        <button type="submit" class="btn btn-primary btn-block">Adicionar</button>
+                                    </div>
+                                </div> 
+                            </form>
                         </div>
-                        <div class="modal-footer">
-                            <button class="waves-effect waves-green btn-flat" type="submit">Confirmar</button>
-                            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
-                        </div>
-                        </form>
                     </div>
                 </div>
             </div>
-        </section>
+
+            <div class="table-responsive table-full-width container">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>DescriÁ„o</th>
+                            <th>Quantidade</th>
+                            <th>ObservaÁ„o</th>
+                            <th>Subtotal</th>
+                            <th>Editar</th>
+                            <th>Excluir</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (Consumo consumo : reserva.getConsumo()) {%>
+                        <tr>
+                            <td><%= consumo.getProduto().getDescricao()%></td>
+                            <td><%= consumo.getQuantidade()%></td>
+                            <td><%= consumo.getObservacao()%></td>
+                            <td><%= consumo.getSubTotal()%></td>
+                            <td>
+                                <a class="mx-2" data-toggle="modal" data-target="#modal-<%= consumo.getId()%>">
+                                    <i class="icon icon-pencil"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a class="mx-3 acaoExcluir" href="ControleConsumo?acao=Excluir&id=<%= consumo.getId()%>"> <i class="icon icon-trash-simple"></i> </a>
+                            </td>
+                        </tr>
+                    <div class="modal fade" id="modal-<%= consumo.getId()%>" tabindex="-1" role="dialog" aria-labelledby="modal-<%= consumo.getId()%>Label" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="modal-<%= consumo.getId()%>Label">
+                                        Editar produto para <%= reserva.getUsuario().getNome()%>
+                                    </h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="ControleConsumo?acao=Editar&id=<%= consumo.getId()%>" method="POST">
+                                        <div>
+                                            <p>Produto: <%= consumo.getProduto().getDescricao()%></p>
+                                            <input name="produtoID" value="<%= consumo.getProduto().getId()%>" type="hidden"/>
+
+                                            <div class="form-group">
+                                                <label for="quantidade">Quantidade</label>
+                                                <input type="number" name="quantidade" value="<%= consumo.getQuantidade()%>" class="form-control" id="quantidade"/>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="observacao">Quantidade</label>                                              
+                                                <textarea name="observacao" class="form-control"><%= consumo.getProduto().getDescricao()%></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="row mx-0">
+                                            <div class="col-12 col-lg-6">
+                                                <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cancelar</button>
+                                            </div>
+                                            <div class="col-12 col-lg-6">
+                                                <button type="submit" class="btn btn-primary btn-block">Editar</button>
+                                            </div>
+                                        </div> 
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    <% }%>
+                    </tbody>
+                </table>
+            </div>
+
+            <hr class="my-5">
+
+            <div class="row align-items-center justify-content-between">
+                <div class="col-12 col-lg-6">
+                    <h4 class="my-4 title"> <i class="icon icon-check-circle-07"></i> Checkout</h4>
+                </div>                     
+            </div>
+
+            <div class="row mx-0 justify-content-between">
+                <div class="col-6 col-lg-8 text-left">
+                    <p>Total em consumo</p>                             
+                </div>
+                <div class="col-6 col-lg-4 text-right">
+                    <p>R$ <%= (Double) request.getAttribute("totalConsumo")%></p>                             
+                </div>                            
+            </div>
+            <div class="row mx-0 justify-content-between">
+                <div class="col-6 col-lg-8 text-left">
+                    <p>Total em hospedagem</p>                             
+                </div>
+                <div class="col-6 col-lg-4 text-right">
+                    <p>R$ <%= (Double) reserva.getSubTotal()%></p>                             
+                </div>                            
+            </div>
+            <div class="row mx-0 justify-content-between">
+                <div class="col-6 col-lg-8 text-left">
+                    <p>Subtotal:</p>                             
+                </div>
+                <div class="col-6 col-lg-4 text-right">
+                    <p> R$ <%= (Double) reserva.getSubTotal() + (Double) request.getAttribute("totalConsumo")%></p>                             
+                </div>                            
+            </div>
+            <div class="row align-items-center justify-content-end">                
+                <div class="col-12 col-lg-3">
+                    <button type="button" class="btn btn-primary btn-block" <%= reserva.getDataEntrada() == null || reserva.getDataSaida() != null ? "disabled" : ""%> data-toggle="modal" data-target="#modal-finalizar">
+                        Finalizar hospedagem
+                    </button>
+                </div>                       
+            </div>
+
+            <div class="modal fade" id="modal-finalizar" tabindex="-1" role="dialog" aria-labelledby="modal-finalizarLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modal-finalizarLabel">Finalizar hospedagem</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="ControlePagamento" method="POST">
+                                <div>
+                                    <input name="reservaID" value="<%= reserva.getId()%>" type="hidden"/>
+                                    <div class="form-group">
+                                        <label for="subTotal">Valor total</label>
+                                        <input class="form-control" type="number" required name="subTotal" id="subTotal" value="<%= (Double) reserva.getSubTotal() + (Double) request.getAttribute("totalConsumo")%>"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="parcelas">Parcelas</label>
+                                        <input class="form-control" name="parcelas" type="number" min="1" id="parcelas" required/>
+                                    </div>                                   
+                                    <div class="alert alert-primary" role="alert"id="valorParcelas">
+                                        Parcelas: 1x de R$ <%= (Double) reserva.getSubTotal() + (Double) request.getAttribute("totalConsumo")%>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-lg-6">
+                                        <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cancelar</button>
+                                    </div>
+                                    <div class="col-12 col-lg-6">
+                                        <button type="submit" class="btn btn-success btn-block">Confirmar</button> 
+                                    </div>
+                                </div>                                
+                            </form>
+                        </div>                                
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
-        <!--   Core JS Files   -->
-        <script src="/tcc/assets/js/core/jquery.min.js" type="text/javascript"></script>
-        <script src="/tcc/assets/js/core/popper.min.js" type="text/javascript"></script>
-        <!-- Compiled and minified JavaScript -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-        <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
-        <script src="/tcc/assets/js/main.js" type="text/javascript"></script>
-        <script>
-            $(document).ready(function() {
-                $('[name="parcelas"]').on('input', function() {
-                    parcelas = parseInt($(this).val());
-                    valorParcelas = $('#valorParcelas');
-                    valorTotal = parseInt($('[name="subTotal"]').val());
-                    
-                    if (parcelas !== null && parcelas !== "") {
-                        total = valorTotal / parcelas;
-                        console.log(total);
-                        valorParcelas.html(parcelas + "x de R$ " + Math.ceil(total));
-                        return;
-                    }
-                    
-                    valorParcelas.html(parcelas + "x de R$ " + Math.ceil(valorTotal));
-                });
-            });
-        </script>
-    </body>
-
-</html>
+<%@include file="../template/footer.jsp"%>

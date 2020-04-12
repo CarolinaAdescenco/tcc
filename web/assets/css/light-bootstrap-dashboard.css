@@ -696,7 +696,7 @@ body>.navbar-collapse[data-color="purple"]:after {
 }
 
 .main-panel>.content {
-    padding: 30px 15px;
+    padding: 10px 15px;
     min-height: calc(100% - 123px);
 }
 

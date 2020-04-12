@@ -1,17 +1,14 @@
-<%@page import="model.Usuario"%>
+
 
 <!--  main panel close in footer.jsp  -->
 <div class="main-panel">
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg " color-on-scroll="500">
+    <nav class="navbar navbar-expand-lg sticky-top" color-on-scroll="500">
         <div class="container-fluid">
 
-            <%
-                Usuario usuario = (Usuario) session.getAttribute("usuarioAutenticado");
-                if (usuario != null) {
-            %>
-            <a class="navbar-brand" href="#pablo">Bem vindo, <%= usuario.getEmail()%></a>
-            <% }%>
+            
+            <a class="navbar-brand" href="#pablo">Bem vindo</a>
+        
 
             <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-bar burger-lines"></span>
