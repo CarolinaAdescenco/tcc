@@ -36,6 +36,7 @@
                     <div class="table-responsive table-full-width container">
                         <table class="table table-hover table-striped">
                             <thead>
+                    
                                 <tr>
                                     <th>ID</th>
                                     <th>Tipo</th>
