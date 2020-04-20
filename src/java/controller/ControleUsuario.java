@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import model.Endereco;
 import model.EnderecoDAO;
 import model.PerfilDeAcesso;
+import model.Reserva;
+import model.ReservaDAO;
 import model.Usuario;
 import model.UsuarioDAO;
 import services.PasswordService;
@@ -69,6 +71,10 @@ public class ControleUsuario extends HttpServlet {
                 
                 EnderecoDAO enderecoDAO = new EnderecoDAO();
                 usuario.setEndereco(enderecoDAO.consultar(usuarioID));
+                
+                ReservaDAO reservaDAO = new ReservaDAO();
+                ArrayList<Reserva> reservas = reservaDAO.consultarPorUsuario(usuarioID);
+                usuario.setReservas(reservas);
 
                 request.setAttribute("usuario", usuario);
                 request.getRequestDispatcher("/admin/editar_usuario.jsp").forward(request, response);

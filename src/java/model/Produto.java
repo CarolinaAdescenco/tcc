@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
-/**
- *
- * @author ana.fernandes
- */
 public class Produto {
     
     private int id;
@@ -16,10 +7,8 @@ public class Produto {
     private Double valor_unitario;
     private int quantidade_estoque;
 
-    public Produto() {
-    }
+    public Produto() {}
 
-    
     public Produto(int id, String descricao, Double valor_unitario, int quantidade_estoque) {
         this.id = id;
         this.descricao = descricao;
@@ -32,8 +21,6 @@ public class Produto {
         this.valor_unitario = valor_unitario;
         this.quantidade_estoque = quantidade_estoque;
     }
-    
-    
 
     public int getId() {
         return id;

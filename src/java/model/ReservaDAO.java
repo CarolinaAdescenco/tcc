@@ -204,12 +204,11 @@ public class ReservaDAO {
         return reserva;
     }
     
-    public Reserva consultarPorUsuario(int usuarioID) {
-
+    public ArrayList<Reserva> consultarPorUsuario(int usuarioID) {
         Connection conexao = null;
         PreparedStatement pstmt = null;
         ResultSet rsReserva = null;
-        Reserva reserva = new Reserva();
+        ArrayList<Reserva> reservas = new ArrayList<>();
         try {
             conexao = ConectaBanco.getConnection();
             pstmt = conexao.prepareStatement(CONSULTAR_POR_USUARIO);
@@ -217,6 +216,7 @@ public class ReservaDAO {
             rsReserva = pstmt.executeQuery();
 
             while (rsReserva.next()) {
+                Reserva reserva = new Reserva();
                 reserva.setId(rsReserva.getInt("id"));
                 reserva.setSubTotal(rsReserva.getDouble("sub_total"));
                 reserva.setAcomodacaoID(rsReserva.getInt("acomodacoes_id"));
@@ -229,7 +229,7 @@ public class ReservaDAO {
                 acomodacao.setDescricao(rsReserva.getString("descricao"));
                 reserva.setAcomodacao(acomodacao);
 
-                return reserva;
+                reservas.add(reserva);
             }
         } catch (SQLException sqlErro) {
             throw new RuntimeException(sqlErro);
@@ -243,7 +243,7 @@ public class ReservaDAO {
             }
         }
         
-        return reserva;
+        return reservas;
     }
 
     public void definirChegada(int reservaID) {
