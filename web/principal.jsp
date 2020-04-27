@@ -2,8 +2,6 @@
 <%@include file="template/header.jsp"%>
 <%@include file="template/sidebar.jsp"%>
 <%@include file="template/navbar.jsp"%>
-
-
     
     <div class="content">
         <div class="container-fluid">
