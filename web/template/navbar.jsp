@@ -3,14 +3,14 @@
 <!--  main panel close in footer.jsp  -->
 <div class="main-panel">
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg sticky-top" color-on-scroll="500">
+    <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container-fluid">
 
             
             <a class="navbar-brand" href="#pablo">Bem vindo</a>
         
 
-            <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-bar burger-lines"></span>
                 <span class="navbar-toggler-bar burger-lines"></span>
                 <span class="navbar-toggler-bar burger-lines"></span>
@@ -23,7 +23,7 @@
                             <span class="d-lg-none">Home</span>
                         </a>
                     </li>
-                    <li class="dropdown nav-item">
+<!--                    <li class="dropdown nav-item">
                         <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                             <i class="icon icon-bell-53"></i>
                             <span class="notification">5</span>
@@ -36,36 +36,23 @@
                             <a class="dropdown-item" href="#">Notification 4</a>
                             <a class="dropdown-item" href="#">Another notification</a>
                         </ul>
-                    </li>
-                    <li class="nav-item">
+                    </li>-->
+<!--                    <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="icon icon-zoom-2"></i>
                             <span class="d-lg-block">&nbsp;Search</span>
                         </a>
-                    </li>
+                    </li>-->
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="/tcc/admin/principal.jsp">
-                            <span class="no-icon">Área Restrita</span>
+                            <i class="icon icon-lock mx-2"></i> Área Restrita
                         </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="no-icon">Dropdown</span>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                            <div class="divider"></div>
-                            <a class="dropdown-item" href="#">Separated link</a>
-                        </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="ControleAcesso?acao=Sair">
-                            <span class="no-icon">Log out</span>
+                            <i class="icon icon-spaceship mx-2"></i> Log out
                         </a>
                     </li>
                 </ul>

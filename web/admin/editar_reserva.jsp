@@ -1,8 +1,8 @@
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="model.Produto"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="model.Consumo"%>
 <%@page import="model.Reserva"%>
+<%@page import="model.Produto"%>
 <%@include file="../template/header.jsp"%>
 <%@include file="../template/sidebar.jsp"%>
 <%@include file="../template/navbar.jsp"%>

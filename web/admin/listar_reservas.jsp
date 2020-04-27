@@ -1,8 +1,8 @@
 <%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="model.Produto"%>
 <%@page import="model.Acomodacao"%>
 <%@page import="model.Reserva"%>
-<%@page import="java.util.ArrayList"%>
 <%@page import="model.Usuario"%>
 <%@include file="../template/header.jsp"%>
 <%@include file="../template/sidebar.jsp"%>

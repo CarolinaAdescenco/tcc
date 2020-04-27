@@ -1,5 +1,5 @@
-<%@page import="model.Reserva"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="model.Reserva"%>
 <%@page import="model.Produto"%>
 <%@include file="../template/header.jsp"%>
 <%@include file="../template/sidebar.jsp"%>

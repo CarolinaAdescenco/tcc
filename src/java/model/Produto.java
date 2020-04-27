@@ -18,7 +18,6 @@ public class Produto {
 
     public Produto() {
     }
-
     
     public Produto(int id, String descricao, Double valor_unitario, int quantidade_estoque) {
         this.id = id;
@@ -31,9 +30,7 @@ public class Produto {
         this.descricao = descricao;
         this.valor_unitario = valor_unitario;
         this.quantidade_estoque = quantidade_estoque;
-    }
-    
-    
+    }  
 
     public int getId() {
         return id;
