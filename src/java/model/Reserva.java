@@ -18,6 +18,7 @@ public class Reserva {
     private Usuario usuario = new Usuario();
     private Acomodacao acomodacao = new Acomodacao();
     private ArrayList<Consumo> consumos = new ArrayList<>();
+    private Pagamento pagamento;
 
 
     public Reserva(int acomodacaoID, int usuarioID, Date dataCheckin, Date dataCheckout, int adultos, int criancas) {
@@ -134,6 +135,14 @@ public class Reserva {
 
     public void setSubTotal(Double subTotal) {
         this.subTotal = subTotal;
+    }
+
+    public Pagamento getPagamento() {
+        return pagamento;
+    }
+
+    public void setPagamento(Pagamento pagamento) {
+        this.pagamento = pagamento;
     }
     
     public void calcularSubTotal(Double valorQuarto) {

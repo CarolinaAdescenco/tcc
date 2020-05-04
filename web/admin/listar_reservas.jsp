@@ -94,7 +94,6 @@
                                     <a class="btn cancelarReserva <%= reserva.getDataEntrada() != null ? "disabled": "" %>" href="ControlePagamento?reservaID=<%= reserva.getId()%>">Cancelar</a>
                                 </td>
                             </tr>
-                            <!-- Modal Structure -->
                         <div id="modal<%= reserva.getId()%>" class="modal">
                             <div class="modal-content">
                                 <h4>Lançar produto para: <%= reserva.getUsuario().getNome()%></h4>
@@ -135,31 +134,34 @@
                         </tbody>
                     </table>
                     
-                    <% ArrayList<Acomodacao> acomodacoes = (ArrayList<Acomodacao>) request.getAttribute("acomodacoes"); %>
+                    <% ArrayList<Acomodacao> acomodacoesLivres = (ArrayList<Acomodacao>) request.getAttribute("acomodacoesLivres"); %>
+                    <% ArrayList<Acomodacao> acomodacoesOcupadas = (ArrayList<Acomodacao>) request.getAttribute("acomodacoesOcupadas"); %>
+
                     <h3>Situação das acomodações</h3>
-                    
+
                     <div class="row">
-                        <% ReservaDAO resDAO = new ReservaDAO(); %>
-                        <% for (Acomodacao acomodacao : acomodacoes) {%>
-                        <div class="col s3 justify-content-center">
-                            <% if (resDAO.estaDisponivel(acomodacao.getId(), new Date())) { %>
-                            <figure>
+                        <% for (Acomodacao acomodacao : acomodacoesLivres) {%>
+                            <div class="col s3 justify-content-center">
+                                <figure>
                                     <img src="/tcc/assets/images/free.png">
                                     <figcaption><%= acomodacao.getDescricao() %></figcaption>
                                 </figure>
-                            <%  } else { %>
+                            </div>
+                        <% } %>
+
+                        <% for (Acomodacao acomodacao : acomodacoesOcupadas) {%>
+                            <div class="col s3 justify-content-center">
                                 <figure>
-                                    <img src="/tcc/assets/images/closed.png">
+                                    <img src="/tcc/assets/images/free.png">
                                     <figcaption><%= acomodacao.getDescricao() %></figcaption>
                                 </figure>
-                            <% } %>
-                        </div>
+                            </div>
                         <% } %>
                     </div>
-                    
                 </div>
                 <div id="cadastrar" class="col s12">
                     <h2>Cadastrar</h2>
+                    <% ArrayList<Acomodacao> acomodacoes = (ArrayList<Acomodacao>) request.getAttribute("acomodacoes"); %>
                     <div class="row justify-content-center">
                         <form action="ControleReserva" method="post">
                         <div class="form-group col-12 col-md-4">

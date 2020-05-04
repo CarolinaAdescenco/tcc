@@ -62,7 +62,7 @@
                         á
                         <%= formatador.format(reserva.getDataCheckout())%>
                         <a 
-                            class="waves-effect waves-light btn-small <%= reserva.getDataEntrada() != null ? "disabled" : ""%>"
+                            class="waves-effect waves-light btn-small <%= reserva.getDataEntrada() != null ? "disabled" : "" %>"
                             href="/tcc/ControleReserva?acao=DefinirChegada&reservaID=<%= reserva.getId()%>">
                             Confirmar entrada
                         </a>
