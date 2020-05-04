@@ -59,25 +59,29 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Status<th>
                                 <th>Email</th>
                                 <th>Perfil</th>
-                                <th>Editar</th>
+                                <th>Editar</th> 
                                 <th>Excluir</th>
                             </tr>
                         </thead>
                         <tbody>
                             <% for (Usuario usuario : usuarios) {%>
                             <tr>
-                                <td><%= usuario.getId()%></td>
-                                <td><%= usuario.getEmail()%></td>
-                                <td><%= usuario.getPerfil()%></td>
+                                <td><%= usuario.getId() %></td>
+                                <td><%= usuario.getStatus() %></td>
+                                <td><%= usuario.getEmail() %></td>
+                                <td><%= usuario.getPerfil() %></td>
                                 <td>
-                                    <a href="ControleUsuario?acao=Consultar&usuarioID=<%= usuario.getId()%>"> <i
-                                            class="material-icons">edit</i> </a>
+                                    <a href="ControleUsuario?acao=Consultar&usuarioID=<%= usuario.getId()%>">
+                                        <i class="material-icons">edit</i>
+                                    </a>
                                 </td>
                                 <td>
-                                    <a href="ControleUsuario?acao=Excluir&usuarioID=<%= usuario.getId()%>"> <i class="material-icons">delete</i> </a>
-
+                                    <a href="ControleUsuario?acao=Excluir&usuarioID=<%= usuario.getId()%>">
+                                        <i class="material-icons">delete</i>
+                                    </a>
                                 </td>
                             </tr>
                             <% }%>

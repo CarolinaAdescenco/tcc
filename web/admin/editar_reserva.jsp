@@ -1,3 +1,5 @@
+<%@page import="java.util.concurrent.TimeUnit"%>
+<%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="model.Produto"%>
 <%@page import="java.util.ArrayList"%>
@@ -42,23 +44,34 @@
                 String msg = (String) request.getAttribute("msg");
                 if (msg != null) {
             %>
-            <font color="blue"><%=msg%></font>
+                <font color="blue"><%=msg%></font>
             <% } %>
 
             <div class="row">
                 <% Reserva reserva = (Reserva) request.getAttribute("reserva");%>
+
+                <% Boolean inativar = reserva.getDataEntrada() == null || reserva.getDataSaida() != null; %>
+
                 <div class="col 12">
                     <h1><%= reserva.getUsuario().getNome()%></h1>
                     <p>
                         Data reserva:
-                        <%= new SimpleDateFormat("dd-MM-yyyy").format(reserva.getDataCheckin())%>
+                        <% SimpleDateFormat formatador = new SimpleDateFormat("dd-MM-yyyy"); %>
+                        
+                        <%= formatador.format(reserva.getDataCheckin())%>
                         á
-                        <%= new SimpleDateFormat("dd-MM-yyyy").format(reserva.getDataCheckout())%>
+                        <%= formatador.format(reserva.getDataCheckout())%>
                         <a 
-                            class="waves-effect waves-light btn-small <%= reserva.getDataEntrada() != null ? "disabled" : ""%>"
+                            class="waves-effect waves-light btn-small <%= reserva.getDataEntrada() != null ? "disabled" : "" %>"
                             href="/tcc/ControleReserva?acao=DefinirChegada&reservaID=<%= reserva.getId()%>">
-                            Confirmar
+                            Confirmar entrada
                         </a>
+                    </p>
+                    <p>
+                        <% long diffInMilli = Math.abs(reserva.getDataCheckout().getTime() - reserva.getDataCheckin().getTime()); %>
+                        <% long quantidadeDias = TimeUnit.DAYS.convert(diffInMilli, TimeUnit.MILLISECONDS); %>
+                        
+                        Numero de Diarias: <%= quantidadeDias %>
                     </p>
                     <p>
                         Data entrada:
@@ -125,9 +138,17 @@
                                 <td><%= consumo.getObservacao()%></td>
                                 <td><%= consumo.getSubTotal()%></td>
                                 <td>
-                                    <a class="btn col s3 m3 acaoExcluir" href="ControleConsumo?acao=Excluir&id=<%= consumo.getId()%>">Excluir</a>
+                                    <a
+                                        class="btn col s3 m3 acaoExcluir <%= inativar ? "disabled" : ""%>"
+                                        href="ControleConsumo?acao=Excluir&id=<%= consumo.getId() %>">
+                                        Excluir
+                                    </a>
 
-                                    <a class="waves-effect waves-light btn modal-trigger col s3 m3" href="#modal<%= consumo.getId()%>">Editar</a>
+                                    <a
+                                        class="waves-effect waves-light btn modal-trigger col s3 m3 <%= inativar ? "disabled" : ""%>"
+                                        href="#modal<%= consumo.getId()%>">
+                                        Editar
+                                    </a>
                                     <div id="modal<%= consumo.getId()%>" class="modal">
                                         <div class="modal-content">
                                             <h4>Alterar produto</h4>
@@ -136,6 +157,7 @@
                                             <form action="ControleConsumo?acao=Editar&id=<%= consumo.getId()%>" method="POST">
                                                 <p>Produto: <%= consumo.getProduto().getDescricao()%></p>
                                                 <input name="produtoID" value="<%= consumo.getProduto().getId()%>" type="hidden"/>
+                                                <input name="consumoID" value="<%= consumo.getId() %>" type="hidden" />
                                                 <label>
                                                     Quantidade
                                                     <input type="number" name="quantidade" value="<%= consumo.getQuantidade()%>"/>
@@ -157,20 +179,25 @@
                         </tbody>
                     </table>
 
-                    <h5>
-                        Total em consumo:
+                    <p>
+                        <strong>Total em consumo:</strong>
                         R$ <%= (Double) request.getAttribute("totalConsumo")%>
-                    </h5>
-                    <h5>
-                        Total em hospedagem:
-                        R$ <%= (Double) reserva.getSubTotal()%>
-                    </h5>
+                    </p>
+                    
+                    <p>
+                        <strong>Valor de cada diaria:</strong>
+                        R$ <%= reserva.getAcomodacao().getValorPadrao() %>
+                    </p>
+                    <p>
+                        <strong>Total em hospedagem:</strong>
+                        R$ <%= (Double) reserva.getSubTotal() %>
+                    </p>
                     <hr>
                     <h5>
                         Subtotal:
                         R$ <%= (Double) reserva.getSubTotal() + (Double) request.getAttribute("totalConsumo") %>
                     </h5>
-                    <a class="waves-effect waves-light btn modal-trigger col s3 m3 <%= reserva.getDataEntrada() == null || reserva.getDataSaida() != null ? "disabled" : ""%>" href="#modal-finalizar">Finalizar</a>
+                    <a class="waves-effect waves-light btn modal-trigger col s3 m3 <%= inativar ? "disabled" : ""%>" href="#modal-finalizar">Finalizar</a>
                     <div id="modal-finalizar" class="modal">
                         <div class="modal-content">
                             <h4>Finalizar hospedagem</h4>

@@ -1,3 +1,6 @@
+<%@page import="java.util.Date"%>
+<%@page import="model.ReservaDAO"%>
+<%@page import="enums.StatusUsuario"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="model.Produto"%>
 <%@page import="model.Acomodacao"%>
@@ -91,7 +94,6 @@
                                     <a class="btn cancelarReserva <%= reserva.getDataEntrada() != null ? "disabled": "" %>" href="ControlePagamento?reservaID=<%= reserva.getId()%>">Cancelar</a>
                                 </td>
                             </tr>
-                            <!-- Modal Structure -->
                         <div id="modal<%= reserva.getId()%>" class="modal">
                             <div class="modal-content">
                                 <h4>Lançar produto para: <%= reserva.getUsuario().getNome()%></h4>
@@ -131,19 +133,44 @@
                         <% }%>
                         </tbody>
                     </table>
+                    
+                    <% ArrayList<Acomodacao> acomodacoesLivres = (ArrayList<Acomodacao>) request.getAttribute("acomodacoesLivres"); %>
+                    <% ArrayList<Acomodacao> acomodacoesOcupadas = (ArrayList<Acomodacao>) request.getAttribute("acomodacoesOcupadas"); %>
+
+                    <h3>Situação das acomodações</h3>
+
+                    <div class="row">
+                        <% for (Acomodacao acomodacao : acomodacoesLivres) {%>
+                            <div class="col s3 justify-content-center">
+                                <figure>
+                                    <img src="/tcc/assets/images/free.png">
+                                    <figcaption><%= acomodacao.getDescricao() %></figcaption>
+                                </figure>
+                            </div>
+                        <% } %>
+
+                        <% for (Acomodacao acomodacao : acomodacoesOcupadas) {%>
+                            <div class="col s3 justify-content-center">
+                                <figure>
+                                    <img src="/tcc/assets/images/free.png">
+                                    <figcaption><%= acomodacao.getDescricao() %></figcaption>
+                                </figure>
+                            </div>
+                        <% } %>
+                    </div>
                 </div>
                 <div id="cadastrar" class="col s12">
                     <h2>Cadastrar</h2>
+                    <% ArrayList<Acomodacao> acomodacoes = (ArrayList<Acomodacao>) request.getAttribute("acomodacoes"); %>
                     <div class="row justify-content-center">
                         <form action="ControleReserva" method="post">
                         <div class="form-group col-12 col-md-4">
                             <label for="tipoAcomodacao">Tipo de acomodação</label>
                             <select name="acomodacaoID" class="form-control selectpicker" data-style="btn btn-link" id="acomodacaoID">
-                                <% ArrayList<Acomodacao> acomodacoes = (ArrayList<Acomodacao>) request.getAttribute("acomodacoes"); %>
                                 <% for (Acomodacao acomodacao : acomodacoes) {%>
-                                <option value="<%= acomodacao.getId()%>">
-                                    <%= acomodacao.getDescricao()%> - R$ <%= acomodacao.getValorPadrao()%>
-                                </option>
+                                    <option value="<%= acomodacao.getId()%>">
+                                        <%= acomodacao.getDescricao()%> - R$ <%= acomodacao.getValorPadrao()%>
+                                    </option>
                                 <% } %>
                             </select>
                         </div>
@@ -152,9 +179,11 @@
                             <select name="usuarioID" class="form-control selectpicker" data-style="btn btn-link" id="usuarioID">
                                 <% ArrayList<Usuario> usuarios = (ArrayList<Usuario>) request.getAttribute("usuarios"); %>
                                 <% for (Usuario usuario : usuarios) {%>
-                                <option value="<%= usuario.getId()%>">
-                                    <%= usuario.getEmail()%> - <%= usuario.getCpf()%>
-                                </option>
+                                    <% if (usuario.getStatus() == StatusUsuario.ATIVO) { %>
+                                        <option value="<%= usuario.getId()%>">
+                                            <%= usuario.getEmail()%> - <%= usuario.getCpf()%>
+                                        </option>
+                                    <% } %>
                                 <% }%>
                             </select>
                         </div>
