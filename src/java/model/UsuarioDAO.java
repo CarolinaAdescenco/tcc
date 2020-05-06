@@ -1,5 +1,6 @@
 package model;
 
+import enums.StatusUsuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,12 +11,12 @@ import util.ConectaBanco;
 
 public class UsuarioDAO {
     
-    private static final String CADASTRAR_NOVO_USUARIO = "INSERT INTO usuarios (email, senha, perfil, cpf, nome) VALUES(?,?,?,?, ?)";
-    private static final String AUTENTICA_USUARIO = "SELECT * FROM usuarios WHERE email=? AND senha=?";
+    private static final String CADASTRAR_NOVO_USUARIO = "INSERT INTO usuarios (email, senha, perfil, cpf, nome, status) VALUES(?,?,?,?,?,?)";
+    private static final String AUTENTICA_USUARIO = "SELECT * FROM usuarios WHERE email = ? AND senha = ? AND status = ?";
     private static final String BUSCAR_USUARIO = "SELECT * FROM usuarios WHERE id=?";
     private static final String LISTAR_USUARIO = "SELECT * FROM usuarios";
-    private static final String DELETAR_USUARIO = "DELETE from usuarios WHERE id = ?";
-    private static final String ATUALIZAR_USUARIO = "UPDATE usuarios SET email = ?, senha = ?, perfil = ?, cpf = ?  WHERE id = ?";
+    private static final String DELETAR_USUARIO = "UPDATE usuarios SET status = ? WHERE id = ?";
+    private static final String ATUALIZAR_USUARIO = "UPDATE usuarios SET email = ?, senha = ?, perfil = ?, cpf = ?, status = ?  WHERE id = ?";
     
     
     public Usuario cadastrar(Usuario usuario){
@@ -31,6 +32,7 @@ public class UsuarioDAO {
             pstmt.setString(3, usuario.getPerfil().toString());
             pstmt.setString(4, usuario.getCpf());
             pstmt.setString(5, usuario.getNome());
+            pstmt.setString(6, usuario.getStatus().toString());
             pstmt.executeUpdate();
             resUser = pstmt.getGeneratedKeys();
 
@@ -63,6 +65,7 @@ public class UsuarioDAO {
             pstmt = conexao.prepareStatement(AUTENTICA_USUARIO);
             pstmt.setString(1, usuario.getEmail());
             pstmt.setString(2, usuario.getSenha());
+            pstmt.setString(3, StatusUsuario.ATIVO.toString());
             rsUsuario = pstmt.executeQuery();
             if (rsUsuario.next()) {
                 usuarioAutenticado = new Usuario();
@@ -98,6 +101,7 @@ public class UsuarioDAO {
             rsUsuario = pstmt.executeQuery();
             if (rsUsuario.next()) {
                 usuario = new Usuario();
+                usuario.setStatus(StatusUsuario.valueOf(rsUsuario.getString("status")));
                 usuario.setNome(rsUsuario.getString("nome"));
                 usuario.setId(rsUsuario.getInt("id"));
                 usuario.setEmail(rsUsuario.getString("email"));
@@ -126,6 +130,7 @@ public class UsuarioDAO {
         Connection conexao = null;
         PreparedStatement pstmt = null;
         ResultSet rsUsuario = null;
+
         try {
             conexao = ConectaBanco.getConnection();
             pstmt = conexao.prepareStatement(LISTAR_USUARIO);
@@ -133,6 +138,7 @@ public class UsuarioDAO {
             while (rsUsuario.next()) {
                 Usuario usuario = new Usuario();
                 usuario.setId(rsUsuario.getInt("id"));
+                usuario.setStatus(StatusUsuario.valueOf(rsUsuario.getString("status")));
                 usuario.setEmail(rsUsuario.getString("email"));
                 usuario.setSenha(rsUsuario.getString("senha"));
                 usuario.setPerfil(PerfilDeAcesso.valueOf(rsUsuario.getString("perfil")));
@@ -155,6 +161,7 @@ public class UsuarioDAO {
     }
 
     public void editar(Usuario usuario, int usuarioID) {
+
         Connection conexao = null;
         PreparedStatement pstmt = null;
         ResultSet rsUsuario = null;
@@ -165,7 +172,8 @@ public class UsuarioDAO {
             pstmt.setString(2, usuario.getSenha());
             pstmt.setString(3, usuario.getPerfil().toString());
             pstmt.setString(4, usuario.getCpf());
-            pstmt.setInt(5, usuarioID);
+            pstmt.setString(5, usuario.getStatus().toString());
+            pstmt.setInt(6, usuarioID);
             pstmt.execute();
         } catch(SQLException sqlErro){
             throw new RuntimeException(sqlErro);
@@ -186,7 +194,8 @@ public class UsuarioDAO {
         try {
             conexao = ConectaBanco.getConnection();
             pstmt = conexao.prepareStatement(DELETAR_USUARIO);
-            pstmt.setInt(1, usuarioID);
+            pstmt.setString(1, StatusUsuario.INATIVO.toString());
+            pstmt.setInt(2, usuarioID);
             pstmt.execute();
         } catch(SQLException sqlErro){
             throw new RuntimeException(sqlErro);

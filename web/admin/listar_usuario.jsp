@@ -13,7 +13,7 @@
 <div class="content">
     <div class="container-fluid">
         <div class="section">
-            <h2 class="my-4 title"> <i class="icon icon-badge-13"></i> Usuários</h2>
+            <h2 class="my-4 title"> <i class="icon icon-badge-13"></i> Usuï¿½rios</h2>
 
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -27,35 +27,38 @@
 
                     <% ArrayList<Usuario> usuarios = (ArrayList<Usuario>) request.getAttribute("usuarios"); %>
 
-                    <div class="table-responsive table-full-width container">
-                        <table class="table table-hover table-striped">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Email</th>
-                                    <th>Perfil</th>
-                                    <th>Editar</th>
-                                    <th>Excluir</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <% for (Usuario usuario : usuarios) {%>
-                                <tr>
-                                    <td><%= usuario.getId()%></td>
-                                    <td><%= usuario.getEmail()%></td>
-                                    <td><%= usuario.getPerfil()%></td>
-                                    <td>
-                                        <a href="ControleUsuario?acao=Consultar&usuarioID=<%= usuario.getId()%>"> <i class="icon icon-pencil  mx-2"></i> </a>
-                                    </td>
-                                    <td>
-                                        <a href="ControleUsuario?acao=Excluir&usuarioID=<%= usuario.getId()%>"> <i class="icon icon-trash-simple mx-3"></i> </a>
-
-                                    </td>
-                                </tr>
-                                <% }%>
-                            </tbody>
-                        </table>
-                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Status<th>
+                                <th>Email</th>
+                                <th>Perfil</th>
+                                <th>Editar</th> 
+                                <th>Excluir</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for (Usuario usuario : usuarios) {%>
+                            <tr>
+                                <td><%= usuario.getId() %></td>
+                                <td><%= usuario.getStatus() %></td>
+                                <td><%= usuario.getEmail() %></td>
+                                <td><%= usuario.getPerfil() %></td>
+                                <td>
+                                    <a href="ControleUsuario?acao=Consultar&usuarioID=<%= usuario.getId()%>">
+                                        <i class="material-icons">edit</i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="ControleUsuario?acao=Excluir&usuarioID=<%= usuario.getId()%>">
+                                        <i class="material-icons">delete</i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <% }%>
+                        </tbody>
+                    </table>
                 </div>
                 <div class="tab-pane fade" id="nav-add" role="tabpanel" aria-labelledby="nav-add-tab">  
                     <form action="/tcc/ControleUsuario" method="POST">
@@ -89,7 +92,7 @@
                         </div>
                             
                         <div class="row mb-3">
-                            <h2 class="my-4 title"> <i class="icon icon-compass-05"></i> Endereço</h2>
+                            <h2 class="my-4 title"> <i class="icon icon-compass-05"></i> Endereï¿½o</h2>
                         </div>
                             
                         <div class="row justify-content-center">
@@ -99,7 +102,7 @@
                             </div>
 
                             <div class="form-group col-12 col-lg-6">
-                                <label  for="numero">Número</label>
+                                <label  for="numero">Nï¿½mero</label>
                                 <input class="form-control" type="text" required name="numero" id="numero">
                             </div>
 
@@ -119,7 +122,7 @@
                             </div>
 
                             <div class="form-group col-12 col-lg-6">
-                                <label  for="municipio">Município</label>
+                                <label  for="municipio">Municï¿½pio</label>
                                 <input class="form-control" type="text" required name="municipio" id="municipio" >
                             </div>
 

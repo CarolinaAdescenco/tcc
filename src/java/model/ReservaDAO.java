@@ -16,7 +16,7 @@ public class ReservaDAO {
     private static final String CADASTRAR_NOVA_RESERVA = "INSERT INTO reservas(acomodacoes_id, usuarios_id, data_checkin, data_checkout, adultos, criancas, sub_total) VALUES(?, ?, ? , ?, ?, ?, ?)";
     private static final String CONSULTAR_DISPONIBILIDADE = "SELECT COUNT(*) FROM reservas WHERE acomodacoes_id = ? AND ? BETWEEN data_checkin AND data_checkout";
     private static final String LISTAR_RESERVAS = "SELECT usuario.id as usuario_id, usuario.email as usuario_email, reserva.id as reserva_id FROM usuarios as usuario, reservas as reserva WHERE reserva.usuarios_id = usuario.id";
-    private static final String LISTAR_OCUPACOES = "SELECT usuario.nome as usuario_nome, usuario.id as usuario_id, reserva.id as reserva_id, usuario.cpf as usuario_cpf, reserva.data_checkin as reserva_checkin, reserva.data_checkout as reserva_checkout, reserva.data_entrada, reserva.data_saida FROM usuarios as usuario, reservas as reserva WHERE reserva.usuarios_id = usuario.id";
+    private static final String LISTAR_OCUPACOES = "SELECT usuario.nome as usuario_nome, usuario.id as usuario_id, reserva.id as reserva_id, usuario.cpf as usuario_cpf, reserva.data_checkin as reserva_checkin, reserva.data_checkout as reserva_checkout, reserva.data_entrada, reserva.data_saida FROM usuarios as usuario, reservas as reserva WHERE reserva.usuarios_id = usuario.id ORDER BY reserva.data_checkin";
 
     private static final String ADICIONAR_ITEM_PEDIDO = "INSERT INTO produtos_reservas(produtos_id, reservas_id, quantidade, sub_total, observacao) VALUES(?, ?, ?, ?, ?)";
     private static final String DEFINIR_CHEGADA = "UPDATE reservas SET data_entrada = ? WHERE id = ?";
@@ -54,11 +54,17 @@ public class ReservaDAO {
     }
     
     public Boolean estaDisponivel(int acomodacaoID, java.util.Date data) {
+        /**
+         * Conta a quantidade de ocorrencias em que o ID da acomodação esta
+         * presente na tabela de reservas e a data desejada esta entre "checkin" e "checkout",
+         * Se nenhuma ocorrencia for encontrada, significa que a acomodação
+         * esta disponivel.
+         */
         Connection conexao = null;
         PreparedStatement pstmt = null;
         ResultSet rsReserva = null;
         
-        try{
+        try {
             conexao = ConectaBanco.getConnection();
             pstmt = conexao.prepareStatement(CONSULTAR_DISPONIBILIDADE);
             pstmt.setInt(1, acomodacaoID);
@@ -67,6 +73,11 @@ public class ReservaDAO {
             rsReserva.next();
             int achou = rsReserva.getInt(1);
             
+            /**
+             * Se a contagem for menor que 1 significa que nenhuma reserva
+             * foi encontrada entre a data desejada para o ID da acomodacação,
+             * logo, a reserva está disponivel.
+             */
             return achou < 1;
             
         } catch(SQLException sqlErro){
@@ -83,6 +94,9 @@ public class ReservaDAO {
     }
 
     public ArrayList<Reserva> listarOcupacoes() {
+        /**
+         * Lista todos os usuarios com suas respectivas reservas.
+         */
         ArrayList<Reserva> reservas = new ArrayList<>();
 
         Connection conexao = null;
@@ -156,6 +170,7 @@ public class ReservaDAO {
         PreparedStatement pstmt = null;
         ResultSet rsReserva = null;
         Reserva reserva = new Reserva();
+        AcomodacaoDAO acoDAO = new AcomodacaoDAO();
         try {
             conexao = ConectaBanco.getConnection();
             pstmt = conexao.prepareStatement(CONSULTAR);
@@ -163,6 +178,7 @@ public class ReservaDAO {
             rsReserva = pstmt.executeQuery();
 
             while (rsReserva.next()) {
+                reserva.setAcomodacao(acoDAO.consultar(rsReserva.getInt("acomodacoes_id")));
                 reserva.setId(rsReserva.getInt("id"));
                 reserva.setSubTotal(rsReserva.getDouble("sub_total"));
                 reserva.setAcomodacaoID(rsReserva.getInt("acomodacoes_id"));
@@ -188,12 +204,11 @@ public class ReservaDAO {
         return reserva;
     }
     
-    public Reserva consultarPorUsuario(int usuarioID) {
-
+    public ArrayList<Reserva> consultarPorUsuario(int usuarioID) {
         Connection conexao = null;
         PreparedStatement pstmt = null;
         ResultSet rsReserva = null;
-        Reserva reserva = new Reserva();
+        ArrayList<Reserva> reservas = new ArrayList<>();
         try {
             conexao = ConectaBanco.getConnection();
             pstmt = conexao.prepareStatement(CONSULTAR_POR_USUARIO);
@@ -201,6 +216,7 @@ public class ReservaDAO {
             rsReserva = pstmt.executeQuery();
 
             while (rsReserva.next()) {
+                Reserva reserva = new Reserva();
                 reserva.setId(rsReserva.getInt("id"));
                 reserva.setSubTotal(rsReserva.getDouble("sub_total"));
                 reserva.setAcomodacaoID(rsReserva.getInt("acomodacoes_id"));
@@ -213,7 +229,7 @@ public class ReservaDAO {
                 acomodacao.setDescricao(rsReserva.getString("descricao"));
                 reserva.setAcomodacao(acomodacao);
 
-                return reserva;
+                reservas.add(reserva);
             }
         } catch (SQLException sqlErro) {
             throw new RuntimeException(sqlErro);
@@ -227,12 +243,14 @@ public class ReservaDAO {
             }
         }
         
-        return reserva;
+        return reservas;
     }
 
-    // Define a data de entrada do cliente ao hotel.
-    // Por padrão a data é inserida como a data atual a execução desse método.
     public void definirChegada(int reservaID) {
+        /**
+         * Define a data de entrada do cliente ao hotel,
+         * Por padrão a data é inserida como a data atual a execução desse método.
+         */
         Connection conexao = null;
         PreparedStatement pstmt = null;
         

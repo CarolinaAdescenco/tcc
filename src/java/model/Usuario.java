@@ -1,14 +1,27 @@
 package model;
 
+import enums.StatusUsuario;
+import java.util.ArrayList;
+
 public class Usuario {
     private int id;
+    private StatusUsuario status = StatusUsuario.ATIVO;
     private String nome;
     private String email;
     private String senha;
     private PerfilDeAcesso perfil;
     private String cpf;
     private Endereco endereco = new Endereco();
-    
+    private ArrayList<Reserva> reservas;
+
+    public StatusUsuario getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusUsuario status) {
+        this.status = status;
+    }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -63,5 +76,13 @@ public class Usuario {
 
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
+    }
+
+    public ArrayList<Reserva> getReservas() {
+        return reservas;
+    }
+
+    public void setReservas(ArrayList<Reserva> reservas) {
+        this.reservas = reservas;
     }
 }

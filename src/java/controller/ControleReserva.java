@@ -6,11 +6,8 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -22,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import model.Acomodacao;
 import model.AcomodacaoDAO;
 import model.Consumo;
-import model.PagamentoDAO;
 import model.Produto;
 import model.ProdutoDAO;
 import model.Reserva;
@@ -82,7 +78,7 @@ public class ControleReserva extends HttpServlet {
         Acomodacao aco = acoDAO.consultar(acomodacaoID);
 
         long diferenca = Math.abs(checkin.getTime() - checkout.getTime());
-        long quantidadeDias = diferenca / (24 * 60 * 60 * 1000);
+        long quantidadeDias = TimeUnit.DAYS.convert(diferenca, TimeUnit.MILLISECONDS);
         Double valoHospedagem = aco.getValorPadrao() * quantidadeDias;
 
         reserva.setSubTotal(valoHospedagem);
@@ -105,8 +101,6 @@ public class ControleReserva extends HttpServlet {
         int resID = Integer.parseInt(request.getParameter("reservaID"));
         ReservaDAO resDao = new ReservaDAO();
 
-        // TODO: Comparar data de "agora" com data de check-in
-        // para "bloquear" a entrada caso a data de check-in seja no futuro.
         Reserva reserv = resDao.consultar(resID);
 
         if (reserv.getDataCheckin().after(new Date())) {
@@ -158,6 +152,7 @@ public class ControleReserva extends HttpServlet {
         ArrayList<Acomodacao> acomodacoes = new ArrayList<>();
         acomodacoes = acomodacao.listar();
         request.setAttribute("acomodacoes", acomodacoes);
+        
 
         UsuarioDAO usuario = new UsuarioDAO();
         ArrayList<Usuario> usuarios = new ArrayList<>();
@@ -176,8 +171,21 @@ public class ControleReserva extends HttpServlet {
         ReservaDAO reservasDAO = new ReservaDAO();
         ArrayList<Reserva> reservas = reservasDAO.listarOcupacoes();
         request.setAttribute("reservas", reservas);
-        request.getRequestDispatcher("/admin/listar_reservas.jsp").forward(request, response);
         // -- FIM
+
+        ArrayList<Acomodacao> acomodacoesOcupadas = new ArrayList<>();
+        ArrayList<Acomodacao> acomodacoesLivres = new ArrayList<>();
+        for (Acomodacao aco : acomodacoes) {
+            if (reservasDAO.estaDisponivel(aco.getId(), new Date())) {
+                acomodacoesOcupadas.add(aco);
+            } else {
+                acomodacoesLivres.add(aco);
+            }
+        }
+        request.setAttribute("acomodacoesOcupadas", acomodacoesOcupadas);
+        request.setAttribute("acomodacoesLivres", acomodacoesLivres);
+
+        request.getRequestDispatcher("/admin/listar_reservas.jsp").forward(request, response);
     }
 
 

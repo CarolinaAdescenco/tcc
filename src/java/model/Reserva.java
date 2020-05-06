@@ -18,6 +18,7 @@ public class Reserva {
     private Usuario usuario = new Usuario();
     private Acomodacao acomodacao = new Acomodacao();
     private ArrayList<Consumo> consumos = new ArrayList<>();
+    private Pagamento pagamento;
 
 
     public Reserva(int acomodacaoID, int usuarioID, Date dataCheckin, Date dataCheckout, int adultos, int criancas) {
@@ -135,6 +136,14 @@ public class Reserva {
     public void setSubTotal(Double subTotal) {
         this.subTotal = subTotal;
     }
+
+    public Pagamento getPagamento() {
+        return pagamento;
+    }
+
+    public void setPagamento(Pagamento pagamento) {
+        this.pagamento = pagamento;
+    }
     
     public void calcularSubTotal(Double valorQuarto) {
         this.subTotal = this.adultos * valorQuarto;
@@ -142,24 +151,21 @@ public class Reserva {
     
     public String getSituacao() {
         String situacao = null;
-        
+
         if (this.dataEntrada == null) {
-            situacao = "Aguardando entrada";
+            return "Aguardando entrada";
         }
         
-        
-        if (this.dataEntrada != null && this.dataEntrada.equals(this.dataSaida)) {
-            situacao = "Cancelado";
+        if (this.dataEntrada != null && this.dataSaida == null) {
+            return "Em progresso";
         }
         
-        
-        if (this.dataEntrada != null && !this.dataEntrada.equals(this.dataSaida)) {
-            situacao = "Finalizado";
+        if (this.dataEntrada != null && this.dataSaida != null && this.dataSaida.before(this.dataCheckout)) {
+            return "Saída antecipada";
         }
         
-        
-        if (this.dataSaida == null && this.dataEntrada != null) {
-            situacao = "Em progresso";
+        if (this.dataSaida.equals(this.dataCheckout) || this.dataSaida.after(this.dataCheckout)) {
+            return "Finalizado";
         }
 
         return situacao == null ? "Confirmado" : situacao;

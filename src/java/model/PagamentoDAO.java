@@ -10,7 +10,7 @@ import util.ConectaBanco;
 
 public class PagamentoDAO {
 
-    private static final String CONSULTAR = "SELECT * FROM pagamentos WHERE id = ?";
+    private static final String CONSULTAR = "SELECT * FROM pagamentos WHERE id = ? ORDER BY date_part('month', dataPagamento) DESC";
     private static final String CADASTAR = "INSERT INTO pagamentos(reserva_id, valor_total, parcelas) VALUES(?, ?, ?)";
     
     public Pagamento consultar(Integer reservaID) {
@@ -31,6 +31,7 @@ public class PagamentoDAO {
                 pagamento.setReservaID(reservaID);
                 pagamento.setValorTotal(rsPagamento.getDouble("valor_total"));
                 pagamento.setParcelas(rsPagamento.getInt("parcelas"));
+                pagamento.setDataPagamento(rsPagamento.getDate("data_pagamento"));
             }
 
         } catch(SQLException sqlErro){
