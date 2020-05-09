@@ -54,7 +54,7 @@
                                     <td><%= produto.getQuantidade_estoque()%></td>
                                     <td>
                                         <a href="ControleProduto?acao=Consultar&produtoID=<%= produto.getId()%>"> <i
-                                                class="icon icon-pencil  mx-2"></i> </a>
+                                                class="icon icon-pencil mx-2"></i> </a>
                                     </td>
                                     <td>
                                         <a href="ControleProduto?acao=Excluir&produtoID=<%= produto.getId()%>"> <i

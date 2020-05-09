@@ -40,12 +40,12 @@
                         <table class="table table-hover table-striped">
                             <thead>
                                 <tr>
-                                    <th>Nome do hospede</th>
+                                    <th>Nome do hóspede</th>
                                     <th>CPF</th>
                                     <th>Data de checkin</th>
                                     <th>Data de checkout</th>
-                                    <th>Situaï¿½ï¿½o</th>
-                                    <th>Aï¿½ï¿½es</th>
+                                    <th>Situação</th>
+                                    <th>Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -64,7 +64,7 @@
                                 <!-- Modal Structure -->
                             <div id="modal<%= reserva.getId()%>" class="modal">
                                 <div class="modal-content">
-                                    <h4>Lanï¿½ar produto para: <%= reserva.getUsuario().getNome()%></h4>
+                                    <h4>Lançar produto para: <%= reserva.getUsuario().getNome()%></h4>
                                     <form action="ControleProduto?acao=LancarProduto" method="POST">
                                         <div class="row justify-content-center">
 
@@ -108,7 +108,7 @@
                     <% ArrayList<Acomodacao> acomodacoesLivres = (ArrayList<Acomodacao>) request.getAttribute("acomodacoesLivres"); %>
                     <% ArrayList<Acomodacao> acomodacoesOcupadas = (ArrayList<Acomodacao>) request.getAttribute("acomodacoesOcupadas"); %>
 
-                    <h3>SituaÃ§Ã£o das acomodaÃ§Ãµes</h3>
+                    <h3>Situação das Acomodações</h3>
 
                     <div class="row">
                         <% for (Acomodacao acomodacao : acomodacoesLivres) {%>
@@ -130,50 +130,59 @@
                         <% } %>
                     </div>
                 </div>
-                <div id="cadastrar" class="col s12">
-                    <h2>Cadastrar</h2>
+            </div>
+            <div class="tab-pane fade" id="nav-add" role="tabpanel" aria-labelledby="nav-add-tab"> 
                     <% ArrayList<Acomodacao> acomodacoes = (ArrayList<Acomodacao>) request.getAttribute("acomodacoes"); %>
-                    <div class="row justify-content-center">
+                    
                         <form action="ControleReserva" method="post">
-                        <div class="form-group col-12 col-md-4">
-                            <label for="tipoAcomodacao">Tipo de acomodaÃ§Ã£o</label>
-                            <select name="acomodacaoID" class="form-control selectpicker" data-style="btn btn-link" id="acomodacaoID">
-                                <% for (Acomodacao acomodacao : acomodacoes) {%>
-                                    <option value="<%= acomodacao.getId()%>">
-                                        <%= acomodacao.getDescricao()%> - R$ <%= acomodacao.getValorPadrao()%>
-                                    </option>
-                                <% } %>
-                            </select>
-                        </div>
-                        <div class="form-group col-12 col-md-4">
-                            <label for="tipoAcomodacao">UsuÃ¡rio</label>
-                            <select name="usuarioID" class="form-control selectpicker" data-style="btn btn-link" id="usuarioID">
-                                <% ArrayList<Usuario> usuarios = (ArrayList<Usuario>) request.getAttribute("usuarios"); %>
-                                <% for (Usuario usuario : usuarios) {%>
-                                    <% if (usuario.getStatus() == StatusUsuario.ATIVO) { %>
-                                        <option value="<%= usuario.getId()%>">
-                                            <%= usuario.getEmail()%> - <%= usuario.getCpf()%>
-                                        </option>
-                                    <% } %>
-                                <% }%>
-                            </select>
-                        </div>
-                        <div class="form-group col-12 col-md-4">
-                            <label for="criancas">CrianÃ§as</label>
-                            <input type="number" name="criancas" id="criancas" min="0"/>
-                            <br />
-                            <label for="adultos">Adultos</label>
-                            <input type="number" name="adultos" id="adultos" min="0"/>
-                        </div>
-                        <div class="form-group col-12 col-md-4">
-                            <label for="checkin">Checkin</label>
-                            <input type="date" name="checkin" class="datepicker" id="checkin"/>
-                            <br />
-                            <label for="checkout">Checkout</label>
-                            <input type="date" name="checkout" class="datepicker" id="checkout"/>
-                        </div>
-                        <div class="form-group col-12 col-md-4">
-                            <input class="btn btn-primary" type="submit" value="Cadastrar" name="acao">
+                            <div class="row justify-content-center">
+                                <div class="form-group col-12 col-lg-6">
+                                    <label for="tipoAcomodacao">Tipo de acomodação</label>
+                                    <select name="acomodacaoID" class="form-control selectpicker" data-style="btn btn-link" id="acomodacaoID">
+                                        <% for (Acomodacao acomodacao : acomodacoes) {%>
+                                            <option value="<%= acomodacao.getId()%>">
+                                                <%= acomodacao.getDescricao()%> - R$ <%= acomodacao.getValorPadrao()%>
+                                            </option>
+                                        <% } %>
+                                    </select>
+                                </div>
+                                <div class="form-group col-12 col-lg-6">
+                                    <label for="tipoAcomodacao">Usuário</label>
+                                    <select name="usuarioID" class="form-control selectpicker" data-style="btn btn-link" id="usuarioID">
+                                        <% ArrayList<Usuario> usuarios = (ArrayList<Usuario>) request.getAttribute("usuarios"); %>
+                                        <% for (Usuario usuario : usuarios) {%>
+                                            <% if (usuario.getStatus() == StatusUsuario.ATIVO) { %>
+                                                <option value="<%= usuario.getId()%>">
+                                                    <%= usuario.getEmail()%> - <%= usuario.getCpf()%>
+                                                </option>
+                                            <% } %>
+                                        <% }%>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-12 col-lg-6">
+                                    <label for="criancas">Crianças</label>
+                                    <input class="form-control" type="number" required name="criancas" id="criancas" min="0">
+                                </div>
+
+                                <div class="form-group col-12 col-lg-6">
+                                    <label for="adultos">Adultos</label>
+                                    <input class="form-control" type="number" required name="adultos" id="adultos" min="0">
+                                </div>
+
+                                <div class="form-group col-12 col-lg-6">
+                                    <label for="checkin">Check-in</label>
+                                    <input class="form-control" type="date" required name="checkin" id="checkin">
+                                </div>
+
+                                <div class="form-group col-12 col-lg-6">
+                                    <label for="checkout">Check-out</label>
+                                    <input class="form-control" type="date" required name="checkout" id="checkout">
+                                </div>                            
+
+                                <div class="form-group col-12 col-lg-4 mt-3">
+                                    <input class="btn btn-primary btn-block" type="submit" value="Cadastrar" name="acao">
+                                </div>
                         </div>
                     </form>
                 </div>

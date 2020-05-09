@@ -10,7 +10,7 @@
 
             <% Usuario usuario = (Usuario) request.getAttribute("usuario");%>            
 
-            <h2 class="my-4 title"> <i class="icon icon-pencil"></i> Editar usuï¿½rio <%= usuario.getId()%> - <%= usuario.getNome()%></h2>
+            <h2 class="my-4 title"> <i class="icon icon-pencil"></i> Editar usuário <%= usuario.getId()%> - <%= usuario.getNome()%></h2>
 
             <form action="ControleUsuario?acao=Editar" method="POST">
                 <input type="hidden" name="usuarioID" value="<%= usuario.getId()%>">
@@ -45,7 +45,7 @@
                 </div>
                             
                 <div class="row mb-3">
-                    <h2 class="my-4 title"> <i class="icon icon-compass-05"></i> Endereï¿½o</h2>
+                    <h2 class="my-4 title"> <i class="icon icon-compass-05"></i> Endereço</h2>
                 </div>
                 
                 <div class="row justify-content-center">
@@ -56,7 +56,7 @@
                     </div>
 
                     <div class="form-group col-12 col-lg-6">
-                        <label for="numero">Nï¿½mero</label>
+                        <label for="numero">Número</label>
                         <input class="form-control" type="text" required name="numero" id="numero"
                                value="<%= usuario.getEndereco().getNumero()%>">
                     </div>
@@ -80,7 +80,7 @@
                     </div>
 
                     <div class="form-group col-12 col-lg-6">
-                        <label for="municipio">Municï¿½pio</label>
+                        <label for="municipio">Município</label>
                         <input class="form-control" type="text" required name="municipio" id="municipio"
                                value="<%= usuario.getEndereco().getMunicipio()%>" >
                     </div>
