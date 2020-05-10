@@ -45,7 +45,8 @@
                                     <th>Data de checkin</th>
                                     <th>Data de checkout</th>
                                     <th>Situação</th>
-                                    <th>Ações</th>
+                                    <th>Ver reserva</th>
+                                    <th>Cancelar</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -57,8 +58,10 @@
                                     <td><%= new SimpleDateFormat("dd-MM-yyyy").format(reserva.getDataCheckout())%></td>
                                     <td><%= reserva.getSituacao()%></td>
                                     <td>
-                                        <a class="btn btn-primary" href="ControleReserva?acao=Detalhes&reservaID=<%= reserva.getId()%>&usuarioID=<%= reserva.getUsuario().getId()%>">   Ver detalhes</a>
-                                        <a class="btn btn-danger cancelarReserva <%= reserva.getDataEntrada() != null ? "disabled" : ""%>" href="ControlePagamento?reservaID=<%= reserva.getId()%>">Cancelar</a>
+                                        <a href="ControleReserva?acao=Detalhes&reservaID=<%= reserva.getId()%>&usuarioID=<%= reserva.getUsuario().getId()%>"> <i class="icon icon-eye-19 mx-4"></i> </a>
+                                    </td>                                    
+                                    <td>
+                                        <a class="cancelarReserva <%= reserva.getDataEntrada() != null ? "disabled" : ""%>" href="ControlePagamento?reservaID=<%= reserva.getId()%>"> <i class="icon icon-trash-simple mx-4"></i> </a>
                                     </td>
                                 </tr>
                                 <!-- Modal Structure -->
