@@ -27,7 +27,7 @@
                         <input type="hidden" name="usuarioID" value="<%= usuario.getId()%>">
 
                         <div class="row justify-content-center">
-                            <div class="form-group col-12 col-lg-6">
+                            <div class="form-group col-12 col-lg-12">
                                 <label for="email">E-mail</label>
                                 <input class="form-control" type="text" required name="txtLogin" id="email"
                                        value="<%= usuario.getEmail()%>">
@@ -41,6 +41,15 @@
                                 <label for="cpf">CPF</label>
                                 <input class="form-control" type="text" required name="cpf" id="cpf"
                                        value="<%= usuario.getCpf()%>">
+                            </div>
+                            <div class="form-group col-12 col-md-6">
+                                <label for="tipoUsuario">Status</label>
+                                <select name="status" class="form-control selectpicker" data-style="btn btn-link"
+                                    id="status">
+                                    <option value="<%= usuario.getStatus() %>" selected disabled><%= usuario.getStatus() %></option>
+                                    <option value="ativo">Ativo</option>
+                                    <option value="inativo">Inativo</option>
+                                </select>
                             </div>
 
                             <div class="form-group col-12 col-lg-6">
@@ -111,7 +120,10 @@
                             
                 <div class="tab-pane fade" id="nav-add" role="tabpanel" aria-labelledby="nav-add-tab">
                     <% if (usuario.getReservas().isEmpty()) { %>
-                        <p>Nenhum histórico encontrado!</p>
+                    <div class="d-flex align-items-center justify-content-center my-5">
+                        <h4>Nenhum histórico encontrado!</h4>
+                    </div>
+                        
                     <% } else { %>
                    <div class="table-responsive table-full-width container">
                         <table class="table table-hover table-striped">

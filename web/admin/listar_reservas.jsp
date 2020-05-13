@@ -28,6 +28,7 @@
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active" id="nav-list-tab" data-toggle="tab" href="#nav-list" role="tab" aria-controls="nav-list" aria-selected="true">Listar</a>
                     <a class="nav-item nav-link" id="nav-add-tab" data-toggle="tab" href="#nav-add" role="tab" aria-controls="nav-add" aria-selected="false">Cadastrar</a>   
+                    <a class="nav-item nav-link" id="nav-acomodacao-tab" data-toggle="tab" href="#nav-acomodacao" role="tab" aria-controls="nav-acomodacao" aria-selected="false">Situação Acomodações</a>
                 </div>
             </nav>
 
@@ -106,32 +107,8 @@
                         </div>
                         <% }%>
                         </tbody>
-                    </table>
+                    </table>                  
                     
-                    <% ArrayList<Acomodacao> acomodacoesLivres = (ArrayList<Acomodacao>) request.getAttribute("acomodacoesLivres"); %>
-                    <% ArrayList<Acomodacao> acomodacoesOcupadas = (ArrayList<Acomodacao>) request.getAttribute("acomodacoesOcupadas"); %>
-
-                    <h3>Situação das Acomodações</h3>
-
-                    <div class="row">
-                        <% for (Acomodacao acomodacao : acomodacoesLivres) {%>
-                            <div class="col s3 justify-content-center">
-                                <figure>
-                                    <img src="/tcc/assets/images/free.png">
-                                    <figcaption><%= acomodacao.getDescricao() %></figcaption>
-                                </figure>
-                            </div>
-                        <% } %>
-
-                        <% for (Acomodacao acomodacao : acomodacoesOcupadas) {%>
-                            <div class="col s3 justify-content-center">
-                                <figure>
-                                    <img src="/tcc/assets/images/free.png">
-                                    <figcaption><%= acomodacao.getDescricao() %></figcaption>
-                                </figure>
-                            </div>
-                        <% } %>
-                    </div>
                 </div>
             </div>
             <div class="tab-pane fade" id="nav-add" role="tabpanel" aria-labelledby="nav-add-tab"> 
@@ -188,6 +165,24 @@
                                 </div>
                         </div>
                     </form>
+                </div>
+                <div class="tab-pane fade" id="nav-acomodacao" role="tabpanel" aria-labelledby="nav-acomodacao-tab">
+                    <% ArrayList<Acomodacao> acomodacoesLivres = (ArrayList<Acomodacao>) request.getAttribute("acomodacoesLivres"); %>
+                    <% ArrayList<Acomodacao> acomodacoesOcupadas = (ArrayList<Acomodacao>) request.getAttribute("acomodacoesOcupadas"); %>
+
+                    <div class="row">
+                        <% for (Acomodacao acomodacao : acomodacoesLivres) {%>
+                            <div class="col-auto justify-content-center" title="Acomodação livre">
+                                <h4> <i class="icon icon-lock-open"></i> <%= acomodacao.getDescricao() %></h4>   
+                            </div>
+                        <% } %>
+
+                        <% for (Acomodacao acomodacao : acomodacoesOcupadas) {%>
+                            <div class="col-auto justify-content-center" title="Acomodação ocupada">                                
+                                <h4> <i class="icon icon-lock"></i> <%= acomodacao.getDescricao() %></h4>   
+                            </div>
+                        <% } %>
+                    </div>
                 </div>
             </div>
         </div>
