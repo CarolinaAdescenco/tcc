@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
@@ -13,7 +14,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Pagamento;
 import model.PagamentoDAO;
+import model.ReservaDAO;
 
 
 
@@ -38,11 +41,18 @@ public class ControleRelatorio extends HttpServlet {
             inicioRelatorio = ControleRelatorio.FORMATO_DATA_PADRAO.parse(inicio);
         }
         
+        PagamentoDAO pagamento = new PagamentoDAO();
+        ArrayList<Pagamento> pagamentos = pagamento.listar(inicioRelatorio, fimRelatorio);
+        Double total = 0.0;
+        for (Pagamento pag : pagamentos) {
+            total += pag.getValorTotal();
+        }
+        request.setAttribute("pagamentos", pagamentos);
+        request.setAttribute("total", total);
         
-        PagamentoDAO pagamentos = new PagamentoDAO();
-        request.setAttribute("pagamentos", pagamentos.listar(inicioRelatorio, fimRelatorio));
+        ReservaDAO reservas = new ReservaDAO();
    
-        request.getRequestDispatcher("/admin/listar_pagamentos.jsp").forward(request, response);
+        request.getRequestDispatcher("/admin/relatorios.jsp").forward(request, response);
     }
     
     

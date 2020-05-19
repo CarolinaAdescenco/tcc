@@ -22,6 +22,7 @@ public class ReservaDAO {
     private static final String DEFINIR_CHEGADA = "UPDATE reservas SET data_entrada = ? WHERE id = ?";
     private static final String CANCELAR_RESERVA = "UPDATE reservas SET data_entrada = ?, data_saida = ? WHERE id = ?";
     private static String FINALIZAR_RESERVA = "UPDATE reservas SET data_saida = ? WHERE id = ?";
+    private static String RELATORIO = "SELECT acomodacao.descricao, COUNT(*) FROM acomodacoes as acomodacao, reservas WHERE acomodacoes_id = acomodacao.id GROUP BY acomodacoes_id, acomodacao.descricao";
     
     
     public void cadastrar(Reserva reserva) {
@@ -325,5 +326,9 @@ public class ReservaDAO {
                 }
             }
         }
+    }
+
+    public static void relatorio(java.util.Date inicio, java.util.Date fim) {
+        // TODO: Implementar a busca e contagem das acomodações mais utilizadas.
     }
 }
