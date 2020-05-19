@@ -20,7 +20,8 @@ public class Produto {
         this.descricao = descricao;
         this.valor_unitario = valor_unitario;
         this.quantidade_estoque = quantidade_estoque;
-    }
+    }  
+
 
     public int getId() {
         return id;

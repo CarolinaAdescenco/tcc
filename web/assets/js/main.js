@@ -16,9 +16,25 @@ $(document).ready(function () {
             }
         }
     });
+
+    $('.cancelarReserva').on('click', function () {
+        return confirm('Deseja cancelar? 50% do valor sera cobrado.');
+    });
     
-    $('.tabs').tabs();
-    $('select').formSelect();
-    $('.modal').modal();
+
+    $('[name="parcelas"]').on('input', function () {
+        parcelas = parseInt($(this).val());
+        valorParcelas = $('#valorParcelas');
+        valorTotal = parseInt($('[name="subTotal"]').val());
+
+        if (parcelas !== null && parcelas !== "") {
+            total = valorTotal / parcelas;
+            console.log(total);
+            valorParcelas.html("Parcelas: " + parcelas + "x de R$ " + Math.ceil(total));
+            return;
+        }
+
+        valorParcelas.html("Parcelas: " + parcelas + "x de R$ " + Math.ceil(valorTotal));
+    });
 });
 
