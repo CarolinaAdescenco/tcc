@@ -29,7 +29,13 @@
                     <i class="icon icon-cart-simple"></i>
                     <p>Produtos</p>
                 </a>
-            </li>        
+            </li>
+            <li>
+                <a class="nav-link" href="/tcc/admin/ControleRelatorio">
+                    <i class="icon icon-zoom-2"></i>
+                    <p>Relatórios</p>
+                </a>
+            </li>
         </ul>
     </div>
 </div> 

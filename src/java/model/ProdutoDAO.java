@@ -93,7 +93,7 @@ public class ProdutoDAO {
                 produto.setDescricao(rsProduto.getString("descricao"));
                 produto.setValor_unitario(rsProduto.getDouble("valor_unitario"));
                 produto.setQuantidade_estoque(rsProduto.getInt("quantidade_estoque"));
-//
+
                 produtos.add(produto);
             }
         } catch (SQLException sqlErro) {
