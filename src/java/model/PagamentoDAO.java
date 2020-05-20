@@ -16,7 +16,7 @@ public class PagamentoDAO {
     private static final String LISTAR_PAGAMENTOS = "SELECT * FROM pagamentos WHERE data_pagamento BETWEEN ? AND ?";
     
     public ArrayList<Pagamento> listar(java.util.Date inicio, java.util.Date fim) {
-        ArrayList<Pagamento> pagamentos = new ArrayList<Pagamento>();
+        ArrayList<Pagamento> pagamentos = new ArrayList<>();
         
         Connection conexao = null;
         PreparedStatement pstmt = null;

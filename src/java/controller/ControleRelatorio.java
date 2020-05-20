@@ -51,6 +51,7 @@ public class ControleRelatorio extends HttpServlet {
         request.setAttribute("total", total);
         
         ReservaDAO reservas = new ReservaDAO();
+        request.setAttribute("reservas", reservas.relatorio(inicioRelatorio, fimRelatorio));
    
         request.getRequestDispatcher("/admin/relatorios.jsp").forward(request, response);
     }

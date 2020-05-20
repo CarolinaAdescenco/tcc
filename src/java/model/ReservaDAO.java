@@ -22,7 +22,7 @@ public class ReservaDAO {
     private static final String DEFINIR_CHEGADA = "UPDATE reservas SET data_entrada = ? WHERE id = ?";
     private static final String CANCELAR_RESERVA = "UPDATE reservas SET data_entrada = ?, data_saida = ? WHERE id = ?";
     private static String FINALIZAR_RESERVA = "UPDATE reservas SET data_saida = ? WHERE id = ?";
-    private static String RELATORIO = "SELECT acomodacao.descricao, COUNT(*) FROM acomodacoes as acomodacao, reservas WHERE acomodacoes_id = acomodacao.id GROUP BY acomodacoes_id, acomodacao.descricao";
+    private static String RELATORIO = "SELECT reserva.data_checkin, reserva.data_checkout, acomodacao.descricao FROM acomodacoes as acomodacao, reservas as reserva WHERE reserva.acomodacoes_id = acomodacao.id AND data_checkin BETWEEN ? AND ?";
     
     
     public void cadastrar(Reserva reserva) {
@@ -328,7 +328,43 @@ public class ReservaDAO {
         }
     }
 
-    public static void relatorio(java.util.Date inicio, java.util.Date fim) {
-        // TODO: Implementar a busca e contagem das acomodações mais utilizadas.
+    public ArrayList<Reserva> relatorio(java.util.Date inicio, java.util.Date fim) {
+        ArrayList<Reserva> reservas = new ArrayList<>();
+
+        Connection conexao = null;
+        PreparedStatement pstmt = null;
+        ResultSet rsReserva = null;
+        try {
+            conexao = ConectaBanco.getConnection();
+            pstmt = conexao.prepareStatement(RELATORIO);
+            pstmt.setDate(1, new Date(inicio.getTime()));
+            pstmt.setDate(2, new Date(fim.getTime()));
+
+            rsReserva = pstmt.executeQuery();
+            while (rsReserva.next()) {
+                Acomodacao acomodacao = new Acomodacao();
+                acomodacao.setDescricao(rsReserva.getString("descricao"));
+                
+                Reserva reserva = new Reserva();
+                
+                reserva.setAcomodacao(acomodacao);
+                reserva.setDataCheckin(rsReserva.getDate("data_checkin"));
+                reserva.setDataCheckout(rsReserva.getDate("data_checkout"));
+
+                reservas.add(reserva);
+            }
+        } catch (SQLException sqlErro) {
+            throw new RuntimeException(sqlErro);
+        } finally {
+            if (conexao != null) {
+                try {
+                    conexao.close();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        }
+        
+        return reservas;
     }
 }
