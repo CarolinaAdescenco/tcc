@@ -112,6 +112,10 @@
                             </div>
 
                             <div class="form-group col-12 col-lg-4 mt-3">
+                                <a href="/tcc/ControleUsuario?acao=Listar" class="btn btn-secondary btn-block" value="Cancelar">Cancelar</a>  
+                            </div>
+
+                            <div class="form-group col-12 col-lg-4 mt-3">
                                 <input class="btn btn-primary btn-block" type="submit" value="Editar" name="acao">
                             </div>
                         </div>

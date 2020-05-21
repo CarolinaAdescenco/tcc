@@ -31,7 +31,11 @@
                     <div class="form-group col-12 col-md-6">
                         <label for="quantidade">Quantidade em Estoque</label>
                         <input class="form-control" type="text" required name="quantidade_estoque" id="quantidade" value="<%= produto.getQuantidade_estoque()%>">
-                    </div>             
+                    </div>
+                    
+                    <div class="form-group col-12 col-lg-4 mt-3">
+                        <a href="/tcc/ControleProduto?acao=Listar" class="btn btn-secondary btn-block" value="Cancelar">Cancelar</a>  
+                    </div>
 
                     <div class="form-group col-12 col-md-4 mt-3">
                         <input class="btn btn-primary btn-block" type="submit" value="Editar" required name="acao" readonly>
