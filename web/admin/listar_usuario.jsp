@@ -81,11 +81,20 @@
                                 <label  for="cpf">CPF</label>
                                 <input class="form-control" type="text" required name="cpf" id="cpf">
                             </div>
+                            
+                            <div class="form-group col-12 col-md-6">
+                                <label for="tipoUsuario">Status</label>
+                                <select name="status" class="form-control selectpicker" data-style="btn btn-link"
+                                    id="status">
+                                    <option value="ATIVO">Ativo</option>
+                                    <option value="INATIVO">Inativo</option>
+                                </select>
+                            </div>
 
                             <div class="form-group col-12 col-lg-6">
-                                <label for="optPerfil">Perfil</label>
-                                <select name="optPerfil" class="form-control selectpicker" data-style="btn btn-link" id="optPerfil">
-                                    <option disabled selected>Selecione o perfil</option>
+                                <label for="tipoUsuario">Perfil</label>
+                                <select name="optPerfil" class="form-control selectpicker" data-style="btn btn-link"
+                                        id="tipoUsuario">
                                     <option value="comum">Comum</option>
                                     <option value="administrador">Administrador</option>
                                     <option value="hospede">Hospede</option>

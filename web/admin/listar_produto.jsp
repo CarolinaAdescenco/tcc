@@ -46,7 +46,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <% for (Produto produto : produtos) {%>
+                                <% if (produtos.isEmpty()) { %>
+                                <tr>
+                                    <td colspan="6" align="center">Nenhum produto encontrado.</td>
+                                </tr>
+                                <% } else { %>
+                                <% for (Produto produto : produtos) { %>
                                 <tr>
                                     <td><%= produto.getId()%></td>
                                     <td><%= produto.getDescricao()%></td>
@@ -61,7 +66,8 @@
                                                 class="icon icon-trash-simple mx-3"></i> </a>
                                     </td>
                                 </tr>
-                                <% }%>
+                                <% } %>
+                                <% } %>
                             </tbody>
                         </table>
                     </div>

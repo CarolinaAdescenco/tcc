@@ -65,7 +65,7 @@
                                 <% DecimalFormat money = new DecimalFormat("#,###,##0.00"); %>
                                 <% if (pagamentos.isEmpty()) { %>
                                 <tr>
-                                    <td colspan="4">Nenhum pagamento encontrado.</td>
+                                    <td colspan="4" align="center">Nenhum pagamento encontrado.</td>
                                 </tr>
                                 <% } else { %>
                                 <% for (Pagamento pagamento : pagamentos) {%>
@@ -127,7 +127,7 @@
                                 <tbody>
                                     <% if (reservas.isEmpty()) { %>
                                     <tr>
-                                        <td colspan="4">Nenhuma reserva encontrada.</td>
+                                        <td colspan="4" align="center">Nenhuma reserva encontrada.</td>
                                     </tr>
                                     <% } else { %>
                                     <% for (Reserva reserva : reservas) {%>
