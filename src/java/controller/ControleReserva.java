@@ -35,7 +35,7 @@ public class ControleReserva extends HttpServlet {
 
         String acao = request.getParameter("acao");
 
-        switch (acao) {
+            switch (acao) {
             case "Detalhes":
                 this.exibirDetalhe(request, response);
                 break;
@@ -177,9 +177,9 @@ public class ControleReserva extends HttpServlet {
         ArrayList<Acomodacao> acomodacoesLivres = new ArrayList<>();
         for (Acomodacao aco : acomodacoes) {
             if (reservasDAO.estaDisponivel(aco.getId(), new Date())) {
-                acomodacoesOcupadas.add(aco);
-            } else {
                 acomodacoesLivres.add(aco);
+            } else {
+                acomodacoesOcupadas.add(aco);
             }
         }
         request.setAttribute("acomodacoesOcupadas", acomodacoesOcupadas);

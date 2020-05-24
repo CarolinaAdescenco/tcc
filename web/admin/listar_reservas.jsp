@@ -62,7 +62,11 @@
                                         <a href="ControleReserva?acao=Detalhes&reservaID=<%= reserva.getId()%>&usuarioID=<%= reserva.getUsuario().getId()%>"> <i class="icon icon-eye-19 mx-4"></i> </a>
                                     </td>                                    
                                     <td>
-                                        <a class="cancelarReserva <%= reserva.getDataEntrada() != null ? "disabled" : ""%>" href="ControlePagamento?reservaID=<%= reserva.getId()%>"> <i class="icon icon-trash-simple mx-4"></i> </a>
+                                        <% if (reserva.getDataEntrada() != null) { %>
+                                        <span title="Reserva finalizada"><i class="icon icon-trash-simple mx-4"></i></span>
+                                        <% } else { %>
+                                            <a class="cancelarReserva" href="ControlePagamento?reservaID=<%= reserva.getId() %>"> <i class="icon icon-trash-simple mx-4"></i> </a>
+                                        <% } %>
                                     </td>
                                 </tr>
                                 <!-- Modal Structure -->

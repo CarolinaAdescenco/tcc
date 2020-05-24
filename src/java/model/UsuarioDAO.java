@@ -16,7 +16,7 @@ public class UsuarioDAO {
     private static final String BUSCAR_USUARIO = "SELECT * FROM usuarios WHERE id=?";
     private static final String LISTAR_USUARIO = "SELECT * FROM usuarios";
     private static final String DELETAR_USUARIO = "UPDATE usuarios SET status = ? WHERE id = ?";
-    private static final String ATUALIZAR_USUARIO = "UPDATE usuarios SET email = ?, senha = ?, perfil = ?, cpf = ?, status = ?  WHERE id = ?";
+    private static final String ATUALIZAR_USUARIO = "UPDATE usuarios SET nome = ?, email = ?, senha = ?, perfil = ?, cpf = ?, status = ?  WHERE id = ?";
     
     
     public Usuario cadastrar(Usuario usuario){
@@ -168,12 +168,13 @@ public class UsuarioDAO {
         try {
             conexao = ConectaBanco.getConnection();
             pstmt = conexao.prepareStatement(ATUALIZAR_USUARIO);
-            pstmt.setString(1, usuario.getEmail());
-            pstmt.setString(2, usuario.getSenha());
-            pstmt.setString(3, usuario.getPerfil().toString());
-            pstmt.setString(4, usuario.getCpf());
-            pstmt.setString(5, usuario.getStatus().toString());
-            pstmt.setInt(6, usuarioID);
+            pstmt.setString(1, usuario.getNome());
+            pstmt.setString(2, usuario.getEmail());
+            pstmt.setString(3, usuario.getSenha());
+            pstmt.setString(4, usuario.getPerfil().toString());
+            pstmt.setString(5, usuario.getCpf());
+            pstmt.setString(6, usuario.getStatus().toString());
+            pstmt.setInt(7, usuarioID);
             pstmt.execute();
         } catch(SQLException sqlErro){
             throw new RuntimeException(sqlErro);

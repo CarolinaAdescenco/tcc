@@ -30,8 +30,8 @@
                         <h2 class="my-4 title"> <i class="icon icon-pencil"></i> Editar reserva - <%= reserva.getUsuario().getNome()%></h2>  
 
                         <a 
-                            class="btn btn-success <%= reserva.getDataEntrada() != null ? "disabled" : ""%>"
-                            href="/tcc/ControleReserva?acao=DefinirChegada&reservaID=<%= reserva.getId()%>">
+                            class="btn btn-success <%= reserva.getDataEntrada() != null ? "disabled" : "" %>"
+                            href="/tcc/ControleReserva?acao=DefinirChegada&reservaID=<%= reserva.getId() %>">
                             Confirmar entrada
                         </a>
                     </div>
@@ -74,7 +74,7 @@
                     <hr>
                     <div class="d-flex align-items-center justify-content-between">
                         <h2 class="my-4 title"> <i class="icon icon-cart-simple"></i> Produtos</h2>
-                        <button type="button" class="btn btn-primary <%= reserva.getDataEntrada() == null || reserva.getDataSaida() != null ? "disabled" : ""%>" data-toggle="modal" data-target="#addProduct">Adicionar produto</button>
+                        <button type="button" class="btn btn-primary" <%= reserva.getDataEntrada() == null || reserva.getDataSaida() != null ? "disabled" : "" %> data-toggle="modal" data-target="#addProduct">Adicionar produto</button>
                     </div>
 
 
@@ -228,7 +228,7 @@
                             R$ <%= (Double) reserva.getSubTotal() + (Double) request.getAttribute("totalConsumo")%>
                         </h4>
 
-                        <button class="btn btn-primary <%= inativar ? "disabled" : ""%>" data-toggle="modal" data-target="#modal-finalizar">Finalizar hospedagem</button>
+                        <button class="btn btn-primary" <%= inativar ? "disabled" : ""%> data-toggle="modal" data-target="#modal-finalizar">Finalizar hospedagem</button>
                     </div>
 
 

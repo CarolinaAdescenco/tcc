@@ -65,11 +65,11 @@
                 <div class="tab-pane fade" id="nav-add" role="tabpanel" aria-labelledby="nav-add-tab">  
                     <form action="/tcc/ControleUsuario" method="POST">
                         <div class="row justify-content-center">
-                            <div class="form-group col-12">
+                            <div class="form-group col-6">
                                 <label  for="email">Nome</label>
                                 <input class="form-control" type="text" required name="txtNome" id="nome">
                             </div>
-                            <div class="form-group col-12 col-lg-6">
+                            <div class="form-group col-6 col-lg-6">
                                 <label  for="email">E-mail</label>
                                 <input class="form-control" type="text" required name="txtLogin" id="email">
                             </div>

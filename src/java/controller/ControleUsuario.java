@@ -69,6 +69,7 @@ public class ControleUsuario extends HttpServlet {
         String status = request.getParameter("status");
         
         Usuario usuario = new Usuario();
+        usuario.setNome(request.getParameter("txtNome"));
         usuario.setEmail(request.getParameter("txtLogin"));
         usuario.setSenha(PasswordService.hashPassword(request.getParameter("txtSenha")));
         usuario.setCpf(request.getParameter("cpf"));

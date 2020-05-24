@@ -27,7 +27,11 @@
                         <input type="hidden" name="usuarioID" value="<%= usuario.getId()%>">
 
                         <div class="row justify-content-center">
-                            <div class="form-group col-12 col-lg-12">
+                            <div class="form-group col-6 col-lg-6">
+                                <label  for="nome">Nome</label>
+                                <input class="form-control" type="text" required name="txtNome" id="nome" value="<%= usuario.getNome() %>">
+                            </div>
+                            <div class="form-group col-6 col-lg-6">
                                 <label for="email">E-mail</label>
                                 <input class="form-control" type="text" required name="txtLogin" id="email"
                                        value="<%= usuario.getEmail()%>">

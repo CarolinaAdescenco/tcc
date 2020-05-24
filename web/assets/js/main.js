@@ -18,6 +18,10 @@ $(document).ready(function () {
     });
 
     $('.cancelarReserva').on('click', function () {
+        const href = $(this).attr('href');
+        if (!String(href).length) {
+            return;
+        }
         return confirm('Deseja cancelar? 50% do valor sera cobrado.');
     });
     
